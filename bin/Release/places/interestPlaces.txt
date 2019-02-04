@@ -1,0 +1,2 @@
+const-string [pv]\d+, \".*(premium|isPro|removeAds|free|Vip|Paid|Purchased|Subscribed).*
+const-string [pv]\d+, \"pro\"

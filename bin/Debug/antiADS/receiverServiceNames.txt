@@ -1,0 +1,8 @@
+analytics
+AppMeasurement
+campaign
+measurement
+metrica
+tracking
+AdStatisticsReceiver
+\.adman\.

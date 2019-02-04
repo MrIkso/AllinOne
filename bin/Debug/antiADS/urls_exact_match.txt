@@ -1,0 +1,14 @@
+.doubleclick.net
+.googleadservices.com
+//imasdk.googleapis.com/admob/sdkloader/native_video.html
+/pagead/ads
+ad.doubleclick.net
+analytics.localytics.com
+app-measurement.com
+googleads.g.doubleclick.net
+manifest.localytics.com
+manifest.sandbox53.localytics.com
+mobileads.google.com
+profile-api.sandbox53.localytics.com
+profile.localytics.com
+queuer-elb.sandbox53.localytics.com
