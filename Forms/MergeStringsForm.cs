@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using AllInOne.Logic;
 
@@ -38,10 +39,10 @@ namespace AllInOne.Forms
         private void mergeButton_Click(object sender, EventArgs e)
         {
             if("".Equals(fromTBox.Text) || "".Equals(toTBox.Text)) { return; }
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_merge_string + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_merge_string + ":::::");
             Patcher.mergeXml(new string[] { fromTBox.Text }, toTBox.Text, replaceCB.Checked);
             //Patcher.mergeStrings(fromTBox.Text, toTBox.Text, replaceCB.Checked);
-            Patcher.mainf.appendProgressTbox(":::::"+ Language.log_merge_string_done + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_merge_string_done + ":::::");
             Close();
         }
     }

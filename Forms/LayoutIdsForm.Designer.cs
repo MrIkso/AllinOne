@@ -52,7 +52,7 @@
             this.idsButtonHide.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.idsButtonHide.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.idsButtonHide.Location = new System.Drawing.Point(813, 10);
-            this.idsButtonHide.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idsButtonHide.Margin = new System.Windows.Forms.Padding(4);
             this.idsButtonHide.Name = "idsButtonHide";
             this.idsButtonHide.Size = new System.Drawing.Size(100, 28);
             this.idsButtonHide.TabIndex = 1;
@@ -70,7 +70,7 @@
             this.idsListView.FullRowSelect = true;
             this.idsListView.GridLines = true;
             this.idsListView.Location = new System.Drawing.Point(0, 0);
-            this.idsListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idsListView.Margin = new System.Windows.Forms.Padding(4);
             this.idsListView.MultiSelect = false;
             this.idsListView.Name = "idsListView";
             this.idsListView.Size = new System.Drawing.Size(1019, 508);
@@ -101,7 +101,7 @@
             // 
             this.uncheckAllButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.uncheckAllButton.Location = new System.Drawing.Point(532, 10);
-            this.uncheckAllButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.uncheckAllButton.Margin = new System.Windows.Forms.Padding(4);
             this.uncheckAllButton.Name = "uncheckAllButton";
             this.uncheckAllButton.Size = new System.Drawing.Size(153, 28);
             this.uncheckAllButton.TabIndex = 3;
@@ -135,7 +135,7 @@
             this.tableLayoutPanel1.Controls.Add(this.idsButtonHide, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -149,7 +149,7 @@
             this.panel2.Controls.Add(this.caseSensCB);
             this.panel2.Controls.Add(this.filterLabel);
             this.panel2.Location = new System.Drawing.Point(105, 4);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(164, 40);
             this.panel2.TabIndex = 7;
@@ -158,7 +158,7 @@
             // 
             this.caseSensCB.AutoSize = true;
             this.caseSensCB.Location = new System.Drawing.Point(4, 22);
-            this.caseSensCB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.caseSensCB.Margin = new System.Windows.Forms.Padding(4);
             this.caseSensCB.Name = "caseSensCB";
             this.caseSensCB.Size = new System.Drawing.Size(156, 21);
             this.caseSensCB.TabIndex = 6;
@@ -180,7 +180,7 @@
             // 
             this.filterTBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.filterTBox.Location = new System.Drawing.Point(308, 13);
-            this.filterTBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.filterTBox.Margin = new System.Windows.Forms.Padding(4);
             this.filterTBox.Name = "filterTBox";
             this.filterTBox.Size = new System.Drawing.Size(195, 22);
             this.filterTBox.TabIndex = 6;
@@ -193,12 +193,12 @@
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 508);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1019, 50);
             this.panel1.TabIndex = 6;
             // 
-            // layoutIdsForm
+            // LayoutIdsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -207,10 +207,10 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(761, 399);
-            this.Name = "layoutIdsForm";
-            this.ShowIcon = false;
+            this.Name = "LayoutIdsForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список всех id в layout";
             this.Load += new System.EventHandler(this.layoutIdsForm_Load);

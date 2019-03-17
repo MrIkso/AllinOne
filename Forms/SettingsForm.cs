@@ -15,7 +15,7 @@ namespace AllInOne.Forms
 
         public SettingsForm()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
 
         private void Save_Click(object sender, EventArgs e)
@@ -74,17 +74,9 @@ namespace AllInOne.Forms
                             break;
                     }
                 doc.Save(Program.pathToMyPluginDir + "\\settings.xml");
-               // RestartMessage();
-
                 }
-           
-            //Language.Load(Settings.language);
-            //Settings.Load();
-            //this.UpdateFormLanguage();
-            //Close();
         }
-    
-      
+ 
         private void close_btn_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -191,7 +183,6 @@ namespace AllInOne.Forms
                        }
                    }
                     break;
-
                 }
             }
         }

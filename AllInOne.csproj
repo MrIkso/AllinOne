@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>AllInOne.ico</ApplicationIcon>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +50,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cyotek.Windows.Forms.ColorPicker">
+      <HintPath>..\..\..\..\Загрузки\AndroidTelegramThemeEditor-master\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -46,11 +64,29 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AsmToHexArmForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AsmToHexArmForm.Designer.cs">
+      <DependentUpon>AsmToHexArmForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangelogForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ChangelogForm.Designer.cs">
       <DependentUpon>ChangelogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CheckProtectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CheckProtectForm.Designer.cs">
+      <DependentUpon>CheckProtectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ColorEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ColorEditorForm.Designer.cs">
+      <DependentUpon>ColorEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\ColumnSorterAsc.cs" />
     <Compile Include="Logic\ExcludeRes.cs" />
@@ -90,6 +126,7 @@
     </Compile>
     <Compile Include="Logic\Patterns.cs" />
     <Compile Include="Logic\Program.cs" />
+    <Compile Include="Logic\Util\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -112,8 +149,17 @@
     <Compile Include="Logic\TaskPool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AsmToHexArmForm.resx">
+      <DependentUpon>AsmToHexArmForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangelogForm.resx">
       <DependentUpon>ChangelogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CheckProtectForm.resx">
+      <DependentUpon>CheckProtectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ColorEditorForm.resx">
+      <DependentUpon>ColorEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
@@ -131,8 +177,9 @@
       <DependentUpon>MergeStringsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
@@ -147,6 +194,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sloth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_launcher.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

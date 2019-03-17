@@ -21,6 +21,8 @@ namespace AllInOne.Logic
             activityNames = String.Join("|", File.ReadAllLines(Program.pathToMyPluginDir + "\\antiADS\\activityNames.txt"));
             recservNames = String.Join("|", File.ReadAllLines(Program.pathToMyPluginDir + "\\antiADS\\receiverServiceNames.txt"));
             idNames = String.Join("|", File.ReadAllLines(Program.pathToMyPluginDir + "\\antiADS\\idNames.txt"));
+            
+
             linksPattern = new Dictionary<string, string>
             {
                 {@"const-string(.+)([pv]\d+), \""(https*:|//).+("+smaliUrls+@").*\""",
@@ -353,6 +355,12 @@ namespace AllInOne.Logic
                "android.intent.category.DEFAULT"}
         };
 
+        public static Dictionary<string, string> visibleIconPatch = new Dictionary<string, string>
+        {
+            {@"android\.intent\.category\.DEFAULT",
+               "android.intent.category.LAUNCHER"}
+        };
+
         public static Dictionary<string, string> darkLightPatchDhma = new Dictionary<string, string>
         {//DARK~Holo & Material & AppCompat
             {@"\""@android:style/Theme\.Holo\.Light\.DarkActionBar",
@@ -425,5 +433,79 @@ namespace AllInOne.Logic
                 "" }
         };
 
+        public static Dictionary<string, string> fix_18_9Patch = new Dictionary<string, string>
+        {
+            {@"</application",
+            "<meta-data android:name=\"android.max_aspect\" android:value=\"2.1\" />\n\n</application>"}
+        };
+
+        public static Dictionary<string, string> auto_screenOrientation = new Dictionary<string, string>
+        {
+           {@"android:screenOrientation=\""fullUser\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""portrait\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""landscape\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""sensorLandscape\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""sensorPortrait\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""user\""",
+            "android:screenOrientation=\"fullSensor\""},
+           {@"android:screenOrientation=\""locked\""",
+            "android:screenOrientation=\"fullSensor\""}
+        };
+
+        public static Dictionary<string, string> landscape_screenOrientation = new Dictionary<string, string>
+        {
+           {@"android:screenOrientation=\""fullUser\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""portrait\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""landscape\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""fullSensor\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""sensorPortrait\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""user\""",
+            "android:screenOrientation=\"sensorLandscape\""},
+           {@"android:screenOrientation=\""locked\""",
+            "android:screenOrientation=\"sensorLandscape\""}
+        };
+
+        public static Dictionary<string, string> portrait_screenOrientation = new Dictionary<string, string>
+        {
+           {@"android:screenOrientation=\""fullUser\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""sensorLandscape\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""landscape\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""sensorPortrait\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""user\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""locked\""",
+            "android:screenOrientation=\"portrait\""},
+
+           {@"android:screenOrientation=\""fullSensor\""",
+            "android:screenOrientation=\"portrait\""}
+        };
+
+        public static Dictionary<string, string> fix_auth_fb_vkPatch = new Dictionary<string, string>
+        {
+            {@"(const-string|const-string/jumbo) ([pv]\d+), \""com\.vkontakte\.android\""",
+            "${GROUP1} ${GROUP2}, \"com.allinone.fix\""},
+
+           {@"(const-string|const-string/jumbo) ([pv]\d+), \""com\.facebook\.katana\""",
+            "${GROUP1} ${GROUP2}, \"com.allinone.fix\""}
+        };
     }
 }

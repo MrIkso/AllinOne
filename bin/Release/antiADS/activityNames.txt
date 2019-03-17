@@ -1,0 +1,16 @@
+\.ad\.
+\.adman\.
+\.ads\.
+\.AdsActivity
+\.AdView
+adwhirl
+amobee
+burstly
+cauly\.android.ad\.
+inmobi\.
+inneractive\.api\.ads\.
+io\.branch\.
+mad\.ad\.
+medialets\.advertising\.
+MediaPlayerWrapper
+pontiflex\.mobile\.webview\.sdk\.activities

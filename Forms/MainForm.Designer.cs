@@ -1,6 +1,6 @@
 ﻿namespace AllInOne.Forms
 {
-    // Token: 0x02000008 RID: 8
+    
     public partial class MainForm : global::System.Windows.Forms.Form
     {
         // Token: 0x0600005B RID: 91 RVA: 0x0000230A File Offset: 0x0000050A
@@ -12,47 +12,101 @@
             }
             base.Dispose(disposing);
         }
-
-        // Token: 0x0600005C RID: 92 RVA: 0x00008DB8 File Offset: 0x00006FB8
+        
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.taskCountLabel = new System.Windows.Forms.Label();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.pBar = new System.Windows.Forms.ProgressBar();
+            this.progressTLP = new System.Windows.Forms.TableLayoutPanel();
+            this.progressTbox = new System.Windows.Forms.RichTextBox();
+            this.tabsControl = new System.Windows.Forms.TabControl();
+            this.mainTab = new System.Windows.Forms.TabPage();
+            this.version_code = new System.Windows.Forms.Label();
+            this.app_package = new System.Windows.Forms.Label();
+            this.app_versionLbl = new System.Windows.Forms.Label();
+            this.app_nameLbl = new System.Windows.Forms.Label();
+            this.app_iconPB = new System.Windows.Forms.PictureBox();
+            this.openFolderButton = new System.Windows.Forms.Button();
+            this.saveCheckboxButton = new System.Windows.Forms.Button();
+            this.startButton = new System.Windows.Forms.Button();
+            this.orderLv = new System.Windows.Forms.ListView();
+            this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clearAll = new System.Windows.Forms.Button();
+            this.toolsTab = new System.Windows.Forms.TabPage();
+            this.mergeDexBtn = new System.Windows.Forms.Button();
+            this.asmto_hexBtn = new System.Windows.Forms.Button();
+            this.check_protectBtn = new System.Windows.Forms.Button();
+            this.color_editorBtn = new System.Windows.Forms.Button();
+            this.obfuscate_lib_btn = new System.Windows.Forms.Button();
+            this.res_cruptBtn = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.mehButton = new System.Windows.Forms.Button();
+            this.mergeStringsButton = new System.Windows.Forms.Button();
+            this.interestingPlacesButton = new System.Windows.Forms.Button();
+            this.hideIdsButton = new System.Windows.Forms.Button();
+            this.collectStringsButton = new System.Windows.Forms.Button();
+            this.addDebugInfoButton = new System.Windows.Forms.Button();
+            this.remDebugInfoButton = new System.Windows.Forms.Button();
+            this.helpSmaliButton = new System.Windows.Forms.Button();
+            this.aboutTab = new System.Windows.Forms.TabPage();
+            this.tg_link = new System.Windows.Forms.LinkLabel();
+            this.tg_label = new System.Windows.Forms.Label();
+            this.Changelog_btn = new System.Windows.Forms.Button();
+            this.authorLabel3 = new System.Windows.Forms.Label();
+            this.new_author2 = new System.Windows.Forms.LinkLabel();
+            this.authorLabel2 = new System.Windows.Forms.Label();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.buildDateLabel = new System.Windows.Forms.Label();
+            this.lblBuild = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
+            this.authorLabel = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.eggs_picture = new System.Windows.Forms.PictureBox();
+            this.mainTabControl = new System.Windows.Forms.TabControl();
+            this.mainTabPage = new System.Windows.Forms.TabPage();
             this.themesGBox = new System.Windows.Forms.GroupBox();
             this.themesLCB = new System.Windows.Forms.CheckBox();
             this.themesLHMACB = new System.Windows.Forms.CheckBox();
             this.themesDCB = new System.Windows.Forms.CheckBox();
             this.themesDHMACB = new System.Windows.Forms.CheckBox();
-            this.analyticGBox = new System.Windows.Forms.GroupBox();
-            this.analyticFirebaseCB = new System.Windows.Forms.CheckBox();
-            this.analyticMethodCB = new System.Windows.Forms.CheckBox();
-            this.analyticLinksCB = new System.Windows.Forms.CheckBox();
-            this.analyticServiceCB = new System.Windows.Forms.CheckBox();
-            this.analyticReceiverCB = new System.Windows.Forms.CheckBox();
-            this.analyticActivityCB = new System.Windows.Forms.CheckBox();
-            this.analyticLayoutCB = new System.Windows.Forms.CheckBox();
-            this.deleteGBox = new System.Windows.Forms.GroupBox();
-            this.deleteLangsCBox = new System.Windows.Forms.ComboBox();
-            this.deleteResourcesCB = new System.Windows.Forms.CheckBox();
-            this.emulatorCB = new System.Windows.Forms.CheckBox();
-            this.locationCB = new System.Windows.Forms.CheckBox();
-            this.gmsCB = new System.Windows.Forms.CheckBox();
-            this.autostartCB = new System.Windows.Forms.CheckBox();
-            this.internetCB = new System.Windows.Forms.CheckBox();
-            this.allToastsCB = new System.Windows.Forms.CheckBox();
-            this.signatureGBox = new System.Windows.Forms.GroupBox();
-            this.binSignatureCB = new System.Windows.Forms.CheckBox();
-            this.binSignatureInstallerCB = new System.Windows.Forms.CheckBox();
-            this.binInstallerCBox = new System.Windows.Forms.ComboBox();
-            this.licenseGBox = new System.Windows.Forms.GroupBox();
-            this.licenseGoogleCB = new System.Windows.Forms.CheckBox();
-            this.licenseAmazonCB = new System.Windows.Forms.CheckBox();
-            this.installerGBox = new System.Windows.Forms.GroupBox();
-            this.installerGoogleCB = new System.Windows.Forms.CheckBox();
-            this.installerAmazonCB = new System.Windows.Forms.CheckBox();
-            this.splashGBox = new System.Windows.Forms.GroupBox();
-            this.splashInstallCB = new System.Windows.Forms.CheckBox();
-            this.splashRemoveCB = new System.Windows.Forms.CheckBox();
             this.otherGBox = new System.Windows.Forms.GroupBox();
+            this.IconGB = new System.Windows.Forms.GroupBox();
+            this.visibleIconCB = new System.Windows.Forms.CheckBox();
+            this.hideIconCB = new System.Windows.Forms.CheckBox();
+            this.mod_change_log_nameLbl = new System.Windows.Forms.Label();
+            this.mod_image_nameLbl = new System.Windows.Forms.Label();
+            this.mod_linkLbl = new System.Windows.Forms.Label();
+            this.file_unpackLbl = new System.Windows.Forms.Label();
+            this.folder_unpackLbl = new System.Windows.Forms.Label();
+            this.mask_nameLbl = new System.Windows.Forms.Label();
+            this.mask_icon_patchLbl = new System.Windows.Forms.Label();
+            this.mod_changelog_nameTBox = new System.Windows.Forms.TextBox();
+            this.mod_image_nameTBox = new System.Windows.Forms.TextBox();
+            this.add_modDialogCB = new System.Windows.Forms.CheckBox();
+            this.mod_linkTBox = new System.Windows.Forms.TextBox();
+            this.open_btn = new System.Windows.Forms.Button();
+            this.add_permissionCB = new System.Windows.Forms.CheckBox();
+            this.add_permissionCBox = new System.Windows.Forms.ComboBox();
+            this.fix_auth_fb_vkCB = new System.Windows.Forms.CheckBox();
+            this.screenOrientationCB = new System.Windows.Forms.CheckBox();
+            this.screenOrientationCBox = new System.Windows.Forms.ComboBox();
+            this.file_unpackTBox = new System.Windows.Forms.TextBox();
+            this.unpackfileCB = new System.Windows.Forms.CheckBox();
+            this.folder_unpackTBox = new System.Windows.Forms.TextBox();
+            this.mask_icon_patchTBox = new System.Windows.Forms.TextBox();
+            this.maskCB = new System.Windows.Forms.CheckBox();
+            this.mask_nameTBox = new System.Windows.Forms.TextBox();
+            this.fix18_9CB = new System.Windows.Forms.CheckBox();
+            this.splashGBox = new System.Windows.Forms.GroupBox();
+            this.splash_image_patchLbl = new System.Windows.Forms.Label();
+            this.open_btn_image = new System.Windows.Forms.Button();
+            this.splashInstallCB = new System.Windows.Forms.CheckBox();
+            this.splash_image_patchTBox = new System.Windows.Forms.TextBox();
+            this.splashRemoveCB = new System.Windows.Forms.CheckBox();
             this.screenshotCB = new System.Windows.Forms.CheckBox();
             this.backKillCB = new System.Windows.Forms.CheckBox();
             this.backKillCBox = new System.Windows.Forms.ComboBox();
@@ -68,103 +122,39 @@
             this.addToastCB = new System.Windows.Forms.CheckBox();
             this.rootCheckCB = new System.Windows.Forms.CheckBox();
             this.minSdkCBox = new System.Windows.Forms.ComboBox();
-            this.hideIconCB = new System.Windows.Forms.CheckBox();
             this.noUpdateCB = new System.Windows.Forms.CheckBox();
             this.toastMessageTBox = new System.Windows.Forms.TextBox();
             this.mockLocationCB = new System.Windows.Forms.CheckBox();
             this.googleMapsCB = new System.Windows.Forms.CheckBox();
             this.dexCB = new System.Windows.Forms.CheckBox();
             this.reflectionLogCB = new System.Windows.Forms.CheckBox();
-            this.gpsLatitudeTBox = new System.Windows.Forms.TextBox();
-            this.gpsLongitudeTBox = new System.Windows.Forms.TextBox();
-            this.gpsCB = new System.Windows.Forms.CheckBox();
-            this.timeCB = new System.Windows.Forms.CheckBox();
-            this.deviceIdTBox = new System.Windows.Forms.TextBox();
-            this.accountCB = new System.Windows.Forms.CheckBox();
-            this.androidIdTBox = new System.Windows.Forms.TextBox();
-            this.allAutoCB = new System.Windows.Forms.CheckBox();
-            this.brandCB = new System.Windows.Forms.CheckBox();
-            this.allManualCB = new System.Windows.Forms.CheckBox();
-            this.wifiMacTBox = new System.Windows.Forms.TextBox();
-            this.ipCB = new System.Windows.Forms.CheckBox();
-            this.bluetoothMacTBox = new System.Windows.Forms.TextBox();
-            this.bluetoothAddressTBox = new System.Windows.Forms.TextBox();
-            this.serialTBox = new System.Windows.Forms.TextBox();
-            this.bssidCB = new System.Windows.Forms.CheckBox();
-            this.deviceIdCB = new System.Windows.Forms.CheckBox();
-            this.deviceCB = new System.Windows.Forms.CheckBox();
-            this.modelTBox = new System.Windows.Forms.TextBox();
-            this.brandTBox = new System.Windows.Forms.TextBox();
-            this.boardCB = new System.Windows.Forms.CheckBox();
-            this.androidIdCB = new System.Windows.Forms.CheckBox();
-            this.manufacturerCB = new System.Windows.Forms.CheckBox();
-            this.ipTBox = new System.Windows.Forms.TextBox();
-            this.productCB = new System.Windows.Forms.CheckBox();
-            this.bssidTBox = new System.Windows.Forms.TextBox();
-            this.operatorNameCB = new System.Windows.Forms.CheckBox();
-            this.deviceTBox = new System.Windows.Forms.TextBox();
-            this.operatorCB = new System.Windows.Forms.CheckBox();
-            this.boardTBox = new System.Windows.Forms.TextBox();
-            this.subscriberIdCB = new System.Windows.Forms.CheckBox();
-            this.wifiMacAddressCB = new System.Windows.Forms.CheckBox();
-            this.simSerialNumberCB = new System.Windows.Forms.CheckBox();
-            this.manufacturerTBox = new System.Windows.Forms.TextBox();
-            this.productTBox = new System.Windows.Forms.TextBox();
-            this.modelCB = new System.Windows.Forms.CheckBox();
-            this.operatorNameTBox = new System.Windows.Forms.TextBox();
-            this.operatorTBox = new System.Windows.Forms.TextBox();
-            this.bluetoothMacAddressCB = new System.Windows.Forms.CheckBox();
-            this.subscriderIdTBox = new System.Windows.Forms.TextBox();
-            this.simSerialNumberTBox = new System.Windows.Forms.TextBox();
-            this.serialCB = new System.Windows.Forms.CheckBox();
-            this.timeTBox = new System.Windows.Forms.TextBox();
-            this.bluetoothAddressCB = new System.Windows.Forms.CheckBox();
-            this.accountTBox = new System.Windows.Forms.TextBox();
-            this.clearAll = new System.Windows.Forms.Button();
-            this.tabsControl = new System.Windows.Forms.TabControl();
-            this.mainTab = new System.Windows.Forms.TabPage();
-            this.openFolderButton = new System.Windows.Forms.Button();
-            this.saveCheckboxButton = new System.Windows.Forms.Button();
-            this.startButton = new System.Windows.Forms.Button();
-            this.orderLv = new System.Windows.Forms.ListView();
-            this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolsTab = new System.Windows.Forms.TabPage();
-            this.btnSettings = new System.Windows.Forms.Button();
-            this.btnHelp = new System.Windows.Forms.Button();
-            this.mehButton = new System.Windows.Forms.Button();
-            this.mergeStringsButton = new System.Windows.Forms.Button();
-            this.interestingPlacesButton = new System.Windows.Forms.Button();
-            this.hideIdsButton = new System.Windows.Forms.Button();
-            this.collectStringsButton = new System.Windows.Forms.Button();
-            this.addDebugInfoButton = new System.Windows.Forms.Button();
-            this.remDebugInfoButton = new System.Windows.Forms.Button();
-            this.helpSmaliButton = new System.Windows.Forms.Button();
-            this.aboutTab = new System.Windows.Forms.TabPage();
-            this.Changelog_btn = new System.Windows.Forms.Button();
-            this.authorLabel3 = new System.Windows.Forms.Label();
-            this.new_author2 = new System.Windows.Forms.LinkLabel();
-            this.authorLabel2 = new System.Windows.Forms.Label();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.buildDateLabel = new System.Windows.Forms.Label();
-            this.lblBuild = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.versionLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.yandexMoneyLabel = new System.Windows.Forms.Label();
-            this.authorLabel = new System.Windows.Forms.Label();
-            this.yanMoneyLink = new System.Windows.Forms.LinkLabel();
-            this.donateLabel = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.progressTbox = new System.Windows.Forms.TextBox();
-            this.taskCountLabel = new System.Windows.Forms.Label();
-            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.countryIsoTBox = new System.Windows.Forms.TextBox();
-            this.countryIsoCB = new System.Windows.Forms.CheckBox();
-            this.mainTLP = new System.Windows.Forms.TableLayoutPanel();
-            this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.mainTabPage = new System.Windows.Forms.TabPage();
+            this.licenseGBox = new System.Windows.Forms.GroupBox();
+            this.licenseGoogleCB = new System.Windows.Forms.CheckBox();
+            this.licenseAmazonCB = new System.Windows.Forms.CheckBox();
+            this.installerGBox = new System.Windows.Forms.GroupBox();
+            this.installerGoogleCB = new System.Windows.Forms.CheckBox();
+            this.installerAmazonCB = new System.Windows.Forms.CheckBox();
+            this.signatureGBox = new System.Windows.Forms.GroupBox();
+            this.binSignatureCB = new System.Windows.Forms.CheckBox();
+            this.binSignatureInstallerCB = new System.Windows.Forms.CheckBox();
+            this.binInstallerCBox = new System.Windows.Forms.ComboBox();
+            this.deleteGBox = new System.Windows.Forms.GroupBox();
+            this.deleteLangsCBox = new System.Windows.Forms.ComboBox();
+            this.deleteResourcesCB = new System.Windows.Forms.CheckBox();
+            this.emulatorCB = new System.Windows.Forms.CheckBox();
+            this.locationCB = new System.Windows.Forms.CheckBox();
+            this.gmsCB = new System.Windows.Forms.CheckBox();
+            this.autostartCB = new System.Windows.Forms.CheckBox();
+            this.internetCB = new System.Windows.Forms.CheckBox();
+            this.allToastsCB = new System.Windows.Forms.CheckBox();
+            this.analyticGBox = new System.Windows.Forms.GroupBox();
+            this.analyticFirebaseCB = new System.Windows.Forms.CheckBox();
+            this.analyticMethodCB = new System.Windows.Forms.CheckBox();
+            this.analyticLinksCB = new System.Windows.Forms.CheckBox();
+            this.analyticServiceCB = new System.Windows.Forms.CheckBox();
+            this.analyticReceiverCB = new System.Windows.Forms.CheckBox();
+            this.analyticActivityCB = new System.Windows.Forms.CheckBox();
+            this.analyticLayoutCB = new System.Windows.Forms.CheckBox();
             this.replaceTabPage = new System.Windows.Forms.TabPage();
             this.replaceGBox = new System.Windows.Forms.GroupBox();
             this.idTBox = new System.Windows.Forms.TextBox();
@@ -173,28 +163,743 @@
             this.imeiCB = new System.Windows.Forms.CheckBox();
             this.deviceNameTBox = new System.Windows.Forms.TextBox();
             this.imeiTBox = new System.Windows.Forms.TextBox();
-            this.pBar = new System.Windows.Forms.ProgressBar();
-            this.progressTLP = new System.Windows.Forms.TableLayoutPanel();
-            this.themesGBox.SuspendLayout();
-            this.analyticGBox.SuspendLayout();
-            this.deleteGBox.SuspendLayout();
-            this.signatureGBox.SuspendLayout();
-            this.licenseGBox.SuspendLayout();
-            this.installerGBox.SuspendLayout();
-            this.splashGBox.SuspendLayout();
-            this.otherGBox.SuspendLayout();
+            this.countryIsoTBox = new System.Windows.Forms.TextBox();
+            this.deviceIdCB = new System.Windows.Forms.CheckBox();
+            this.countryIsoCB = new System.Windows.Forms.CheckBox();
+            this.operatorNameTBox = new System.Windows.Forms.TextBox();
+            this.allManualCB = new System.Windows.Forms.CheckBox();
+            this.operatorTBox = new System.Windows.Forms.TextBox();
+            this.gpsLatitudeTBox = new System.Windows.Forms.TextBox();
+            this.productTBox = new System.Windows.Forms.TextBox();
+            this.deviceIdTBox = new System.Windows.Forms.TextBox();
+            this.subscriderIdTBox = new System.Windows.Forms.TextBox();
+            this.gpsLongitudeTBox = new System.Windows.Forms.TextBox();
+            this.manufacturerTBox = new System.Windows.Forms.TextBox();
+            this.wifiMacAddressCB = new System.Windows.Forms.CheckBox();
+            this.modelTBox = new System.Windows.Forms.TextBox();
+            this.gpsCB = new System.Windows.Forms.CheckBox();
+            this.brandTBox = new System.Windows.Forms.TextBox();
+            this.androidIdCB = new System.Windows.Forms.CheckBox();
+            this.subscriberIdCB = new System.Windows.Forms.CheckBox();
+            this.timeCB = new System.Windows.Forms.CheckBox();
+            this.ipTBox = new System.Windows.Forms.TextBox();
+            this.boardTBox = new System.Windows.Forms.TextBox();
+            this.accountCB = new System.Windows.Forms.CheckBox();
+            this.modelCB = new System.Windows.Forms.CheckBox();
+            this.wifiMacTBox = new System.Windows.Forms.TextBox();
+            this.operatorCB = new System.Windows.Forms.CheckBox();
+            this.allAutoCB = new System.Windows.Forms.CheckBox();
+            this.serialTBox = new System.Windows.Forms.TextBox();
+            this.brandCB = new System.Windows.Forms.CheckBox();
+            this.deviceTBox = new System.Windows.Forms.TextBox();
+            this.androidIdTBox = new System.Windows.Forms.TextBox();
+            this.bluetoothMacAddressCB = new System.Windows.Forms.CheckBox();
+            this.simSerialNumberCB = new System.Windows.Forms.CheckBox();
+            this.operatorNameCB = new System.Windows.Forms.CheckBox();
+            this.simSerialNumberTBox = new System.Windows.Forms.TextBox();
+            this.bluetoothAddressTBox = new System.Windows.Forms.TextBox();
+            this.bssidCB = new System.Windows.Forms.CheckBox();
+            this.bssidTBox = new System.Windows.Forms.TextBox();
+            this.timeTBox = new System.Windows.Forms.TextBox();
+            this.serialCB = new System.Windows.Forms.CheckBox();
+            this.deviceCB = new System.Windows.Forms.CheckBox();
+            this.productCB = new System.Windows.Forms.CheckBox();
+            this.accountTBox = new System.Windows.Forms.TextBox();
+            this.bluetoothAddressCB = new System.Windows.Forms.CheckBox();
+            this.bluetoothMacTBox = new System.Windows.Forms.TextBox();
+            this.manufacturerCB = new System.Windows.Forms.CheckBox();
+            this.boardCB = new System.Windows.Forms.CheckBox();
+            this.ipCB = new System.Windows.Forms.CheckBox();
+            this.mainTLP = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.mod_image_naneTbox = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.progressTLP.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.mainTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.app_iconPB)).BeginInit();
             this.toolsTab.SuspendLayout();
             this.aboutTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.mainTLP.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eggs_picture)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.mainTabPage.SuspendLayout();
+            this.themesGBox.SuspendLayout();
+            this.otherGBox.SuspendLayout();
+            this.IconGB.SuspendLayout();
+            this.splashGBox.SuspendLayout();
+            this.licenseGBox.SuspendLayout();
+            this.installerGBox.SuspendLayout();
+            this.signatureGBox.SuspendLayout();
+            this.deleteGBox.SuspendLayout();
+            this.analyticGBox.SuspendLayout();
             this.replaceTabPage.SuspendLayout();
             this.replaceGBox.SuspendLayout();
-            this.progressTLP.SuspendLayout();
+            this.mainTLP.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // taskCountLabel
+            // 
+            this.taskCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.taskCountLabel.AutoSize = true;
+            this.taskCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.taskCountLabel.Location = new System.Drawing.Point(1659, 0);
+            this.taskCountLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.taskCountLabel.Name = "taskCountLabel";
+            this.taskCountLabel.Size = new System.Drawing.Size(107, 17);
+            this.taskCountLabel.TabIndex = 19;
+            this.taskCountLabel.Text = "В процессе: [0]";
+            // 
+            // pBar
+            // 
+            this.pBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pBar.Location = new System.Drawing.Point(1, 0);
+            this.pBar.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
+            this.pBar.Name = "pBar";
+            this.pBar.Size = new System.Drawing.Size(1593, 24);
+            this.pBar.Step = 1;
+            this.pBar.TabIndex = 25;
+            // 
+            // progressTLP
+            // 
+            this.progressTLP.ColumnCount = 2;
+            this.progressTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90.14085F));
+            this.progressTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.859155F));
+            this.progressTLP.Controls.Add(this.pBar, 0, 0);
+            this.progressTLP.Controls.Add(this.taskCountLabel, 1, 0);
+            this.progressTLP.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressTLP.Location = new System.Drawing.Point(0, 888);
+            this.progressTLP.Margin = new System.Windows.Forms.Padding(4);
+            this.progressTLP.MinimumSize = new System.Drawing.Size(0, 25);
+            this.progressTLP.Name = "progressTLP";
+            this.progressTLP.RowCount = 1;
+            this.progressTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.progressTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.progressTLP.Size = new System.Drawing.Size(1770, 25);
+            this.progressTLP.TabIndex = 25;
+            // 
+            // progressTbox
+            // 
+            this.progressTbox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.progressTbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainTLP.SetColumnSpan(this.progressTbox, 2);
+            this.progressTbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressTbox.Location = new System.Drawing.Point(1, 706);
+            this.progressTbox.Margin = new System.Windows.Forms.Padding(1);
+            this.progressTbox.Name = "progressTbox";
+            this.progressTbox.ReadOnly = true;
+            this.progressTbox.Size = new System.Drawing.Size(1768, 163);
+            this.progressTbox.TabIndex = 18;
+            this.progressTbox.Text = "";
+            this.progressTbox.TextChanged += new System.EventHandler(this.progressTbox_TextChanged);
+            // 
+            // tabsControl
+            // 
+            this.tabsControl.Controls.Add(this.mainTab);
+            this.tabsControl.Controls.Add(this.toolsTab);
+            this.tabsControl.Controls.Add(this.aboutTab);
+            this.tabsControl.Location = new System.Drawing.Point(1313, 1);
+            this.tabsControl.Margin = new System.Windows.Forms.Padding(1);
+            this.tabsControl.MinimumSize = new System.Drawing.Size(456, 0);
+            this.tabsControl.Name = "tabsControl";
+            this.tabsControl.SelectedIndex = 0;
+            this.tabsControl.Size = new System.Drawing.Size(456, 671);
+            this.tabsControl.TabIndex = 13;
+            // 
+            // mainTab
+            // 
+            this.mainTab.BackColor = System.Drawing.SystemColors.Control;
+            this.mainTab.Controls.Add(this.version_code);
+            this.mainTab.Controls.Add(this.app_package);
+            this.mainTab.Controls.Add(this.app_versionLbl);
+            this.mainTab.Controls.Add(this.app_nameLbl);
+            this.mainTab.Controls.Add(this.app_iconPB);
+            this.mainTab.Controls.Add(this.openFolderButton);
+            this.mainTab.Controls.Add(this.saveCheckboxButton);
+            this.mainTab.Controls.Add(this.startButton);
+            this.mainTab.Controls.Add(this.orderLv);
+            this.mainTab.Controls.Add(this.clearAll);
+            this.mainTab.Location = new System.Drawing.Point(4, 25);
+            this.mainTab.Margin = new System.Windows.Forms.Padding(4);
+            this.mainTab.Name = "mainTab";
+            this.mainTab.Padding = new System.Windows.Forms.Padding(4);
+            this.mainTab.Size = new System.Drawing.Size(448, 642);
+            this.mainTab.TabIndex = 0;
+            this.mainTab.Text = "Главная";
+            // 
+            // version_code
+            // 
+            this.version_code.AutoSize = true;
+            this.version_code.Location = new System.Drawing.Point(80, 597);
+            this.version_code.Name = "version_code";
+            this.version_code.Size = new System.Drawing.Size(89, 17);
+            this.version_code.TabIndex = 25;
+            this.version_code.Text = "version code";
+            // 
+            // app_package
+            // 
+            this.app_package.AutoSize = true;
+            this.app_package.Location = new System.Drawing.Point(80, 614);
+            this.app_package.Name = "app_package";
+            this.app_package.Size = new System.Drawing.Size(62, 17);
+            this.app_package.TabIndex = 24;
+            this.app_package.Text = "package";
+            // 
+            // app_versionLbl
+            // 
+            this.app_versionLbl.AutoSize = true;
+            this.app_versionLbl.Location = new System.Drawing.Point(80, 579);
+            this.app_versionLbl.Name = "app_versionLbl";
+            this.app_versionLbl.Size = new System.Drawing.Size(54, 17);
+            this.app_versionLbl.TabIndex = 23;
+            this.app_versionLbl.Text = "version";
+            // 
+            // app_nameLbl
+            // 
+            this.app_nameLbl.AutoSize = true;
+            this.app_nameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.app_nameLbl.Location = new System.Drawing.Point(79, 553);
+            this.app_nameLbl.Name = "app_nameLbl";
+            this.app_nameLbl.Size = new System.Drawing.Size(95, 20);
+            this.app_nameLbl.TabIndex = 22;
+            this.app_nameLbl.Text = "App Name";
+            // 
+            // app_iconPB
+            // 
+            this.app_iconPB.InitialImage = global::AllInOne.Properties.Resources.ic_launcher;
+            this.app_iconPB.Location = new System.Drawing.Point(7, 558);
+            this.app_iconPB.Name = "app_iconPB";
+            this.app_iconPB.Size = new System.Drawing.Size(55, 55);
+            this.app_iconPB.TabIndex = 21;
+            this.app_iconPB.TabStop = false;
+            // 
+            // openFolderButton
+            // 
+            this.openFolderButton.AutoSize = true;
+            this.openFolderButton.Location = new System.Drawing.Point(4, 443);
+            this.openFolderButton.Margin = new System.Windows.Forms.Padding(0);
+            this.openFolderButton.Name = "openFolderButton";
+            this.openFolderButton.Size = new System.Drawing.Size(440, 33);
+            this.openFolderButton.TabIndex = 20;
+            this.openFolderButton.Text = "Открыть папку Apk";
+            this.openFolderButton.UseVisualStyleBackColor = true;
+            this.openFolderButton.Click += new System.EventHandler(this.openFoldersButton_Click);
+            // 
+            // saveCheckboxButton
+            // 
+            this.saveCheckboxButton.BackColor = System.Drawing.Color.MistyRose;
+            this.saveCheckboxButton.Location = new System.Drawing.Point(4, 507);
+            this.saveCheckboxButton.Margin = new System.Windows.Forms.Padding(0);
+            this.saveCheckboxButton.Name = "saveCheckboxButton";
+            this.saveCheckboxButton.Size = new System.Drawing.Size(440, 28);
+            this.saveCheckboxButton.TabIndex = 20;
+            this.saveCheckboxButton.Text = "Сохранить состояние чекбоксов";
+            this.saveCheckboxButton.UseVisualStyleBackColor = false;
+            this.saveCheckboxButton.Click += new System.EventHandler(this.saveCheckboxButton_Click);
+            // 
+            // startButton
+            // 
+            this.startButton.BackColor = System.Drawing.Color.GreenYellow;
+            this.startButton.FlatAppearance.BorderColor = System.Drawing.Color.ForestGreen;
+            this.startButton.Location = new System.Drawing.Point(4, 475);
+            this.startButton.Margin = new System.Windows.Forms.Padding(0);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(211, 28);
+            this.startButton.TabIndex = 15;
+            this.startButton.Text = "Пропатчить apk";
+            this.startButton.UseVisualStyleBackColor = false;
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // orderLv
+            // 
+            this.orderLv.AllowDrop = true;
+            this.orderLv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnName});
+            this.orderLv.Dock = System.Windows.Forms.DockStyle.Top;
+            this.orderLv.FullRowSelect = true;
+            this.orderLv.GridLines = true;
+            this.orderLv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.orderLv.Location = new System.Drawing.Point(4, 4);
+            this.orderLv.Margin = new System.Windows.Forms.Padding(4);
+            this.orderLv.MultiSelect = false;
+            this.orderLv.Name = "orderLv";
+            this.orderLv.Size = new System.Drawing.Size(440, 428);
+            this.orderLv.TabIndex = 13;
+            this.orderLv.UseCompatibleStateImageBehavior = false;
+            this.orderLv.View = System.Windows.Forms.View.Details;
+            this.orderLv.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.orderLv_ItemDrag);
+            this.orderLv.DragDrop += new System.Windows.Forms.DragEventHandler(this.orderLv_DragDrop);
+            this.orderLv.DragEnter += new System.Windows.Forms.DragEventHandler(this.orderLv_DragEnter);
+            // 
+            // columnName
+            // 
+            this.columnName.Text = "Очередность патчей";
+            this.columnName.Width = 455;
+            // 
+            // clearAll
+            // 
+            this.clearAll.BackColor = System.Drawing.Color.LightSalmon;
+            this.clearAll.Location = new System.Drawing.Point(233, 475);
+            this.clearAll.Margin = new System.Windows.Forms.Padding(0);
+            this.clearAll.Name = "clearAll";
+            this.clearAll.Size = new System.Drawing.Size(211, 28);
+            this.clearAll.TabIndex = 10;
+            this.clearAll.Text = "Очистить все";
+            this.clearAll.UseVisualStyleBackColor = false;
+            this.clearAll.Click += new System.EventHandler(this.clearBoxes_Click);
+            // 
+            // toolsTab
+            // 
+            this.toolsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.toolsTab.Controls.Add(this.mergeDexBtn);
+            this.toolsTab.Controls.Add(this.asmto_hexBtn);
+            this.toolsTab.Controls.Add(this.check_protectBtn);
+            this.toolsTab.Controls.Add(this.color_editorBtn);
+            this.toolsTab.Controls.Add(this.obfuscate_lib_btn);
+            this.toolsTab.Controls.Add(this.res_cruptBtn);
+            this.toolsTab.Controls.Add(this.btnSettings);
+            this.toolsTab.Controls.Add(this.btnHelp);
+            this.toolsTab.Controls.Add(this.mehButton);
+            this.toolsTab.Controls.Add(this.mergeStringsButton);
+            this.toolsTab.Controls.Add(this.interestingPlacesButton);
+            this.toolsTab.Controls.Add(this.hideIdsButton);
+            this.toolsTab.Controls.Add(this.collectStringsButton);
+            this.toolsTab.Controls.Add(this.addDebugInfoButton);
+            this.toolsTab.Controls.Add(this.remDebugInfoButton);
+            this.toolsTab.Controls.Add(this.helpSmaliButton);
+            this.toolsTab.Location = new System.Drawing.Point(4, 25);
+            this.toolsTab.Margin = new System.Windows.Forms.Padding(4);
+            this.toolsTab.Name = "toolsTab";
+            this.toolsTab.Size = new System.Drawing.Size(448, 642);
+            this.toolsTab.TabIndex = 3;
+            this.toolsTab.Text = "Инструменты";
+            // 
+            // mergeDexBtn
+            // 
+            this.mergeDexBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.mergeDexBtn.Location = new System.Drawing.Point(4, 218);
+            this.mergeDexBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.mergeDexBtn.Name = "mergeDexBtn";
+            this.mergeDexBtn.Size = new System.Drawing.Size(440, 28);
+            this.mergeDexBtn.TabIndex = 31;
+            this.mergeDexBtn.Text = "Обеденить dex-ы в один";
+            this.mergeDexBtn.UseVisualStyleBackColor = false;
+            this.mergeDexBtn.Click += new System.EventHandler(this.mergeDexBtn_Click);
+            // 
+            // asmto_hexBtn
+            // 
+            this.asmto_hexBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.asmto_hexBtn.Location = new System.Drawing.Point(4, 290);
+            this.asmto_hexBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.asmto_hexBtn.Name = "asmto_hexBtn";
+            this.asmto_hexBtn.Size = new System.Drawing.Size(440, 28);
+            this.asmto_hexBtn.TabIndex = 30;
+            this.asmto_hexBtn.Text = "Asm To Hex";
+            this.asmto_hexBtn.UseVisualStyleBackColor = false;
+            this.asmto_hexBtn.Click += new System.EventHandler(this.asmto_hexBtn_Click);
+            // 
+            // check_protectBtn
+            // 
+            this.check_protectBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.check_protectBtn.Location = new System.Drawing.Point(4, 326);
+            this.check_protectBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.check_protectBtn.Name = "check_protectBtn";
+            this.check_protectBtn.Size = new System.Drawing.Size(440, 28);
+            this.check_protectBtn.TabIndex = 29;
+            this.check_protectBtn.Text = "Check Protect";
+            this.check_protectBtn.UseVisualStyleBackColor = false;
+            this.check_protectBtn.Click += new System.EventHandler(this.check_protectBtn_Click);
+            // 
+            // color_editorBtn
+            // 
+            this.color_editorBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.color_editorBtn.Location = new System.Drawing.Point(4, 254);
+            this.color_editorBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.color_editorBtn.Name = "color_editorBtn";
+            this.color_editorBtn.Size = new System.Drawing.Size(440, 28);
+            this.color_editorBtn.TabIndex = 28;
+            this.color_editorBtn.Text = "Color Editor";
+            this.color_editorBtn.UseVisualStyleBackColor = false;
+            this.color_editorBtn.Click += new System.EventHandler(this.color_editorBtn_Click);
+            // 
+            // obfuscate_lib_btn
+            // 
+            this.obfuscate_lib_btn.BackColor = System.Drawing.SystemColors.Control;
+            this.obfuscate_lib_btn.Location = new System.Drawing.Point(4, 434);
+            this.obfuscate_lib_btn.Margin = new System.Windows.Forms.Padding(4);
+            this.obfuscate_lib_btn.Name = "obfuscate_lib_btn";
+            this.obfuscate_lib_btn.Size = new System.Drawing.Size(440, 28);
+            this.obfuscate_lib_btn.TabIndex = 27;
+            this.obfuscate_lib_btn.Text = "Обфусцировать lib";
+            this.obfuscate_lib_btn.UseVisualStyleBackColor = false;
+            this.obfuscate_lib_btn.Visible = false;
+            this.obfuscate_lib_btn.Click += new System.EventHandler(this.obfuscate_lib_btn_Click);
+            // 
+            // res_cruptBtn
+            // 
+            this.res_cruptBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.res_cruptBtn.Location = new System.Drawing.Point(4, 398);
+            this.res_cruptBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.res_cruptBtn.Name = "res_cruptBtn";
+            this.res_cruptBtn.Size = new System.Drawing.Size(440, 28);
+            this.res_cruptBtn.TabIndex = 26;
+            this.res_cruptBtn.Text = "Зашифровать ресурсы";
+            this.res_cruptBtn.UseVisualStyleBackColor = false;
+            this.res_cruptBtn.Visible = false;
+            this.res_cruptBtn.Click += new System.EventHandler(this.res_cruptBtn_Click);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSettings.Location = new System.Drawing.Point(4, 576);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(440, 28);
+            this.btnSettings.TabIndex = 25;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnHelp.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnHelp.Location = new System.Drawing.Point(4, 610);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(440, 28);
+            this.btnHelp.TabIndex = 24;
+            this.btnHelp.Text = "H e l p";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // mehButton
+            // 
+            this.mehButton.Location = new System.Drawing.Point(4, 362);
+            this.mehButton.Margin = new System.Windows.Forms.Padding(4);
+            this.mehButton.Name = "mehButton";
+            this.mehButton.Size = new System.Drawing.Size(440, 28);
+            this.mehButton.TabIndex = 23;
+            this.mehButton.Text = "¯\\_(ツ)_/¯";
+            this.mehButton.UseVisualStyleBackColor = false;
+            this.mehButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // mergeStringsButton
+            // 
+            this.mergeStringsButton.BackColor = System.Drawing.SystemColors.Control;
+            this.mergeStringsButton.Location = new System.Drawing.Point(4, 182);
+            this.mergeStringsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.mergeStringsButton.Name = "mergeStringsButton";
+            this.mergeStringsButton.Size = new System.Drawing.Size(440, 28);
+            this.mergeStringsButton.TabIndex = 22;
+            this.mergeStringsButton.Text = "Перенос перевода из одного strings.xml в другой";
+            this.mergeStringsButton.UseVisualStyleBackColor = false;
+            this.mergeStringsButton.Click += new System.EventHandler(this.mergeStringsButton_Click);
+            // 
+            // interestingPlacesButton
+            // 
+            this.interestingPlacesButton.BackColor = System.Drawing.SystemColors.Control;
+            this.interestingPlacesButton.Location = new System.Drawing.Point(4, 146);
+            this.interestingPlacesButton.Margin = new System.Windows.Forms.Padding(4);
+            this.interestingPlacesButton.Name = "interestingPlacesButton";
+            this.interestingPlacesButton.Size = new System.Drawing.Size(440, 28);
+            this.interestingPlacesButton.TabIndex = 21;
+            this.interestingPlacesButton.Text = "Интересные места";
+            this.interestingPlacesButton.UseVisualStyleBackColor = false;
+            this.interestingPlacesButton.Click += new System.EventHandler(this.interestingPlacesButton_Click);
+            // 
+            // hideIdsButton
+            // 
+            this.hideIdsButton.BackColor = System.Drawing.SystemColors.Control;
+            this.hideIdsButton.Location = new System.Drawing.Point(4, 111);
+            this.hideIdsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.hideIdsButton.Name = "hideIdsButton";
+            this.hideIdsButton.Size = new System.Drawing.Size(440, 28);
+            this.hideIdsButton.TabIndex = 20;
+            this.hideIdsButton.Text = "Список всех ID в layout";
+            this.hideIdsButton.UseVisualStyleBackColor = false;
+            this.hideIdsButton.Click += new System.EventHandler(this.hideIdsButton_Click);
+            // 
+            // collectStringsButton
+            // 
+            this.collectStringsButton.BackColor = System.Drawing.SystemColors.Control;
+            this.collectStringsButton.Location = new System.Drawing.Point(4, 75);
+            this.collectStringsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.collectStringsButton.Name = "collectStringsButton";
+            this.collectStringsButton.Size = new System.Drawing.Size(440, 28);
+            this.collectStringsButton.TabIndex = 19;
+            this.collectStringsButton.Text = "Собрать все строки в values/strings.xml";
+            this.collectStringsButton.UseVisualStyleBackColor = false;
+            this.collectStringsButton.Click += new System.EventHandler(this.collectStringsButton_Click);
+            // 
+            // addDebugInfoButton
+            // 
+            this.addDebugInfoButton.BackColor = System.Drawing.Color.Ivory;
+            this.addDebugInfoButton.Location = new System.Drawing.Point(4, 4);
+            this.addDebugInfoButton.Margin = new System.Windows.Forms.Padding(4);
+            this.addDebugInfoButton.Name = "addDebugInfoButton";
+            this.addDebugInfoButton.Size = new System.Drawing.Size(313, 28);
+            this.addDebugInfoButton.TabIndex = 17;
+            this.addDebugInfoButton.Text = "Добавить отладочную информацию в smali";
+            this.addDebugInfoButton.UseVisualStyleBackColor = false;
+            this.addDebugInfoButton.Click += new System.EventHandler(this.addDebugInfoButton_Click);
+            // 
+            // remDebugInfoButton
+            // 
+            this.remDebugInfoButton.BackColor = System.Drawing.Color.Ivory;
+            this.remDebugInfoButton.Location = new System.Drawing.Point(325, 4);
+            this.remDebugInfoButton.Margin = new System.Windows.Forms.Padding(4);
+            this.remDebugInfoButton.Name = "remDebugInfoButton";
+            this.remDebugInfoButton.Size = new System.Drawing.Size(119, 28);
+            this.remDebugInfoButton.TabIndex = 18;
+            this.remDebugInfoButton.Text = "Удалить";
+            this.remDebugInfoButton.UseVisualStyleBackColor = false;
+            this.remDebugInfoButton.Click += new System.EventHandler(this.remDebugInfoButton_Click);
+            // 
+            // helpSmaliButton
+            // 
+            this.helpSmaliButton.BackColor = System.Drawing.SystemColors.Control;
+            this.helpSmaliButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.helpSmaliButton.Location = new System.Drawing.Point(4, 39);
+            this.helpSmaliButton.Margin = new System.Windows.Forms.Padding(4);
+            this.helpSmaliButton.Name = "helpSmaliButton";
+            this.helpSmaliButton.Size = new System.Drawing.Size(440, 28);
+            this.helpSmaliButton.TabIndex = 16;
+            this.helpSmaliButton.Text = "Добавить вспомогательную инфу в smali";
+            this.helpSmaliButton.UseVisualStyleBackColor = false;
+            this.helpSmaliButton.Click += new System.EventHandler(this.helpSmaliButton_Click);
+            // 
+            // aboutTab
+            // 
+            this.aboutTab.BackColor = System.Drawing.SystemColors.Control;
+            this.aboutTab.Controls.Add(this.tg_link);
+            this.aboutTab.Controls.Add(this.tg_label);
+            this.aboutTab.Controls.Add(this.Changelog_btn);
+            this.aboutTab.Controls.Add(this.authorLabel3);
+            this.aboutTab.Controls.Add(this.new_author2);
+            this.aboutTab.Controls.Add(this.authorLabel2);
+            this.aboutTab.Controls.Add(this.linkLabel2);
+            this.aboutTab.Controls.Add(this.buildDateLabel);
+            this.aboutTab.Controls.Add(this.lblBuild);
+            this.aboutTab.Controls.Add(this.lblVersion);
+            this.aboutTab.Controls.Add(this.versionLabel);
+            this.aboutTab.Controls.Add(this.authorLabel);
+            this.aboutTab.Controls.Add(this.linkLabel1);
+            this.aboutTab.Controls.Add(this.eggs_picture);
+            this.aboutTab.Location = new System.Drawing.Point(4, 25);
+            this.aboutTab.Margin = new System.Windows.Forms.Padding(4);
+            this.aboutTab.Name = "aboutTab";
+            this.aboutTab.Size = new System.Drawing.Size(448, 642);
+            this.aboutTab.TabIndex = 2;
+            this.aboutTab.Text = "About";
+            // 
+            // tg_link
+            // 
+            this.tg_link.AutoSize = true;
+            this.tg_link.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tg_link.Location = new System.Drawing.Point(186, 306);
+            this.tg_link.Margin = new System.Windows.Forms.Padding(4);
+            this.tg_link.Name = "tg_link";
+            this.tg_link.Size = new System.Drawing.Size(38, 20);
+            this.tg_link.TabIndex = 21;
+            this.tg_link.TabStop = true;
+            this.tg_link.Text = "Link";
+            this.tg_link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tg_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.tg_link_LinkClicked);
+            // 
+            // tg_label
+            // 
+            this.tg_label.AutoSize = true;
+            this.tg_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tg_label.Location = new System.Drawing.Point(22, 306);
+            this.tg_label.Margin = new System.Windows.Forms.Padding(4);
+            this.tg_label.Name = "tg_label";
+            this.tg_label.Size = new System.Drawing.Size(124, 20);
+            this.tg_label.TabIndex = 20;
+            this.tg_label.Text = "Telegram group:";
+            this.tg_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Changelog_btn
+            // 
+            this.Changelog_btn.BackColor = System.Drawing.SystemColors.Control;
+            this.Changelog_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Changelog_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Changelog_btn.ForeColor = System.Drawing.Color.ForestGreen;
+            this.Changelog_btn.Location = new System.Drawing.Point(164, 334);
+            this.Changelog_btn.Name = "Changelog_btn";
+            this.Changelog_btn.Size = new System.Drawing.Size(113, 34);
+            this.Changelog_btn.TabIndex = 18;
+            this.Changelog_btn.Text = "Changelog";
+            this.Changelog_btn.UseVisualStyleBackColor = false;
+            this.Changelog_btn.Click += new System.EventHandler(this.Changelog_btn_Click);
+            // 
+            // authorLabel3
+            // 
+            this.authorLabel3.AutoSize = true;
+            this.authorLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.authorLabel3.Location = new System.Drawing.Point(22, 225);
+            this.authorLabel3.Margin = new System.Windows.Forms.Padding(4);
+            this.authorLabel3.Name = "authorLabel3";
+            this.authorLabel3.Size = new System.Drawing.Size(140, 20);
+            this.authorLabel3.TabIndex = 16;
+            this.authorLabel3.Text = "Автор (v7b2-???):";
+            this.authorLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // new_author2
+            // 
+            this.new_author2.AutoSize = true;
+            this.new_author2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.new_author2.Location = new System.Drawing.Point(188, 224);
+            this.new_author2.Margin = new System.Windows.Forms.Padding(4);
+            this.new_author2.Name = "new_author2";
+            this.new_author2.Size = new System.Drawing.Size(61, 20);
+            this.new_author2.TabIndex = 17;
+            this.new_author2.TabStop = true;
+            this.new_author2.Text = "Mr Ikso";
+            this.new_author2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.new_author2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.new_author2_LinkClicked);
+            // 
+            // authorLabel2
+            // 
+            this.authorLabel2.AutoSize = true;
+            this.authorLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.authorLabel2.Location = new System.Drawing.Point(21, 197);
+            this.authorLabel2.Margin = new System.Windows.Forms.Padding(4);
+            this.authorLabel2.Name = "authorLabel2";
+            this.authorLabel2.Size = new System.Drawing.Size(138, 20);
+            this.authorLabel2.TabIndex = 14;
+            this.authorLabel2.Text = "Автор (v6d-v7b2):";
+            this.authorLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.linkLabel2.Location = new System.Drawing.Point(188, 196);
+            this.linkLabel2.Margin = new System.Windows.Forms.Padding(4);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(68, 20);
+            this.linkLabel2.TabIndex = 15;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "plusodin";
+            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAutor2_LinkClicked);
+            // 
+            // buildDateLabel
+            // 
+            this.buildDateLabel.AutoSize = true;
+            this.buildDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buildDateLabel.Location = new System.Drawing.Point(22, 278);
+            this.buildDateLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.buildDateLabel.Name = "buildDateLabel";
+            this.buildDateLabel.Size = new System.Drawing.Size(91, 20);
+            this.buildDateLabel.TabIndex = 13;
+            this.buildDateLabel.Text = "Build Date: ";
+            this.buildDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblBuild
+            // 
+            this.lblBuild.AutoSize = true;
+            this.lblBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBuild.Location = new System.Drawing.Point(188, 277);
+            this.lblBuild.Margin = new System.Windows.Forms.Padding(4);
+            this.lblBuild.Name = "lblBuild";
+            this.lblBuild.Size = new System.Drawing.Size(41, 20);
+            this.lblBuild.TabIndex = 12;
+            this.lblBuild.Text = "date";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblVersion.Location = new System.Drawing.Point(188, 252);
+            this.lblVersion.Margin = new System.Windows.Forms.Padding(4);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(59, 20);
+            this.lblVersion.TabIndex = 11;
+            this.lblVersion.Text = "version";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.versionLabel.Location = new System.Drawing.Point(22, 250);
+            this.versionLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(72, 20);
+            this.versionLabel.TabIndex = 3;
+            this.versionLabel.Text = "Версия: ";
+            this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // authorLabel
+            // 
+            this.authorLabel.AutoSize = true;
+            this.authorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.authorLabel.Location = new System.Drawing.Point(21, 169);
+            this.authorLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.authorLabel.Name = "authorLabel";
+            this.authorLabel.Size = new System.Drawing.Size(119, 20);
+            this.authorLabel.TabIndex = 1;
+            this.authorLabel.Text = "Автор (v1-v6c):";
+            this.authorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.linkLabel1.Location = new System.Drawing.Point(188, 168);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(128, 20);
+            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "7lexer7 (Anteiku)";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAutor_LinkClicked);
+            // 
+            // eggs_picture
+            // 
+            this.eggs_picture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eggs_picture.Image = global::AllInOne.Properties.Resources.sloth;
+            this.eggs_picture.InitialImage = null;
+            this.eggs_picture.Location = new System.Drawing.Point(0, 0);
+            this.eggs_picture.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.eggs_picture.Name = "eggs_picture";
+            this.eggs_picture.Size = new System.Drawing.Size(448, 642);
+            this.eggs_picture.TabIndex = 10;
+            this.eggs_picture.TabStop = false;
+            this.eggs_picture.Click += new System.EventHandler(this.eggs_picture_Click);
+            // 
+            // mainTabControl
+            // 
+            this.mainTabControl.Controls.Add(this.mainTabPage);
+            this.mainTabControl.Controls.Add(this.replaceTabPage);
+            this.mainTabControl.Location = new System.Drawing.Point(4, 4);
+            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4);
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.Size = new System.Drawing.Size(1300, 696);
+            this.mainTabControl.TabIndex = 27;
+            // 
+            // mainTabPage
+            // 
+            this.mainTabPage.AutoScroll = true;
+            this.mainTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.mainTabPage.Controls.Add(this.themesGBox);
+            this.mainTabPage.Controls.Add(this.otherGBox);
+            this.mainTabPage.Controls.Add(this.licenseGBox);
+            this.mainTabPage.Controls.Add(this.installerGBox);
+            this.mainTabPage.Controls.Add(this.signatureGBox);
+            this.mainTabPage.Controls.Add(this.deleteGBox);
+            this.mainTabPage.Controls.Add(this.analyticGBox);
+            this.mainTabPage.Location = new System.Drawing.Point(4, 25);
+            this.mainTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.mainTabPage.Name = "mainTabPage";
+            this.mainTabPage.Padding = new System.Windows.Forms.Padding(4);
+            this.mainTabPage.Size = new System.Drawing.Size(1292, 667);
+            this.mainTabPage.TabIndex = 0;
+            this.mainTabPage.Text = "Main";
             // 
             // themesGBox
             // 
@@ -259,399 +964,35 @@
             this.themesDHMACB.UseVisualStyleBackColor = true;
             this.themesDHMACB.CheckedChanged += new System.EventHandler(this.themes_CheckedChanged);
             // 
-            // analyticGBox
-            // 
-            this.analyticGBox.Controls.Add(this.analyticFirebaseCB);
-            this.analyticGBox.Controls.Add(this.analyticMethodCB);
-            this.analyticGBox.Controls.Add(this.analyticLinksCB);
-            this.analyticGBox.Controls.Add(this.analyticServiceCB);
-            this.analyticGBox.Controls.Add(this.analyticReceiverCB);
-            this.analyticGBox.Controls.Add(this.analyticActivityCB);
-            this.analyticGBox.Controls.Add(this.analyticLayoutCB);
-            this.analyticGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.analyticGBox.Location = new System.Drawing.Point(8, 7);
-            this.analyticGBox.Margin = new System.Windows.Forms.Padding(1);
-            this.analyticGBox.MinimumSize = new System.Drawing.Size(307, 0);
-            this.analyticGBox.Name = "analyticGBox";
-            this.analyticGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.analyticGBox.Size = new System.Drawing.Size(307, 106);
-            this.analyticGBox.TabIndex = 25;
-            this.analyticGBox.TabStop = false;
-            this.analyticGBox.Text = "Аналитика/реклама";
-            // 
-            // analyticFirebaseCB
-            // 
-            this.analyticFirebaseCB.AutoSize = true;
-            this.analyticFirebaseCB.Location = new System.Drawing.Point(3, 81);
-            this.analyticFirebaseCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticFirebaseCB.Name = "analyticFirebaseCB";
-            this.analyticFirebaseCB.Size = new System.Drawing.Size(85, 21);
-            this.analyticFirebaseCB.TabIndex = 6;
-            this.analyticFirebaseCB.Text = "Firebase";
-            this.analyticFirebaseCB.UseVisualStyleBackColor = true;
-            this.analyticFirebaseCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticMethodCB
-            // 
-            this.analyticMethodCB.AutoSize = true;
-            this.analyticMethodCB.Location = new System.Drawing.Point(140, 60);
-            this.analyticMethodCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticMethodCB.Name = "analyticMethodCB";
-            this.analyticMethodCB.Size = new System.Drawing.Size(82, 21);
-            this.analyticMethodCB.TabIndex = 5;
-            this.analyticMethodCB.Text = "Методы";
-            this.analyticMethodCB.UseVisualStyleBackColor = true;
-            this.analyticMethodCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticLinksCB
-            // 
-            this.analyticLinksCB.AutoSize = true;
-            this.analyticLinksCB.Location = new System.Drawing.Point(3, 60);
-            this.analyticLinksCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticLinksCB.Name = "analyticLinksCB";
-            this.analyticLinksCB.Size = new System.Drawing.Size(79, 21);
-            this.analyticLinksCB.TabIndex = 4;
-            this.analyticLinksCB.Text = "Ссылки";
-            this.analyticLinksCB.UseVisualStyleBackColor = true;
-            this.analyticLinksCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticServiceCB
-            // 
-            this.analyticServiceCB.AutoSize = true;
-            this.analyticServiceCB.Location = new System.Drawing.Point(3, 39);
-            this.analyticServiceCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticServiceCB.Name = "analyticServiceCB";
-            this.analyticServiceCB.Size = new System.Drawing.Size(87, 21);
-            this.analyticServiceCB.TabIndex = 3;
-            this.analyticServiceCB.Text = "Сервисы";
-            this.analyticServiceCB.UseVisualStyleBackColor = true;
-            this.analyticServiceCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticReceiverCB
-            // 
-            this.analyticReceiverCB.AutoSize = true;
-            this.analyticReceiverCB.Location = new System.Drawing.Point(140, 17);
-            this.analyticReceiverCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticReceiverCB.Name = "analyticReceiverCB";
-            this.analyticReceiverCB.Size = new System.Drawing.Size(95, 21);
-            this.analyticReceiverCB.TabIndex = 2;
-            this.analyticReceiverCB.Text = "Ресиверы";
-            this.analyticReceiverCB.UseVisualStyleBackColor = true;
-            this.analyticReceiverCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticActivityCB
-            // 
-            this.analyticActivityCB.AutoSize = true;
-            this.analyticActivityCB.Location = new System.Drawing.Point(3, 18);
-            this.analyticActivityCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticActivityCB.Name = "analyticActivityCB";
-            this.analyticActivityCB.Size = new System.Drawing.Size(91, 21);
-            this.analyticActivityCB.TabIndex = 1;
-            this.analyticActivityCB.Text = "Активити";
-            this.analyticActivityCB.UseVisualStyleBackColor = true;
-            this.analyticActivityCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // analyticLayoutCB
-            // 
-            this.analyticLayoutCB.AutoSize = true;
-            this.analyticLayoutCB.Location = new System.Drawing.Point(140, 39);
-            this.analyticLayoutCB.Margin = new System.Windows.Forms.Padding(0);
-            this.analyticLayoutCB.Name = "analyticLayoutCB";
-            this.analyticLayoutCB.Size = new System.Drawing.Size(140, 21);
-            this.analyticLayoutCB.TabIndex = 0;
-            this.analyticLayoutCB.Text = "Разметка Layout";
-            this.analyticLayoutCB.UseVisualStyleBackColor = true;
-            this.analyticLayoutCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
-            // 
-            // deleteGBox
-            // 
-            this.deleteGBox.Controls.Add(this.deleteLangsCBox);
-            this.deleteGBox.Controls.Add(this.deleteResourcesCB);
-            this.deleteGBox.Controls.Add(this.emulatorCB);
-            this.deleteGBox.Controls.Add(this.locationCB);
-            this.deleteGBox.Controls.Add(this.gmsCB);
-            this.deleteGBox.Controls.Add(this.autostartCB);
-            this.deleteGBox.Controls.Add(this.internetCB);
-            this.deleteGBox.Controls.Add(this.allToastsCB);
-            this.deleteGBox.Location = new System.Drawing.Point(8, 114);
-            this.deleteGBox.Margin = new System.Windows.Forms.Padding(4);
-            this.deleteGBox.MinimumSize = new System.Drawing.Size(307, 0);
-            this.deleteGBox.Name = "deleteGBox";
-            this.deleteGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.deleteGBox.Size = new System.Drawing.Size(307, 198);
-            this.deleteGBox.TabIndex = 18;
-            this.deleteGBox.TabStop = false;
-            this.deleteGBox.Text = "Удалить";
-            // 
-            // deleteLangsCBox
-            // 
-            this.deleteLangsCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.deleteLangsCBox.Enabled = false;
-            this.deleteLangsCBox.FormattingEnabled = true;
-            this.deleteLangsCBox.Location = new System.Drawing.Point(4, 165);
-            this.deleteLangsCBox.Margin = new System.Windows.Forms.Padding(4);
-            this.deleteLangsCBox.Name = "deleteLangsCBox";
-            this.deleteLangsCBox.Size = new System.Drawing.Size(253, 24);
-            this.deleteLangsCBox.TabIndex = 26;
-            // 
-            // deleteResourcesCB
-            // 
-            this.deleteResourcesCB.AutoSize = true;
-            this.deleteResourcesCB.Location = new System.Drawing.Point(3, 140);
-            this.deleteResourcesCB.Margin = new System.Windows.Forms.Padding(0);
-            this.deleteResourcesCB.Name = "deleteResourcesCB";
-            this.deleteResourcesCB.Size = new System.Drawing.Size(142, 21);
-            this.deleteResourcesCB.TabIndex = 22;
-            this.deleteResourcesCB.Text = "Лишние ресурсы";
-            this.deleteResourcesCB.UseVisualStyleBackColor = true;
-            this.deleteResourcesCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // emulatorCB
-            // 
-            this.emulatorCB.AutoSize = true;
-            this.emulatorCB.Location = new System.Drawing.Point(3, 15);
-            this.emulatorCB.Margin = new System.Windows.Forms.Padding(0);
-            this.emulatorCB.Name = "emulatorCB";
-            this.emulatorCB.Size = new System.Drawing.Size(232, 21);
-            this.emulatorCB.TabIndex = 2;
-            this.emulatorCB.Text = "Проверку на эмулятор Android";
-            this.emulatorCB.UseVisualStyleBackColor = true;
-            this.emulatorCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // locationCB
-            // 
-            this.locationCB.AutoSize = true;
-            this.locationCB.Location = new System.Drawing.Point(3, 98);
-            this.locationCB.Margin = new System.Windows.Forms.Padding(0);
-            this.locationCB.Name = "locationCB";
-            this.locationCB.Size = new System.Drawing.Size(207, 21);
-            this.locationCB.TabIndex = 5;
-            this.locationCB.Text = "Доступ к местоположению";
-            this.locationCB.UseVisualStyleBackColor = true;
-            this.locationCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // gmsCB
-            // 
-            this.gmsCB.AutoSize = true;
-            this.gmsCB.Location = new System.Drawing.Point(3, 36);
-            this.gmsCB.Margin = new System.Windows.Forms.Padding(0);
-            this.gmsCB.Name = "gmsCB";
-            this.gmsCB.Size = new System.Drawing.Size(270, 21);
-            this.gmsCB.TabIndex = 1;
-            this.gmsCB.Text = "Зависимость от Google play services";
-            this.gmsCB.UseVisualStyleBackColor = true;
-            this.gmsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // autostartCB
-            // 
-            this.autostartCB.AutoSize = true;
-            this.autostartCB.Location = new System.Drawing.Point(3, 57);
-            this.autostartCB.Margin = new System.Windows.Forms.Padding(0);
-            this.autostartCB.Name = "autostartCB";
-            this.autostartCB.Size = new System.Drawing.Size(194, 21);
-            this.autostartCB.TabIndex = 17;
-            this.autostartCB.Text = "Автозапуск при загрузке";
-            this.autostartCB.UseVisualStyleBackColor = true;
-            this.autostartCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // internetCB
-            // 
-            this.internetCB.AutoSize = true;
-            this.internetCB.Location = new System.Drawing.Point(3, 78);
-            this.internetCB.Margin = new System.Windows.Forms.Padding(0);
-            this.internetCB.Name = "internetCB";
-            this.internetCB.Size = new System.Drawing.Size(155, 21);
-            this.internetCB.TabIndex = 4;
-            this.internetCB.Text = "Доступ в интернет";
-            this.internetCB.UseVisualStyleBackColor = true;
-            this.internetCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // allToastsCB
-            // 
-            this.allToastsCB.AutoSize = true;
-            this.allToastsCB.Location = new System.Drawing.Point(3, 119);
-            this.allToastsCB.Margin = new System.Windows.Forms.Padding(0);
-            this.allToastsCB.Name = "allToastsCB";
-            this.allToastsCB.Size = new System.Drawing.Size(173, 21);
-            this.allToastsCB.TabIndex = 7;
-            this.allToastsCB.Text = "Все Toast-сообщения";
-            this.allToastsCB.UseVisualStyleBackColor = true;
-            this.allToastsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // signatureGBox
-            // 
-            this.signatureGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.signatureGBox.Controls.Add(this.binSignatureCB);
-            this.signatureGBox.Controls.Add(this.binSignatureInstallerCB);
-            this.signatureGBox.Controls.Add(this.binInstallerCBox);
-            this.signatureGBox.Location = new System.Drawing.Point(8, 313);
-            this.signatureGBox.Margin = new System.Windows.Forms.Padding(4);
-            this.signatureGBox.MinimumSize = new System.Drawing.Size(307, 0);
-            this.signatureGBox.Name = "signatureGBox";
-            this.signatureGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.signatureGBox.Size = new System.Drawing.Size(307, 94);
-            this.signatureGBox.TabIndex = 21;
-            this.signatureGBox.TabStop = false;
-            this.signatureGBox.Text = "Проверка подписи";
-            // 
-            // binSignatureCB
-            // 
-            this.binSignatureCB.AutoSize = true;
-            this.binSignatureCB.Location = new System.Drawing.Point(3, 18);
-            this.binSignatureCB.Margin = new System.Windows.Forms.Padding(0);
-            this.binSignatureCB.Name = "binSignatureCB";
-            this.binSignatureCB.Size = new System.Drawing.Size(102, 21);
-            this.binSignatureCB.TabIndex = 0;
-            this.binSignatureCB.Text = "патчем Bin";
-            this.binSignatureCB.UseVisualStyleBackColor = true;
-            this.binSignatureCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // binSignatureInstallerCB
-            // 
-            this.binSignatureInstallerCB.AutoSize = true;
-            this.binSignatureInstallerCB.Location = new System.Drawing.Point(3, 39);
-            this.binSignatureInstallerCB.Margin = new System.Windows.Forms.Padding(0);
-            this.binSignatureInstallerCB.Name = "binSignatureInstallerCB";
-            this.binSignatureInstallerCB.Size = new System.Drawing.Size(223, 21);
-            this.binSignatureInstallerCB.TabIndex = 17;
-            this.binSignatureInstallerCB.Text = "патчем от Bin (+Установщик)";
-            this.binSignatureInstallerCB.UseVisualStyleBackColor = true;
-            this.binSignatureInstallerCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // binInstallerCBox
-            // 
-            this.binInstallerCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.binInstallerCBox.Enabled = false;
-            this.binInstallerCBox.FormattingEnabled = true;
-            this.binInstallerCBox.Items.AddRange(new object[] {
-            "Google",
-            "Amazon"});
-            this.binInstallerCBox.Location = new System.Drawing.Point(5, 63);
-            this.binInstallerCBox.Margin = new System.Windows.Forms.Padding(1);
-            this.binInstallerCBox.Name = "binInstallerCBox";
-            this.binInstallerCBox.Size = new System.Drawing.Size(252, 24);
-            this.binInstallerCBox.TabIndex = 18;
-            // 
-            // licenseGBox
-            // 
-            this.licenseGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.licenseGBox.Controls.Add(this.licenseGoogleCB);
-            this.licenseGBox.Controls.Add(this.licenseAmazonCB);
-            this.licenseGBox.Location = new System.Drawing.Point(8, 450);
-            this.licenseGBox.Margin = new System.Windows.Forms.Padding(4);
-            this.licenseGBox.MinimumSize = new System.Drawing.Size(307, 0);
-            this.licenseGBox.Name = "licenseGBox";
-            this.licenseGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.licenseGBox.Size = new System.Drawing.Size(307, 44);
-            this.licenseGBox.TabIndex = 20;
-            this.licenseGBox.TabStop = false;
-            this.licenseGBox.Text = "Проверка лицензии";
-            // 
-            // licenseGoogleCB
-            // 
-            this.licenseGoogleCB.AutoSize = true;
-            this.licenseGoogleCB.Location = new System.Drawing.Point(3, 18);
-            this.licenseGoogleCB.Margin = new System.Windows.Forms.Padding(0);
-            this.licenseGoogleCB.Name = "licenseGoogleCB";
-            this.licenseGoogleCB.Size = new System.Drawing.Size(129, 21);
-            this.licenseGoogleCB.TabIndex = 1;
-            this.licenseGoogleCB.Text = "Google License";
-            this.licenseGoogleCB.UseVisualStyleBackColor = true;
-            this.licenseGoogleCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // licenseAmazonCB
-            // 
-            this.licenseAmazonCB.AutoSize = true;
-            this.licenseAmazonCB.Location = new System.Drawing.Point(140, 18);
-            this.licenseAmazonCB.Margin = new System.Windows.Forms.Padding(0);
-            this.licenseAmazonCB.Name = "licenseAmazonCB";
-            this.licenseAmazonCB.Size = new System.Drawing.Size(134, 21);
-            this.licenseAmazonCB.TabIndex = 0;
-            this.licenseAmazonCB.Text = "Amazon License";
-            this.licenseAmazonCB.UseVisualStyleBackColor = true;
-            this.licenseAmazonCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // installerGBox
-            // 
-            this.installerGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.installerGBox.Controls.Add(this.installerGoogleCB);
-            this.installerGBox.Controls.Add(this.installerAmazonCB);
-            this.installerGBox.Location = new System.Drawing.Point(8, 406);
-            this.installerGBox.Margin = new System.Windows.Forms.Padding(4);
-            this.installerGBox.MinimumSize = new System.Drawing.Size(307, 0);
-            this.installerGBox.Name = "installerGBox";
-            this.installerGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.installerGBox.Size = new System.Drawing.Size(307, 44);
-            this.installerGBox.TabIndex = 19;
-            this.installerGBox.TabStop = false;
-            this.installerGBox.Text = "Проверка установщика";
-            // 
-            // installerGoogleCB
-            // 
-            this.installerGoogleCB.AutoSize = true;
-            this.installerGoogleCB.Location = new System.Drawing.Point(3, 18);
-            this.installerGoogleCB.Margin = new System.Windows.Forms.Padding(0);
-            this.installerGoogleCB.Name = "installerGoogleCB";
-            this.installerGoogleCB.Size = new System.Drawing.Size(129, 21);
-            this.installerGoogleCB.TabIndex = 0;
-            this.installerGoogleCB.Text = "Google Installer";
-            this.installerGoogleCB.UseVisualStyleBackColor = true;
-            this.installerGoogleCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // installerAmazonCB
-            // 
-            this.installerAmazonCB.AutoSize = true;
-            this.installerAmazonCB.Location = new System.Drawing.Point(140, 17);
-            this.installerAmazonCB.Margin = new System.Windows.Forms.Padding(0);
-            this.installerAmazonCB.Name = "installerAmazonCB";
-            this.installerAmazonCB.Size = new System.Drawing.Size(134, 21);
-            this.installerAmazonCB.TabIndex = 1;
-            this.installerAmazonCB.Text = "Amazon Installer";
-            this.installerAmazonCB.UseVisualStyleBackColor = true;
-            this.installerAmazonCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // splashGBox
-            // 
-            this.splashGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.splashGBox.Controls.Add(this.splashInstallCB);
-            this.splashGBox.Controls.Add(this.splashRemoveCB);
-            this.splashGBox.Location = new System.Drawing.Point(658, 7);
-            this.splashGBox.Margin = new System.Windows.Forms.Padding(4);
-            this.splashGBox.MinimumSize = new System.Drawing.Size(327, 0);
-            this.splashGBox.Name = "splashGBox";
-            this.splashGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.splashGBox.Size = new System.Drawing.Size(327, 44);
-            this.splashGBox.TabIndex = 22;
-            this.splashGBox.TabStop = false;
-            this.splashGBox.Text = "Сплэшскрин";
-            // 
-            // splashInstallCB
-            // 
-            this.splashInstallCB.AutoSize = true;
-            this.splashInstallCB.Location = new System.Drawing.Point(3, 18);
-            this.splashInstallCB.Margin = new System.Windows.Forms.Padding(0);
-            this.splashInstallCB.Name = "splashInstallCB";
-            this.splashInstallCB.Size = new System.Drawing.Size(94, 21);
-            this.splashInstallCB.TabIndex = 0;
-            this.splashInstallCB.Text = "Добавить";
-            this.splashInstallCB.UseVisualStyleBackColor = true;
-            this.splashInstallCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // splashRemoveCB
-            // 
-            this.splashRemoveCB.AutoSize = true;
-            this.splashRemoveCB.Location = new System.Drawing.Point(165, 18);
-            this.splashRemoveCB.Margin = new System.Windows.Forms.Padding(0);
-            this.splashRemoveCB.Name = "splashRemoveCB";
-            this.splashRemoveCB.Size = new System.Drawing.Size(77, 21);
-            this.splashRemoveCB.TabIndex = 1;
-            this.splashRemoveCB.Text = "Убрать";
-            this.splashRemoveCB.UseVisualStyleBackColor = true;
-            this.splashRemoveCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
             // otherGBox
             // 
             this.otherGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.otherGBox.Controls.Add(this.IconGB);
+            this.otherGBox.Controls.Add(this.mod_change_log_nameLbl);
+            this.otherGBox.Controls.Add(this.mod_image_nameLbl);
+            this.otherGBox.Controls.Add(this.mod_linkLbl);
+            this.otherGBox.Controls.Add(this.file_unpackLbl);
+            this.otherGBox.Controls.Add(this.folder_unpackLbl);
+            this.otherGBox.Controls.Add(this.mask_nameLbl);
+            this.otherGBox.Controls.Add(this.mask_icon_patchLbl);
+            this.otherGBox.Controls.Add(this.mod_changelog_nameTBox);
+            this.otherGBox.Controls.Add(this.mod_image_nameTBox);
+            this.otherGBox.Controls.Add(this.add_modDialogCB);
+            this.otherGBox.Controls.Add(this.mod_linkTBox);
+            this.otherGBox.Controls.Add(this.open_btn);
+            this.otherGBox.Controls.Add(this.add_permissionCB);
+            this.otherGBox.Controls.Add(this.add_permissionCBox);
+            this.otherGBox.Controls.Add(this.fix_auth_fb_vkCB);
+            this.otherGBox.Controls.Add(this.screenOrientationCB);
+            this.otherGBox.Controls.Add(this.screenOrientationCBox);
+            this.otherGBox.Controls.Add(this.file_unpackTBox);
+            this.otherGBox.Controls.Add(this.unpackfileCB);
+            this.otherGBox.Controls.Add(this.folder_unpackTBox);
+            this.otherGBox.Controls.Add(this.mask_icon_patchTBox);
+            this.otherGBox.Controls.Add(this.maskCB);
+            this.otherGBox.Controls.Add(this.mask_nameTBox);
+            this.otherGBox.Controls.Add(this.fix18_9CB);
+            this.otherGBox.Controls.Add(this.splashGBox);
             this.otherGBox.Controls.Add(this.screenshotCB);
             this.otherGBox.Controls.Add(this.backKillCB);
             this.otherGBox.Controls.Add(this.backKillCBox);
@@ -667,7 +1008,6 @@
             this.otherGBox.Controls.Add(this.addToastCB);
             this.otherGBox.Controls.Add(this.rootCheckCB);
             this.otherGBox.Controls.Add(this.minSdkCBox);
-            this.otherGBox.Controls.Add(this.hideIconCB);
             this.otherGBox.Controls.Add(this.noUpdateCB);
             this.otherGBox.Controls.Add(this.toastMessageTBox);
             this.otherGBox.Controls.Add(this.mockLocationCB);
@@ -679,15 +1019,387 @@
             this.otherGBox.MinimumSize = new System.Drawing.Size(327, 0);
             this.otherGBox.Name = "otherGBox";
             this.otherGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.otherGBox.Size = new System.Drawing.Size(327, 594);
+            this.otherGBox.Size = new System.Drawing.Size(961, 652);
             this.otherGBox.TabIndex = 23;
             this.otherGBox.TabStop = false;
             this.otherGBox.Text = "Другое";
             // 
+            // IconGB
+            // 
+            this.IconGB.Controls.Add(this.visibleIconCB);
+            this.IconGB.Controls.Add(this.hideIconCB);
+            this.IconGB.Location = new System.Drawing.Point(6, 383);
+            this.IconGB.Name = "IconGB";
+            this.IconGB.Size = new System.Drawing.Size(278, 55);
+            this.IconGB.TabIndex = 52;
+            this.IconGB.TabStop = false;
+            this.IconGB.Text = "Иконка";
+            // 
+            // visibleIconCB
+            // 
+            this.visibleIconCB.AutoSize = true;
+            this.visibleIconCB.Location = new System.Drawing.Point(165, 18);
+            this.visibleIconCB.Margin = new System.Windows.Forms.Padding(0);
+            this.visibleIconCB.Name = "visibleIconCB";
+            this.visibleIconCB.Size = new System.Drawing.Size(92, 21);
+            this.visibleIconCB.TabIndex = 11;
+            this.visibleIconCB.Text = "Показать";
+            this.visibleIconCB.UseVisualStyleBackColor = true;
+            this.visibleIconCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // hideIconCB
+            // 
+            this.hideIconCB.AutoSize = true;
+            this.hideIconCB.Location = new System.Drawing.Point(2, 18);
+            this.hideIconCB.Margin = new System.Windows.Forms.Padding(0);
+            this.hideIconCB.Name = "hideIconCB";
+            this.hideIconCB.Size = new System.Drawing.Size(78, 21);
+            this.hideIconCB.TabIndex = 10;
+            this.hideIconCB.Text = "Скрыть";
+            this.hideIconCB.UseVisualStyleBackColor = true;
+            this.hideIconCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // mod_change_log_nameLbl
+            // 
+            this.mod_change_log_nameLbl.AutoSize = true;
+            this.mod_change_log_nameLbl.Location = new System.Drawing.Point(318, 582);
+            this.mod_change_log_nameLbl.Name = "mod_change_log_nameLbl";
+            this.mod_change_log_nameLbl.Size = new System.Drawing.Size(281, 17);
+            this.mod_change_log_nameLbl.TabIndex = 50;
+            this.mod_change_log_nameLbl.Text = "Имя файла из ченджлогом мода в assets:";
+            // 
+            // mod_image_nameLbl
+            // 
+            this.mod_image_nameLbl.AutoSize = true;
+            this.mod_image_nameLbl.Location = new System.Drawing.Point(318, 537);
+            this.mod_image_nameLbl.Name = "mod_image_nameLbl";
+            this.mod_image_nameLbl.Size = new System.Drawing.Size(160, 17);
+            this.mod_image_nameLbl.TabIndex = 49;
+            this.mod_image_nameLbl.Text = "Имя картинки в assets:";
+            // 
+            // mod_linkLbl
+            // 
+            this.mod_linkLbl.AutoSize = true;
+            this.mod_linkLbl.Location = new System.Drawing.Point(318, 490);
+            this.mod_linkLbl.Name = "mod_linkLbl";
+            this.mod_linkLbl.Size = new System.Drawing.Size(168, 17);
+            this.mod_linkLbl.TabIndex = 48;
+            this.mod_linkLbl.Text = "Ссылка на автора мода:";
+            // 
+            // file_unpackLbl
+            // 
+            this.file_unpackLbl.AutoSize = true;
+            this.file_unpackLbl.Location = new System.Drawing.Point(318, 308);
+            this.file_unpackLbl.Name = "file_unpackLbl";
+            this.file_unpackLbl.Size = new System.Drawing.Size(86, 17);
+            this.file_unpackLbl.TabIndex = 47;
+            this.file_unpackLbl.Text = "Имя файла:";
+            // 
+            // folder_unpackLbl
+            // 
+            this.folder_unpackLbl.AutoSize = true;
+            this.folder_unpackLbl.Location = new System.Drawing.Point(321, 264);
+            this.folder_unpackLbl.Name = "folder_unpackLbl";
+            this.folder_unpackLbl.Size = new System.Drawing.Size(251, 17);
+            this.folder_unpackLbl.TabIndex = 46;
+            this.folder_unpackLbl.Text = "Имя папки для расспаковки файлов:";
+            // 
+            // mask_nameLbl
+            // 
+            this.mask_nameLbl.AutoSize = true;
+            this.mask_nameLbl.Location = new System.Drawing.Point(318, 54);
+            this.mask_nameLbl.Name = "mask_nameLbl";
+            this.mask_nameLbl.Size = new System.Drawing.Size(175, 17);
+            this.mask_nameLbl.TabIndex = 45;
+            this.mask_nameLbl.Text = "Новое имя приложaения:";
+            // 
+            // mask_icon_patchLbl
+            // 
+            this.mask_icon_patchLbl.AutoSize = true;
+            this.mask_icon_patchLbl.Location = new System.Drawing.Point(320, 99);
+            this.mask_icon_patchLbl.Name = "mask_icon_patchLbl";
+            this.mask_icon_patchLbl.Size = new System.Drawing.Size(147, 17);
+            this.mask_icon_patchLbl.TabIndex = 44;
+            this.mask_icon_patchLbl.Text = "Путь к новой иконке:";
+            // 
+            // mod_changelog_nameTBox
+            // 
+            this.mod_changelog_nameTBox.Enabled = false;
+            this.mod_changelog_nameTBox.Location = new System.Drawing.Point(321, 602);
+            this.mod_changelog_nameTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.mod_changelog_nameTBox.Name = "mod_changelog_nameTBox";
+            this.mod_changelog_nameTBox.Size = new System.Drawing.Size(279, 22);
+            this.mod_changelog_nameTBox.TabIndex = 43;
+            // 
+            // mod_image_nameTBox
+            // 
+            this.mod_image_nameTBox.Enabled = false;
+            this.mod_image_nameTBox.Location = new System.Drawing.Point(321, 557);
+            this.mod_image_nameTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.mod_image_nameTBox.Name = "mod_image_nameTBox";
+            this.mod_image_nameTBox.Size = new System.Drawing.Size(279, 22);
+            this.mod_image_nameTBox.TabIndex = 42;
+            // 
+            // add_modDialogCB
+            // 
+            this.add_modDialogCB.AutoSize = true;
+            this.add_modDialogCB.Location = new System.Drawing.Point(321, 469);
+            this.add_modDialogCB.Margin = new System.Windows.Forms.Padding(0);
+            this.add_modDialogCB.Name = "add_modDialogCB";
+            this.add_modDialogCB.Size = new System.Drawing.Size(192, 21);
+            this.add_modDialogCB.TabIndex = 40;
+            this.add_modDialogCB.Text = "Добавить диалог о моде";
+            this.add_modDialogCB.UseVisualStyleBackColor = true;
+            this.add_modDialogCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // mod_linkTBox
+            // 
+            this.mod_linkTBox.Enabled = false;
+            this.mod_linkTBox.Location = new System.Drawing.Point(321, 511);
+            this.mod_linkTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.mod_linkTBox.Name = "mod_linkTBox";
+            this.mod_linkTBox.Size = new System.Drawing.Size(279, 22);
+            this.mod_linkTBox.TabIndex = 41;
+            // 
+            // open_btn
+            // 
+            this.open_btn.Enabled = false;
+            this.open_btn.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.open_btn.FlatAppearance.BorderSize = 0;
+            this.open_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.open_btn.Image = ((System.Drawing.Image)(resources.GetObject("open_btn.Image")));
+            this.open_btn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.open_btn.Location = new System.Drawing.Point(604, 116);
+            this.open_btn.Name = "open_btn";
+            this.open_btn.Size = new System.Drawing.Size(36, 29);
+            this.open_btn.TabIndex = 39;
+            this.open_btn.UseVisualStyleBackColor = true;
+            this.open_btn.Click += new System.EventHandler(this.open_btn_Click);
+            // 
+            // add_permissionCB
+            // 
+            this.add_permissionCB.AutoSize = true;
+            this.add_permissionCB.Location = new System.Drawing.Point(321, 416);
+            this.add_permissionCB.Margin = new System.Windows.Forms.Padding(0);
+            this.add_permissionCB.Name = "add_permissionCB";
+            this.add_permissionCB.Size = new System.Drawing.Size(321, 21);
+            this.add_permissionCB.TabIndex = 37;
+            this.add_permissionCB.Text = "Добавить запрос разрешений(Android 6.0+)";
+            this.add_permissionCB.UseVisualStyleBackColor = true;
+            this.add_permissionCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // add_permissionCBox
+            // 
+            this.add_permissionCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.add_permissionCBox.Enabled = false;
+            this.add_permissionCBox.FormattingEnabled = true;
+            this.add_permissionCBox.Items.AddRange(new object[] {
+            "Разрешение на память",
+            "Разрешение на чтение контактов",
+            "Разрешение на камеру",
+            "Разрешение на местоположение",
+            "Разрешение на чтение смс",
+            "Разрешение на телефон",
+            "Разрешение на календарь"});
+            this.add_permissionCBox.Location = new System.Drawing.Point(321, 438);
+            this.add_permissionCBox.Margin = new System.Windows.Forms.Padding(1);
+            this.add_permissionCBox.Name = "add_permissionCBox";
+            this.add_permissionCBox.Size = new System.Drawing.Size(277, 24);
+            this.add_permissionCBox.TabIndex = 38;
+            // 
+            // fix_auth_fb_vkCB
+            // 
+            this.fix_auth_fb_vkCB.AutoSize = true;
+            this.fix_auth_fb_vkCB.Location = new System.Drawing.Point(6, 621);
+            this.fix_auth_fb_vkCB.Margin = new System.Windows.Forms.Padding(0);
+            this.fix_auth_fb_vkCB.Name = "fix_auth_fb_vkCB";
+            this.fix_auth_fb_vkCB.Size = new System.Drawing.Size(283, 21);
+            this.fix_auth_fb_vkCB.TabIndex = 36;
+            this.fix_auth_fb_vkCB.Text = "Восстановление авторизации VK и FB";
+            this.fix_auth_fb_vkCB.UseVisualStyleBackColor = true;
+            this.fix_auth_fb_vkCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // screenOrientationCB
+            // 
+            this.screenOrientationCB.AutoSize = true;
+            this.screenOrientationCB.Location = new System.Drawing.Point(321, 359);
+            this.screenOrientationCB.Margin = new System.Windows.Forms.Padding(0);
+            this.screenOrientationCB.Name = "screenOrientationCB";
+            this.screenOrientationCB.Size = new System.Drawing.Size(221, 21);
+            this.screenOrientationCB.TabIndex = 34;
+            this.screenOrientationCB.Text = "Сменить ориентацию экрана";
+            this.screenOrientationCB.UseVisualStyleBackColor = true;
+            this.screenOrientationCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // screenOrientationCBox
+            // 
+            this.screenOrientationCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.screenOrientationCBox.Enabled = false;
+            this.screenOrientationCBox.FormattingEnabled = true;
+            this.screenOrientationCBox.Items.AddRange(new object[] {
+            "Авто",
+            "Альбомная",
+            "Портретная"});
+            this.screenOrientationCBox.Location = new System.Drawing.Point(321, 381);
+            this.screenOrientationCBox.Margin = new System.Windows.Forms.Padding(1);
+            this.screenOrientationCBox.Name = "screenOrientationCBox";
+            this.screenOrientationCBox.Size = new System.Drawing.Size(277, 24);
+            this.screenOrientationCBox.TabIndex = 35;
+            // 
+            // file_unpackTBox
+            // 
+            this.file_unpackTBox.Enabled = false;
+            this.file_unpackTBox.Location = new System.Drawing.Point(321, 329);
+            this.file_unpackTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.file_unpackTBox.Name = "file_unpackTBox";
+            this.file_unpackTBox.Size = new System.Drawing.Size(279, 22);
+            this.file_unpackTBox.TabIndex = 33;
+            this.file_unpackTBox.Text = "AllinOne_File.zip";
+            // 
+            // unpackfileCB
+            // 
+            this.unpackfileCB.AutoSize = true;
+            this.unpackfileCB.Location = new System.Drawing.Point(321, 242);
+            this.unpackfileCB.Margin = new System.Windows.Forms.Padding(0);
+            this.unpackfileCB.Name = "unpackfileCB";
+            this.unpackfileCB.Size = new System.Drawing.Size(316, 21);
+            this.unpackfileCB.TabIndex = 31;
+            this.unpackfileCB.Text = "Распаковка файлов в /sdcard/xxxxx/файл(ы)";
+            this.unpackfileCB.UseVisualStyleBackColor = true;
+            this.unpackfileCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // folder_unpackTBox
+            // 
+            this.folder_unpackTBox.Enabled = false;
+            this.folder_unpackTBox.Location = new System.Drawing.Point(321, 282);
+            this.folder_unpackTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.folder_unpackTBox.Name = "folder_unpackTBox";
+            this.folder_unpackTBox.Size = new System.Drawing.Size(279, 22);
+            this.folder_unpackTBox.TabIndex = 32;
+            this.folder_unpackTBox.Text = "AllinOne";
+            // 
+            // mask_icon_patchTBox
+            // 
+            this.mask_icon_patchTBox.Enabled = false;
+            this.mask_icon_patchTBox.Location = new System.Drawing.Point(321, 119);
+            this.mask_icon_patchTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.mask_icon_patchTBox.Name = "mask_icon_patchTBox";
+            this.mask_icon_patchTBox.Size = new System.Drawing.Size(279, 22);
+            this.mask_icon_patchTBox.TabIndex = 29;
+            // 
+            // maskCB
+            // 
+            this.maskCB.AutoSize = true;
+            this.maskCB.Location = new System.Drawing.Point(321, 13);
+            this.maskCB.Margin = new System.Windows.Forms.Padding(0);
+            this.maskCB.Name = "maskCB";
+            this.maskCB.Size = new System.Drawing.Size(264, 38);
+            this.maskCB.TabIndex = 27;
+            this.maskCB.Text = "Смена имени приложения и иконки\r\nпри первом запуске";
+            this.maskCB.UseVisualStyleBackColor = true;
+            this.maskCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // mask_nameTBox
+            // 
+            this.mask_nameTBox.Enabled = false;
+            this.mask_nameTBox.Location = new System.Drawing.Point(321, 73);
+            this.mask_nameTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.mask_nameTBox.Name = "mask_nameTBox";
+            this.mask_nameTBox.Size = new System.Drawing.Size(279, 22);
+            this.mask_nameTBox.TabIndex = 28;
+            this.mask_nameTBox.Text = "AllinOne";
+            // 
+            // fix18_9CB
+            // 
+            this.fix18_9CB.AutoSize = true;
+            this.fix18_9CB.Location = new System.Drawing.Point(6, 600);
+            this.fix18_9CB.Margin = new System.Windows.Forms.Padding(0);
+            this.fix18_9CB.Name = "fix18_9CB";
+            this.fix18_9CB.Size = new System.Drawing.Size(171, 21);
+            this.fix18_9CB.TabIndex = 26;
+            this.fix18_9CB.Text = "Fix app to 18:9 display\r\n";
+            this.fix18_9CB.UseVisualStyleBackColor = true;
+            this.fix18_9CB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // splashGBox
+            // 
+            this.splashGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.splashGBox.Controls.Add(this.splash_image_patchLbl);
+            this.splashGBox.Controls.Add(this.open_btn_image);
+            this.splashGBox.Controls.Add(this.splashInstallCB);
+            this.splashGBox.Controls.Add(this.splash_image_patchTBox);
+            this.splashGBox.Controls.Add(this.splashRemoveCB);
+            this.splashGBox.Location = new System.Drawing.Point(321, 146);
+            this.splashGBox.Margin = new System.Windows.Forms.Padding(4);
+            this.splashGBox.MinimumSize = new System.Drawing.Size(327, 0);
+            this.splashGBox.Name = "splashGBox";
+            this.splashGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splashGBox.Size = new System.Drawing.Size(327, 93);
+            this.splashGBox.TabIndex = 22;
+            this.splashGBox.TabStop = false;
+            this.splashGBox.Text = "Сплэшскрин";
+            // 
+            // splash_image_patchLbl
+            // 
+            this.splash_image_patchLbl.AutoSize = true;
+            this.splash_image_patchLbl.Location = new System.Drawing.Point(0, 43);
+            this.splash_image_patchLbl.Name = "splash_image_patchLbl";
+            this.splash_image_patchLbl.Size = new System.Drawing.Size(155, 17);
+            this.splash_image_patchLbl.TabIndex = 45;
+            this.splash_image_patchLbl.Text = "Путь до сплешскрина:";
+            // 
+            // open_btn_image
+            // 
+            this.open_btn_image.Enabled = false;
+            this.open_btn_image.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.open_btn_image.FlatAppearance.BorderSize = 0;
+            this.open_btn_image.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.open_btn_image.Image = ((System.Drawing.Image)(resources.GetObject("open_btn_image.Image")));
+            this.open_btn_image.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.open_btn_image.Location = new System.Drawing.Point(280, 58);
+            this.open_btn_image.Name = "open_btn_image";
+            this.open_btn_image.Size = new System.Drawing.Size(36, 29);
+            this.open_btn_image.TabIndex = 42;
+            this.open_btn_image.UseVisualStyleBackColor = true;
+            this.open_btn_image.Click += new System.EventHandler(this.open_btn_image_Click);
+            // 
+            // splashInstallCB
+            // 
+            this.splashInstallCB.AutoSize = true;
+            this.splashInstallCB.Location = new System.Drawing.Point(3, 18);
+            this.splashInstallCB.Margin = new System.Windows.Forms.Padding(0);
+            this.splashInstallCB.Name = "splashInstallCB";
+            this.splashInstallCB.Size = new System.Drawing.Size(94, 21);
+            this.splashInstallCB.TabIndex = 0;
+            this.splashInstallCB.Text = "Добавить";
+            this.splashInstallCB.UseVisualStyleBackColor = true;
+            this.splashInstallCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // splash_image_patchTBox
+            // 
+            this.splash_image_patchTBox.Enabled = false;
+            this.splash_image_patchTBox.Location = new System.Drawing.Point(0, 65);
+            this.splash_image_patchTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.splash_image_patchTBox.Name = "splash_image_patchTBox";
+            this.splash_image_patchTBox.Size = new System.Drawing.Size(279, 22);
+            this.splash_image_patchTBox.TabIndex = 41;
+            // 
+            // splashRemoveCB
+            // 
+            this.splashRemoveCB.AutoSize = true;
+            this.splashRemoveCB.Location = new System.Drawing.Point(165, 18);
+            this.splashRemoveCB.Margin = new System.Windows.Forms.Padding(0);
+            this.splashRemoveCB.Name = "splashRemoveCB";
+            this.splashRemoveCB.Size = new System.Drawing.Size(77, 21);
+            this.splashRemoveCB.TabIndex = 1;
+            this.splashRemoveCB.Text = "Убрать";
+            this.splashRemoveCB.UseVisualStyleBackColor = true;
+            this.splashRemoveCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
             // screenshotCB
             // 
             this.screenshotCB.AutoSize = true;
-            this.screenshotCB.Location = new System.Drawing.Point(5, 485);
+            this.screenshotCB.Location = new System.Drawing.Point(6, 524);
             this.screenshotCB.Margin = new System.Windows.Forms.Padding(0);
             this.screenshotCB.Name = "screenshotCB";
             this.screenshotCB.Size = new System.Drawing.Size(296, 21);
@@ -699,12 +1411,12 @@
             // backKillCB
             // 
             this.backKillCB.AutoSize = true;
-            this.backKillCB.Location = new System.Drawing.Point(5, 506);
+            this.backKillCB.Location = new System.Drawing.Point(6, 545);
             this.backKillCB.Margin = new System.Windows.Forms.Padding(0);
             this.backKillCB.Name = "backKillCB";
-            this.backKillCB.Size = new System.Drawing.Size(254, 21);
+            this.backKillCB.Size = new System.Drawing.Size(258, 21);
             this.backKillCB.TabIndex = 15;
-            this.backKillCB.Text = "Выход понажатию кнопки \"Назад\"";
+            this.backKillCB.Text = "Выход по нажатию кнопки \"Назад\"";
             this.backKillCB.UseVisualStyleBackColor = true;
             this.backKillCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
             // 
@@ -717,7 +1429,7 @@
             "Двойное нажатие",
             "Долгий тап",
             "Одно нажатие"});
-            this.backKillCBox.Location = new System.Drawing.Point(7, 530);
+            this.backKillCBox.Location = new System.Drawing.Point(8, 569);
             this.backKillCBox.Margin = new System.Windows.Forms.Padding(1);
             this.backKillCBox.Name = "backKillCBox";
             this.backKillCBox.Size = new System.Drawing.Size(277, 24);
@@ -894,18 +1606,6 @@
             this.minSdkCBox.Size = new System.Drawing.Size(279, 24);
             this.minSdkCBox.TabIndex = 7;
             // 
-            // hideIconCB
-            // 
-            this.hideIconCB.AutoSize = true;
-            this.hideIconCB.Location = new System.Drawing.Point(4, 380);
-            this.hideIconCB.Margin = new System.Windows.Forms.Padding(0);
-            this.hideIconCB.Name = "hideIconCB";
-            this.hideIconCB.Size = new System.Drawing.Size(206, 21);
-            this.hideIconCB.TabIndex = 10;
-            this.hideIconCB.Text = "Скрыть иконку из лончера";
-            this.hideIconCB.UseVisualStyleBackColor = true;
-            this.hideIconCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
             // noUpdateCB
             // 
             this.noUpdateCB.AutoSize = true;
@@ -926,12 +1626,12 @@
             this.toastMessageTBox.Name = "toastMessageTBox";
             this.toastMessageTBox.Size = new System.Drawing.Size(279, 22);
             this.toastMessageTBox.TabIndex = 6;
-            this.toastMessageTBox.Text = "Ваш текст";
+            this.toastMessageTBox.Text = ":::Patched by AllinOne:::";
             // 
             // mockLocationCB
             // 
             this.mockLocationCB.AutoSize = true;
-            this.mockLocationCB.Location = new System.Drawing.Point(4, 401);
+            this.mockLocationCB.Location = new System.Drawing.Point(5, 440);
             this.mockLocationCB.Margin = new System.Windows.Forms.Padding(0);
             this.mockLocationCB.Name = "mockLocationCB";
             this.mockLocationCB.Size = new System.Drawing.Size(295, 21);
@@ -954,7 +1654,7 @@
             // 
             // dexCB
             // 
-            this.dexCB.Location = new System.Drawing.Point(5, 443);
+            this.dexCB.Location = new System.Drawing.Point(6, 482);
             this.dexCB.Margin = new System.Windows.Forms.Padding(0);
             this.dexCB.Name = "dexCB";
             this.dexCB.Size = new System.Drawing.Size(308, 42);
@@ -966,7 +1666,7 @@
             // reflectionLogCB
             // 
             this.reflectionLogCB.AutoSize = true;
-            this.reflectionLogCB.Location = new System.Drawing.Point(4, 422);
+            this.reflectionLogCB.Location = new System.Drawing.Point(5, 461);
             this.reflectionLogCB.Margin = new System.Windows.Forms.Padding(0);
             this.reflectionLogCB.Name = "reflectionLogCB";
             this.reflectionLogCB.Size = new System.Drawing.Size(130, 21);
@@ -975,1056 +1675,369 @@
             this.reflectionLogCB.UseVisualStyleBackColor = true;
             this.reflectionLogCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
             // 
-            // gpsLatitudeTBox
-            // 
-            this.gpsLatitudeTBox.Enabled = false;
-            this.gpsLatitudeTBox.Location = new System.Drawing.Point(189, 503);
-            this.gpsLatitudeTBox.Margin = new System.Windows.Forms.Padding(0, 1, 1, 1);
-            this.gpsLatitudeTBox.Name = "gpsLatitudeTBox";
-            this.gpsLatitudeTBox.Size = new System.Drawing.Size(77, 22);
-            this.gpsLatitudeTBox.TabIndex = 83;
-            // 
-            // gpsLongitudeTBox
-            // 
-            this.gpsLongitudeTBox.Enabled = false;
-            this.gpsLongitudeTBox.Location = new System.Drawing.Point(271, 503);
-            this.gpsLongitudeTBox.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
-            this.gpsLongitudeTBox.Name = "gpsLongitudeTBox";
-            this.gpsLongitudeTBox.Size = new System.Drawing.Size(77, 22);
-            this.gpsLongitudeTBox.TabIndex = 84;
-            // 
-            // gpsCB
-            // 
-            this.gpsCB.Location = new System.Drawing.Point(5, 506);
-            this.gpsCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.gpsCB.Name = "gpsCB";
-            this.gpsCB.Size = new System.Drawing.Size(64, 22);
-            this.gpsCB.TabIndex = 55;
-            this.gpsCB.Text = "GPS";
-            this.gpsCB.UseVisualStyleBackColor = true;
-            this.gpsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // timeCB
-            // 
-            this.timeCB.AutoSize = true;
-            this.timeCB.Location = new System.Drawing.Point(5, 533);
-            this.timeCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.timeCB.Name = "timeCB";
-            this.timeCB.Size = new System.Drawing.Size(72, 21);
-            this.timeCB.TabIndex = 58;
-            this.timeCB.Text = "Время";
-            this.timeCB.UseVisualStyleBackColor = true;
-            this.timeCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // deviceIdTBox
-            // 
-            this.deviceIdTBox.Enabled = false;
-            this.deviceIdTBox.Location = new System.Drawing.Point(188, 16);
-            this.deviceIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.deviceIdTBox.Name = "deviceIdTBox";
-            this.deviceIdTBox.Size = new System.Drawing.Size(159, 22);
-            this.deviceIdTBox.TabIndex = 62;
-            // 
-            // accountCB
-            // 
-            this.accountCB.Location = new System.Drawing.Point(5, 559);
-            this.accountCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.accountCB.Name = "accountCB";
-            this.accountCB.Size = new System.Drawing.Size(129, 22);
-            this.accountCB.TabIndex = 60;
-            this.accountCB.Text = "Account Name";
-            this.accountCB.UseVisualStyleBackColor = true;
-            this.accountCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // androidIdTBox
-            // 
-            this.androidIdTBox.Enabled = false;
-            this.androidIdTBox.Location = new System.Drawing.Point(188, 43);
-            this.androidIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.androidIdTBox.Name = "androidIdTBox";
-            this.androidIdTBox.Size = new System.Drawing.Size(159, 22);
-            this.androidIdTBox.TabIndex = 63;
-            // 
-            // allAutoCB
-            // 
-            this.allAutoCB.AutoSize = true;
-            this.allAutoCB.Location = new System.Drawing.Point(5, 613);
-            this.allAutoCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.allAutoCB.Name = "allAutoCB";
-            this.allAutoCB.Size = new System.Drawing.Size(98, 21);
-            this.allAutoCB.TabIndex = 62;
-            this.allAutoCB.Text = "Все (авто)";
-            this.allAutoCB.UseVisualStyleBackColor = true;
-            this.allAutoCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // brandCB
-            // 
-            this.brandCB.Location = new System.Drawing.Point(4, 208);
-            this.brandCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.brandCB.Name = "brandCB";
-            this.brandCB.Size = new System.Drawing.Size(72, 22);
-            this.brandCB.TabIndex = 19;
-            this.brandCB.Text = "Brand";
-            this.brandCB.UseVisualStyleBackColor = true;
-            this.brandCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // allManualCB
-            // 
-            this.allManualCB.AutoSize = true;
-            this.allManualCB.Location = new System.Drawing.Point(189, 613);
-            this.allManualCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.allManualCB.Name = "allManualCB";
-            this.allManualCB.Size = new System.Drawing.Size(99, 21);
-            this.allManualCB.TabIndex = 63;
-            this.allManualCB.Text = "Все (ручн)";
-            this.allManualCB.UseVisualStyleBackColor = true;
-            this.allManualCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // wifiMacTBox
-            // 
-            this.wifiMacTBox.Enabled = false;
-            this.wifiMacTBox.Location = new System.Drawing.Point(188, 70);
-            this.wifiMacTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.wifiMacTBox.Name = "wifiMacTBox";
-            this.wifiMacTBox.Size = new System.Drawing.Size(159, 22);
-            this.wifiMacTBox.TabIndex = 64;
-            // 
-            // ipCB
-            // 
-            this.ipCB.Location = new System.Drawing.Point(4, 235);
-            this.ipCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.ipCB.Name = "ipCB";
-            this.ipCB.Size = new System.Drawing.Size(48, 22);
-            this.ipCB.TabIndex = 22;
-            this.ipCB.Text = "IP";
-            this.ipCB.UseVisualStyleBackColor = true;
-            this.ipCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // bluetoothMacTBox
-            // 
-            this.bluetoothMacTBox.Enabled = false;
-            this.bluetoothMacTBox.Location = new System.Drawing.Point(188, 97);
-            this.bluetoothMacTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.bluetoothMacTBox.Name = "bluetoothMacTBox";
-            this.bluetoothMacTBox.Size = new System.Drawing.Size(159, 22);
-            this.bluetoothMacTBox.TabIndex = 65;
-            // 
-            // bluetoothAddressTBox
-            // 
-            this.bluetoothAddressTBox.Enabled = false;
-            this.bluetoothAddressTBox.Location = new System.Drawing.Point(188, 124);
-            this.bluetoothAddressTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.bluetoothAddressTBox.Name = "bluetoothAddressTBox";
-            this.bluetoothAddressTBox.Size = new System.Drawing.Size(159, 22);
-            this.bluetoothAddressTBox.TabIndex = 79;
-            // 
-            // serialTBox
-            // 
-            this.serialTBox.Enabled = false;
-            this.serialTBox.Location = new System.Drawing.Point(188, 151);
-            this.serialTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.serialTBox.Name = "serialTBox";
-            this.serialTBox.Size = new System.Drawing.Size(159, 22);
-            this.serialTBox.TabIndex = 66;
-            // 
-            // bssidCB
-            // 
-            this.bssidCB.Location = new System.Drawing.Point(4, 262);
-            this.bssidCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.bssidCB.Name = "bssidCB";
-            this.bssidCB.Size = new System.Drawing.Size(77, 22);
-            this.bssidCB.TabIndex = 25;
-            this.bssidCB.Text = "BSSID";
-            this.bssidCB.UseVisualStyleBackColor = true;
-            this.bssidCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // deviceIdCB
-            // 
-            this.deviceIdCB.Location = new System.Drawing.Point(4, 18);
-            this.deviceIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.deviceIdCB.Name = "deviceIdCB";
-            this.deviceIdCB.Size = new System.Drawing.Size(99, 22);
-            this.deviceIdCB.TabIndex = 1;
-            this.deviceIdCB.Text = "Device ID";
-            this.deviceIdCB.UseVisualStyleBackColor = true;
-            this.deviceIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // deviceCB
-            // 
-            this.deviceCB.Location = new System.Drawing.Point(4, 289);
-            this.deviceCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.deviceCB.Name = "deviceCB";
-            this.deviceCB.Size = new System.Drawing.Size(80, 22);
-            this.deviceCB.TabIndex = 28;
-            this.deviceCB.Text = "Device";
-            this.deviceCB.UseVisualStyleBackColor = true;
-            this.deviceCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // modelTBox
-            // 
-            this.modelTBox.Enabled = false;
-            this.modelTBox.Location = new System.Drawing.Point(188, 178);
-            this.modelTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.modelTBox.Name = "modelTBox";
-            this.modelTBox.Size = new System.Drawing.Size(159, 22);
-            this.modelTBox.TabIndex = 67;
-            // 
-            // brandTBox
-            // 
-            this.brandTBox.Enabled = false;
-            this.brandTBox.Location = new System.Drawing.Point(188, 206);
-            this.brandTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.brandTBox.Name = "brandTBox";
-            this.brandTBox.Size = new System.Drawing.Size(159, 22);
-            this.brandTBox.TabIndex = 68;
-            // 
-            // boardCB
-            // 
-            this.boardCB.Location = new System.Drawing.Point(4, 316);
-            this.boardCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.boardCB.Name = "boardCB";
-            this.boardCB.Size = new System.Drawing.Size(72, 22);
-            this.boardCB.TabIndex = 31;
-            this.boardCB.Text = "Board";
-            this.boardCB.UseVisualStyleBackColor = true;
-            this.boardCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // androidIdCB
-            // 
-            this.androidIdCB.Location = new System.Drawing.Point(4, 46);
-            this.androidIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.androidIdCB.Name = "androidIdCB";
-            this.androidIdCB.Size = new System.Drawing.Size(101, 22);
-            this.androidIdCB.TabIndex = 4;
-            this.androidIdCB.Text = "Android ID";
-            this.androidIdCB.UseVisualStyleBackColor = true;
-            this.androidIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // manufacturerCB
-            // 
-            this.manufacturerCB.Location = new System.Drawing.Point(4, 343);
-            this.manufacturerCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.manufacturerCB.Name = "manufacturerCB";
-            this.manufacturerCB.Size = new System.Drawing.Size(119, 22);
-            this.manufacturerCB.TabIndex = 34;
-            this.manufacturerCB.Text = "Manufacturer";
-            this.manufacturerCB.UseVisualStyleBackColor = true;
-            this.manufacturerCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // ipTBox
-            // 
-            this.ipTBox.Enabled = false;
-            this.ipTBox.Location = new System.Drawing.Point(188, 233);
-            this.ipTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.ipTBox.Name = "ipTBox";
-            this.ipTBox.Size = new System.Drawing.Size(159, 22);
-            this.ipTBox.TabIndex = 69;
-            // 
-            // productCB
-            // 
-            this.productCB.Location = new System.Drawing.Point(4, 370);
-            this.productCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.productCB.Name = "productCB";
-            this.productCB.Size = new System.Drawing.Size(84, 22);
-            this.productCB.TabIndex = 37;
-            this.productCB.Text = "Product";
-            this.productCB.UseVisualStyleBackColor = true;
-            this.productCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // bssidTBox
-            // 
-            this.bssidTBox.Enabled = false;
-            this.bssidTBox.Location = new System.Drawing.Point(188, 260);
-            this.bssidTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.bssidTBox.Name = "bssidTBox";
-            this.bssidTBox.Size = new System.Drawing.Size(159, 22);
-            this.bssidTBox.TabIndex = 70;
-            // 
-            // operatorNameCB
-            // 
-            this.operatorNameCB.Location = new System.Drawing.Point(4, 398);
-            this.operatorNameCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.operatorNameCB.Name = "operatorNameCB";
-            this.operatorNameCB.Size = new System.Drawing.Size(131, 22);
-            this.operatorNameCB.TabIndex = 40;
-            this.operatorNameCB.Text = "Operator Name";
-            this.operatorNameCB.UseVisualStyleBackColor = true;
-            this.operatorNameCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // deviceTBox
-            // 
-            this.deviceTBox.Enabled = false;
-            this.deviceTBox.Location = new System.Drawing.Point(188, 287);
-            this.deviceTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.deviceTBox.Name = "deviceTBox";
-            this.deviceTBox.Size = new System.Drawing.Size(159, 22);
-            this.deviceTBox.TabIndex = 71;
-            // 
-            // operatorCB
-            // 
-            this.operatorCB.Location = new System.Drawing.Point(4, 425);
-            this.operatorCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.operatorCB.Name = "operatorCB";
-            this.operatorCB.Size = new System.Drawing.Size(89, 22);
-            this.operatorCB.TabIndex = 43;
-            this.operatorCB.Text = "Operator";
-            this.operatorCB.UseVisualStyleBackColor = true;
-            this.operatorCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // boardTBox
-            // 
-            this.boardTBox.Enabled = false;
-            this.boardTBox.Location = new System.Drawing.Point(188, 314);
-            this.boardTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.boardTBox.Name = "boardTBox";
-            this.boardTBox.Size = new System.Drawing.Size(159, 22);
-            this.boardTBox.TabIndex = 72;
-            // 
-            // subscriberIdCB
-            // 
-            this.subscriberIdCB.Location = new System.Drawing.Point(4, 452);
-            this.subscriberIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.subscriberIdCB.Name = "subscriberIdCB";
-            this.subscriberIdCB.Size = new System.Drawing.Size(120, 22);
-            this.subscriberIdCB.TabIndex = 46;
-            this.subscriberIdCB.Text = "Subscriber ID";
-            this.subscriberIdCB.UseVisualStyleBackColor = true;
-            this.subscriberIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // wifiMacAddressCB
-            // 
-            this.wifiMacAddressCB.Location = new System.Drawing.Point(4, 73);
-            this.wifiMacAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.wifiMacAddressCB.Name = "wifiMacAddressCB";
-            this.wifiMacAddressCB.Size = new System.Drawing.Size(165, 22);
-            this.wifiMacAddressCB.TabIndex = 7;
-            this.wifiMacAddressCB.Text = "WiFi Mac Address";
-            this.wifiMacAddressCB.UseVisualStyleBackColor = true;
-            this.wifiMacAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // simSerialNumberCB
-            // 
-            this.simSerialNumberCB.Location = new System.Drawing.Point(4, 479);
-            this.simSerialNumberCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.simSerialNumberCB.Name = "simSerialNumberCB";
-            this.simSerialNumberCB.Size = new System.Drawing.Size(149, 22);
-            this.simSerialNumberCB.TabIndex = 49;
-            this.simSerialNumberCB.Text = "Sim Serial Number";
-            this.simSerialNumberCB.UseVisualStyleBackColor = true;
-            this.simSerialNumberCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // manufacturerTBox
-            // 
-            this.manufacturerTBox.Enabled = false;
-            this.manufacturerTBox.Location = new System.Drawing.Point(188, 341);
-            this.manufacturerTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.manufacturerTBox.Name = "manufacturerTBox";
-            this.manufacturerTBox.Size = new System.Drawing.Size(159, 22);
-            this.manufacturerTBox.TabIndex = 73;
-            // 
-            // productTBox
-            // 
-            this.productTBox.Enabled = false;
-            this.productTBox.Location = new System.Drawing.Point(188, 368);
-            this.productTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.productTBox.Name = "productTBox";
-            this.productTBox.Size = new System.Drawing.Size(159, 22);
-            this.productTBox.TabIndex = 74;
-            // 
-            // modelCB
-            // 
-            this.modelCB.Location = new System.Drawing.Point(4, 181);
-            this.modelCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.modelCB.Name = "modelCB";
-            this.modelCB.Size = new System.Drawing.Size(73, 22);
-            this.modelCB.TabIndex = 16;
-            this.modelCB.Text = "Model";
-            this.modelCB.UseVisualStyleBackColor = true;
-            this.modelCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // operatorNameTBox
-            // 
-            this.operatorNameTBox.Enabled = false;
-            this.operatorNameTBox.Location = new System.Drawing.Point(188, 395);
-            this.operatorNameTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.operatorNameTBox.Name = "operatorNameTBox";
-            this.operatorNameTBox.Size = new System.Drawing.Size(159, 22);
-            this.operatorNameTBox.TabIndex = 75;
-            // 
-            // operatorTBox
-            // 
-            this.operatorTBox.Enabled = false;
-            this.operatorTBox.Location = new System.Drawing.Point(188, 422);
-            this.operatorTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.operatorTBox.Name = "operatorTBox";
-            this.operatorTBox.Size = new System.Drawing.Size(159, 22);
-            this.operatorTBox.TabIndex = 76;
-            // 
-            // bluetoothMacAddressCB
-            // 
-            this.bluetoothMacAddressCB.Location = new System.Drawing.Point(4, 100);
-            this.bluetoothMacAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.bluetoothMacAddressCB.Name = "bluetoothMacAddressCB";
-            this.bluetoothMacAddressCB.Size = new System.Drawing.Size(181, 22);
-            this.bluetoothMacAddressCB.TabIndex = 10;
-            this.bluetoothMacAddressCB.Text = "Bluetooth Mac Address";
-            this.bluetoothMacAddressCB.UseVisualStyleBackColor = true;
-            this.bluetoothMacAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // subscriderIdTBox
-            // 
-            this.subscriderIdTBox.Enabled = false;
-            this.subscriderIdTBox.Location = new System.Drawing.Point(188, 449);
-            this.subscriderIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.subscriderIdTBox.Name = "subscriderIdTBox";
-            this.subscriderIdTBox.Size = new System.Drawing.Size(159, 22);
-            this.subscriderIdTBox.TabIndex = 77;
-            // 
-            // simSerialNumberTBox
-            // 
-            this.simSerialNumberTBox.Enabled = false;
-            this.simSerialNumberTBox.Location = new System.Drawing.Point(188, 476);
-            this.simSerialNumberTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.simSerialNumberTBox.Name = "simSerialNumberTBox";
-            this.simSerialNumberTBox.Size = new System.Drawing.Size(159, 22);
-            this.simSerialNumberTBox.TabIndex = 78;
-            // 
-            // serialCB
-            // 
-            this.serialCB.Location = new System.Drawing.Point(4, 154);
-            this.serialCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.serialCB.Name = "serialCB";
-            this.serialCB.Size = new System.Drawing.Size(69, 22);
-            this.serialCB.TabIndex = 13;
-            this.serialCB.Text = "Serial";
-            this.serialCB.UseVisualStyleBackColor = true;
-            this.serialCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // timeTBox
-            // 
-            this.timeTBox.Enabled = false;
-            this.timeTBox.Location = new System.Drawing.Point(189, 530);
-            this.timeTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.timeTBox.Name = "timeTBox";
-            this.timeTBox.Size = new System.Drawing.Size(159, 22);
-            this.timeTBox.TabIndex = 81;
-            // 
-            // bluetoothAddressCB
-            // 
-            this.bluetoothAddressCB.Location = new System.Drawing.Point(4, 127);
-            this.bluetoothAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.bluetoothAddressCB.Name = "bluetoothAddressCB";
-            this.bluetoothAddressCB.Size = new System.Drawing.Size(149, 22);
-            this.bluetoothAddressCB.TabIndex = 52;
-            this.bluetoothAddressCB.Text = "Bluetooth Address";
-            this.bluetoothAddressCB.UseVisualStyleBackColor = true;
-            this.bluetoothAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // accountTBox
-            // 
-            this.accountTBox.Enabled = false;
-            this.accountTBox.Location = new System.Drawing.Point(189, 558);
-            this.accountTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.accountTBox.Name = "accountTBox";
-            this.accountTBox.Size = new System.Drawing.Size(159, 22);
-            this.accountTBox.TabIndex = 82;
-            // 
-            // clearAll
-            // 
-            this.clearAll.BackColor = System.Drawing.Color.LightSalmon;
-            this.clearAll.Location = new System.Drawing.Point(233, 571);
-            this.clearAll.Margin = new System.Windows.Forms.Padding(0);
-            this.clearAll.Name = "clearAll";
-            this.clearAll.Size = new System.Drawing.Size(211, 28);
-            this.clearAll.TabIndex = 10;
-            this.clearAll.Text = "Очистить все";
-            this.clearAll.UseVisualStyleBackColor = false;
-            this.clearAll.Click += new System.EventHandler(this.clearBoxes_Click);
-            // 
-            // tabsControl
-            // 
-            this.tabsControl.Controls.Add(this.mainTab);
-            this.tabsControl.Controls.Add(this.toolsTab);
-            this.tabsControl.Controls.Add(this.aboutTab);
-            this.tabsControl.Location = new System.Drawing.Point(1034, 1);
-            this.tabsControl.Margin = new System.Windows.Forms.Padding(1);
-            this.tabsControl.MinimumSize = new System.Drawing.Size(456, 0);
-            this.tabsControl.Name = "tabsControl";
-            this.tabsControl.SelectedIndex = 0;
-            this.tabsControl.Size = new System.Drawing.Size(456, 671);
-            this.tabsControl.TabIndex = 13;
-            // 
-            // mainTab
-            // 
-            this.mainTab.BackColor = System.Drawing.SystemColors.Control;
-            this.mainTab.Controls.Add(this.openFolderButton);
-            this.mainTab.Controls.Add(this.saveCheckboxButton);
-            this.mainTab.Controls.Add(this.startButton);
-            this.mainTab.Controls.Add(this.orderLv);
-            this.mainTab.Controls.Add(this.clearAll);
-            this.mainTab.Location = new System.Drawing.Point(4, 25);
-            this.mainTab.Margin = new System.Windows.Forms.Padding(4);
-            this.mainTab.Name = "mainTab";
-            this.mainTab.Padding = new System.Windows.Forms.Padding(4);
-            this.mainTab.Size = new System.Drawing.Size(448, 642);
-            this.mainTab.TabIndex = 0;
-            this.mainTab.Text = "Главная";
-            // 
-            // openFolderButton
-            // 
-            this.openFolderButton.AutoSize = true;
-            this.openFolderButton.Location = new System.Drawing.Point(4, 539);
-            this.openFolderButton.Margin = new System.Windows.Forms.Padding(0);
-            this.openFolderButton.Name = "openFolderButton";
-            this.openFolderButton.Size = new System.Drawing.Size(440, 33);
-            this.openFolderButton.TabIndex = 20;
-            this.openFolderButton.Text = "Открыть папку Apk";
-            this.openFolderButton.UseVisualStyleBackColor = true;
-            this.openFolderButton.Click += new System.EventHandler(this.openFoldersButton_Click);
-            // 
-            // saveCheckboxButton
-            // 
-            this.saveCheckboxButton.BackColor = System.Drawing.Color.MistyRose;
-            this.saveCheckboxButton.Location = new System.Drawing.Point(4, 603);
-            this.saveCheckboxButton.Margin = new System.Windows.Forms.Padding(0);
-            this.saveCheckboxButton.Name = "saveCheckboxButton";
-            this.saveCheckboxButton.Size = new System.Drawing.Size(440, 28);
-            this.saveCheckboxButton.TabIndex = 20;
-            this.saveCheckboxButton.Text = "Сохранить состояние чекбоксов";
-            this.saveCheckboxButton.UseVisualStyleBackColor = false;
-            this.saveCheckboxButton.Click += new System.EventHandler(this.saveCheckboxButton_Click);
-            // 
-            // startButton
-            // 
-            this.startButton.BackColor = System.Drawing.Color.GreenYellow;
-            this.startButton.FlatAppearance.BorderColor = System.Drawing.Color.ForestGreen;
-            this.startButton.Location = new System.Drawing.Point(4, 571);
-            this.startButton.Margin = new System.Windows.Forms.Padding(0);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(211, 28);
-            this.startButton.TabIndex = 15;
-            this.startButton.Text = "Пропатчить apk";
-            this.startButton.UseVisualStyleBackColor = false;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // orderLv
-            // 
-            this.orderLv.AllowDrop = true;
-            this.orderLv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnName});
-            this.orderLv.Dock = System.Windows.Forms.DockStyle.Top;
-            this.orderLv.FullRowSelect = true;
-            this.orderLv.GridLines = true;
-            this.orderLv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.orderLv.Location = new System.Drawing.Point(4, 4);
-            this.orderLv.Margin = new System.Windows.Forms.Padding(4);
-            this.orderLv.MultiSelect = false;
-            this.orderLv.Name = "orderLv";
-            this.orderLv.Size = new System.Drawing.Size(440, 531);
-            this.orderLv.TabIndex = 13;
-            this.orderLv.UseCompatibleStateImageBehavior = false;
-            this.orderLv.View = System.Windows.Forms.View.Details;
-            this.orderLv.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.orderLv_ItemDrag);
-            this.orderLv.DragDrop += new System.Windows.Forms.DragEventHandler(this.orderLv_DragDrop);
-            this.orderLv.DragEnter += new System.Windows.Forms.DragEventHandler(this.orderLv_DragEnter);
-            // 
-            // columnName
-            // 
-            this.columnName.Text = "Очередность патчей";
-            this.columnName.Width = 302;
-            // 
-            // toolsTab
-            // 
-            this.toolsTab.BackColor = System.Drawing.SystemColors.Control;
-            this.toolsTab.Controls.Add(this.btnSettings);
-            this.toolsTab.Controls.Add(this.btnHelp);
-            this.toolsTab.Controls.Add(this.mehButton);
-            this.toolsTab.Controls.Add(this.mergeStringsButton);
-            this.toolsTab.Controls.Add(this.interestingPlacesButton);
-            this.toolsTab.Controls.Add(this.hideIdsButton);
-            this.toolsTab.Controls.Add(this.collectStringsButton);
-            this.toolsTab.Controls.Add(this.addDebugInfoButton);
-            this.toolsTab.Controls.Add(this.remDebugInfoButton);
-            this.toolsTab.Controls.Add(this.helpSmaliButton);
-            this.toolsTab.Location = new System.Drawing.Point(4, 25);
-            this.toolsTab.Margin = new System.Windows.Forms.Padding(4);
-            this.toolsTab.Name = "toolsTab";
-            this.toolsTab.Size = new System.Drawing.Size(448, 642);
-            this.toolsTab.TabIndex = 3;
-            this.toolsTab.Text = "Инструменты";
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSettings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSettings.Location = new System.Drawing.Point(4, 576);
-            this.btnSettings.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(440, 28);
-            this.btnSettings.TabIndex = 25;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnHelp.ForeColor = System.Drawing.Color.Maroon;
-            this.btnHelp.Location = new System.Drawing.Point(4, 610);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(4);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(440, 28);
-            this.btnHelp.TabIndex = 24;
-            this.btnHelp.Text = "H e l p";
-            this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
-            // mehButton
-            // 
-            this.mehButton.Location = new System.Drawing.Point(4, 218);
-            this.mehButton.Margin = new System.Windows.Forms.Padding(4);
-            this.mehButton.Name = "mehButton";
-            this.mehButton.Size = new System.Drawing.Size(440, 28);
-            this.mehButton.TabIndex = 23;
-            this.mehButton.Text = "¯\\_(ツ)_/¯";
-            this.mehButton.UseVisualStyleBackColor = false;
-            this.mehButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // mergeStringsButton
-            // 
-            this.mergeStringsButton.BackColor = System.Drawing.SystemColors.Control;
-            this.mergeStringsButton.Location = new System.Drawing.Point(4, 182);
-            this.mergeStringsButton.Margin = new System.Windows.Forms.Padding(4);
-            this.mergeStringsButton.Name = "mergeStringsButton";
-            this.mergeStringsButton.Size = new System.Drawing.Size(440, 28);
-            this.mergeStringsButton.TabIndex = 22;
-            this.mergeStringsButton.Text = "Перенос перевода из одного strings.xml в другой";
-            this.mergeStringsButton.UseVisualStyleBackColor = false;
-            this.mergeStringsButton.Click += new System.EventHandler(this.mergeStringsButton_Click);
-            // 
-            // interestingPlacesButton
-            // 
-            this.interestingPlacesButton.BackColor = System.Drawing.SystemColors.Control;
-            this.interestingPlacesButton.Location = new System.Drawing.Point(4, 146);
-            this.interestingPlacesButton.Margin = new System.Windows.Forms.Padding(4);
-            this.interestingPlacesButton.Name = "interestingPlacesButton";
-            this.interestingPlacesButton.Size = new System.Drawing.Size(440, 28);
-            this.interestingPlacesButton.TabIndex = 21;
-            this.interestingPlacesButton.Text = "Интересные места";
-            this.interestingPlacesButton.UseVisualStyleBackColor = false;
-            this.interestingPlacesButton.Click += new System.EventHandler(this.interestingPlacesButton_Click);
-            // 
-            // hideIdsButton
-            // 
-            this.hideIdsButton.BackColor = System.Drawing.SystemColors.Control;
-            this.hideIdsButton.Location = new System.Drawing.Point(4, 111);
-            this.hideIdsButton.Margin = new System.Windows.Forms.Padding(4);
-            this.hideIdsButton.Name = "hideIdsButton";
-            this.hideIdsButton.Size = new System.Drawing.Size(440, 28);
-            this.hideIdsButton.TabIndex = 20;
-            this.hideIdsButton.Text = "Список всех ID в layout";
-            this.hideIdsButton.UseVisualStyleBackColor = false;
-            this.hideIdsButton.Click += new System.EventHandler(this.hideIdsButton_Click);
-            // 
-            // collectStringsButton
-            // 
-            this.collectStringsButton.BackColor = System.Drawing.SystemColors.Control;
-            this.collectStringsButton.Location = new System.Drawing.Point(4, 75);
-            this.collectStringsButton.Margin = new System.Windows.Forms.Padding(4);
-            this.collectStringsButton.Name = "collectStringsButton";
-            this.collectStringsButton.Size = new System.Drawing.Size(440, 28);
-            this.collectStringsButton.TabIndex = 19;
-            this.collectStringsButton.Text = "Собрать все строки в values/strings.xml";
-            this.collectStringsButton.UseVisualStyleBackColor = false;
-            this.collectStringsButton.Click += new System.EventHandler(this.collectStringsButton_Click);
-            // 
-            // addDebugInfoButton
-            // 
-            this.addDebugInfoButton.BackColor = System.Drawing.Color.Ivory;
-            this.addDebugInfoButton.Location = new System.Drawing.Point(4, 4);
-            this.addDebugInfoButton.Margin = new System.Windows.Forms.Padding(4);
-            this.addDebugInfoButton.Name = "addDebugInfoButton";
-            this.addDebugInfoButton.Size = new System.Drawing.Size(313, 28);
-            this.addDebugInfoButton.TabIndex = 17;
-            this.addDebugInfoButton.Text = "Добавить отладочную информацию в smali";
-            this.addDebugInfoButton.UseVisualStyleBackColor = false;
-            this.addDebugInfoButton.Click += new System.EventHandler(this.addDebugInfoButton_Click);
-            // 
-            // remDebugInfoButton
-            // 
-            this.remDebugInfoButton.BackColor = System.Drawing.Color.Ivory;
-            this.remDebugInfoButton.Location = new System.Drawing.Point(325, 4);
-            this.remDebugInfoButton.Margin = new System.Windows.Forms.Padding(4);
-            this.remDebugInfoButton.Name = "remDebugInfoButton";
-            this.remDebugInfoButton.Size = new System.Drawing.Size(119, 28);
-            this.remDebugInfoButton.TabIndex = 18;
-            this.remDebugInfoButton.Text = "Удалить";
-            this.remDebugInfoButton.UseVisualStyleBackColor = false;
-            this.remDebugInfoButton.Click += new System.EventHandler(this.remDebugInfoButton_Click);
-            // 
-            // helpSmaliButton
-            // 
-            this.helpSmaliButton.BackColor = System.Drawing.SystemColors.Control;
-            this.helpSmaliButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.helpSmaliButton.Location = new System.Drawing.Point(4, 39);
-            this.helpSmaliButton.Margin = new System.Windows.Forms.Padding(4);
-            this.helpSmaliButton.Name = "helpSmaliButton";
-            this.helpSmaliButton.Size = new System.Drawing.Size(440, 28);
-            this.helpSmaliButton.TabIndex = 16;
-            this.helpSmaliButton.Text = "Добавить вспомогательную инфу в smali";
-            this.helpSmaliButton.UseVisualStyleBackColor = false;
-            this.helpSmaliButton.Click += new System.EventHandler(this.helpSmaliButton_Click);
-            // 
-            // aboutTab
-            // 
-            this.aboutTab.BackColor = System.Drawing.SystemColors.Control;
-            this.aboutTab.Controls.Add(this.Changelog_btn);
-            this.aboutTab.Controls.Add(this.authorLabel3);
-            this.aboutTab.Controls.Add(this.new_author2);
-            this.aboutTab.Controls.Add(this.authorLabel2);
-            this.aboutTab.Controls.Add(this.linkLabel2);
-            this.aboutTab.Controls.Add(this.buildDateLabel);
-            this.aboutTab.Controls.Add(this.lblBuild);
-            this.aboutTab.Controls.Add(this.lblVersion);
-            this.aboutTab.Controls.Add(this.versionLabel);
-            this.aboutTab.Controls.Add(this.textBox1);
-            this.aboutTab.Controls.Add(this.label5);
-            this.aboutTab.Controls.Add(this.yandexMoneyLabel);
-            this.aboutTab.Controls.Add(this.authorLabel);
-            this.aboutTab.Controls.Add(this.yanMoneyLink);
-            this.aboutTab.Controls.Add(this.donateLabel);
-            this.aboutTab.Controls.Add(this.linkLabel1);
-            this.aboutTab.Controls.Add(this.pictureBox1);
-            this.aboutTab.Location = new System.Drawing.Point(4, 25);
-            this.aboutTab.Margin = new System.Windows.Forms.Padding(4);
-            this.aboutTab.Name = "aboutTab";
-            this.aboutTab.Size = new System.Drawing.Size(448, 642);
-            this.aboutTab.TabIndex = 2;
-            this.aboutTab.Text = "About";
-            // 
-            // Changelog_btn
-            // 
-            this.Changelog_btn.BackColor = System.Drawing.SystemColors.Control;
-            this.Changelog_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Changelog_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Changelog_btn.ForeColor = System.Drawing.Color.ForestGreen;
-            this.Changelog_btn.Location = new System.Drawing.Point(156, 432);
-            this.Changelog_btn.Name = "Changelog_btn";
-            this.Changelog_btn.Size = new System.Drawing.Size(113, 34);
-            this.Changelog_btn.TabIndex = 18;
-            this.Changelog_btn.Text = "Changelog";
-            this.Changelog_btn.UseVisualStyleBackColor = false;
-            this.Changelog_btn.Click += new System.EventHandler(this.Changelog_btn_Click);
-            // 
-            // authorLabel3
-            // 
-            this.authorLabel3.AutoSize = true;
-            this.authorLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.authorLabel3.Location = new System.Drawing.Point(22, 225);
-            this.authorLabel3.Margin = new System.Windows.Forms.Padding(4);
-            this.authorLabel3.Name = "authorLabel3";
-            this.authorLabel3.Size = new System.Drawing.Size(140, 20);
-            this.authorLabel3.TabIndex = 16;
-            this.authorLabel3.Text = "Автор (v7b2-???):";
-            this.authorLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // new_author2
-            // 
-            this.new_author2.AutoSize = true;
-            this.new_author2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.new_author2.Location = new System.Drawing.Point(188, 224);
-            this.new_author2.Margin = new System.Windows.Forms.Padding(4);
-            this.new_author2.Name = "new_author2";
-            this.new_author2.Size = new System.Drawing.Size(61, 20);
-            this.new_author2.TabIndex = 17;
-            this.new_author2.TabStop = true;
-            this.new_author2.Text = "Mr Ikso";
-            this.new_author2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.new_author2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.new_author2_LinkClicked);
-            // 
-            // authorLabel2
-            // 
-            this.authorLabel2.AutoSize = true;
-            this.authorLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.authorLabel2.Location = new System.Drawing.Point(21, 197);
-            this.authorLabel2.Margin = new System.Windows.Forms.Padding(4);
-            this.authorLabel2.Name = "authorLabel2";
-            this.authorLabel2.Size = new System.Drawing.Size(138, 20);
-            this.authorLabel2.TabIndex = 14;
-            this.authorLabel2.Text = "Автор (v6d-v7b2):";
-            this.authorLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.linkLabel2.Location = new System.Drawing.Point(188, 196);
-            this.linkLabel2.Margin = new System.Windows.Forms.Padding(4);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(68, 20);
-            this.linkLabel2.TabIndex = 15;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "plusodin";
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAutor2_LinkClicked);
-            // 
-            // buildDateLabel
-            // 
-            this.buildDateLabel.AutoSize = true;
-            this.buildDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buildDateLabel.Location = new System.Drawing.Point(22, 278);
-            this.buildDateLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.buildDateLabel.Name = "buildDateLabel";
-            this.buildDateLabel.Size = new System.Drawing.Size(91, 20);
-            this.buildDateLabel.TabIndex = 13;
-            this.buildDateLabel.Text = "Build Date: ";
-            this.buildDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblBuild
-            // 
-            this.lblBuild.AutoSize = true;
-            this.lblBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBuild.Location = new System.Drawing.Point(188, 277);
-            this.lblBuild.Margin = new System.Windows.Forms.Padding(4);
-            this.lblBuild.Name = "lblBuild";
-            this.lblBuild.Size = new System.Drawing.Size(41, 20);
-            this.lblBuild.TabIndex = 12;
-            this.lblBuild.Text = "date";
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblVersion.Location = new System.Drawing.Point(188, 252);
-            this.lblVersion.Margin = new System.Windows.Forms.Padding(4);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(59, 20);
-            this.lblVersion.TabIndex = 11;
-            this.lblVersion.Text = "version";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // versionLabel
-            // 
-            this.versionLabel.AutoSize = true;
-            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.versionLabel.Location = new System.Drawing.Point(22, 250);
-            this.versionLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(72, 20);
-            this.versionLabel.TabIndex = 3;
-            this.versionLabel.Text = "Версия: ";
-            this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(192, 402);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 6, 7, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(129, 18);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "+79281352466";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(21, 402);
-            this.label5.Margin = new System.Windows.Forms.Padding(4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 20);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "QIWI:";
-            // 
-            // yandexMoneyLabel
-            // 
-            this.yandexMoneyLabel.AutoSize = true;
-            this.yandexMoneyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.yandexMoneyLabel.Location = new System.Drawing.Point(21, 375);
-            this.yandexMoneyLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.yandexMoneyLabel.Name = "yandexMoneyLabel";
-            this.yandexMoneyLabel.Size = new System.Drawing.Size(129, 20);
-            this.yandexMoneyLabel.TabIndex = 5;
-            this.yandexMoneyLabel.Text = "Яндекс.Деньги:";
-            // 
-            // authorLabel
-            // 
-            this.authorLabel.AutoSize = true;
-            this.authorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.authorLabel.Location = new System.Drawing.Point(21, 169);
-            this.authorLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.authorLabel.Name = "authorLabel";
-            this.authorLabel.Size = new System.Drawing.Size(119, 20);
-            this.authorLabel.TabIndex = 1;
-            this.authorLabel.Text = "Автор (v1-v6c):";
-            this.authorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // yanMoneyLink
-            // 
-            this.yanMoneyLink.AutoSize = true;
-            this.yanMoneyLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.yanMoneyLink.Location = new System.Drawing.Point(188, 375);
-            this.yanMoneyLink.Margin = new System.Windows.Forms.Padding(4);
-            this.yanMoneyLink.Name = "yanMoneyLink";
-            this.yanMoneyLink.Size = new System.Drawing.Size(66, 20);
-            this.yanMoneyLink.TabIndex = 8;
-            this.yanMoneyLink.TabStop = true;
-            this.yanMoneyLink.Text = "Ссылка";
-            this.yanMoneyLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.yanMoneyLink_LinkClicked);
-            // 
-            // donateLabel
-            // 
-            this.donateLabel.AutoSize = true;
-            this.donateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Underline);
-            this.donateLabel.Location = new System.Drawing.Point(21, 346);
-            this.donateLabel.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.donateLabel.Name = "donateLabel";
-            this.donateLabel.Size = new System.Drawing.Size(284, 20);
-            this.donateLabel.TabIndex = 9;
-            this.donateLabel.Text = "Если хотите поблагодарить 7lexer7:";
-            this.donateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.linkLabel1.Location = new System.Drawing.Point(188, 168);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(128, 20);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "7lexer7 (Anteiku)";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAutor_LinkClicked);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::AllInOne.Properties.Resources.sloth;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(448, 161);
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
-            // 
-            // progressTbox
-            // 
-            this.progressTbox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.progressTbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainTLP.SetColumnSpan(this.progressTbox, 2);
-            this.progressTbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressTbox.Location = new System.Drawing.Point(1, 720);
-            this.progressTbox.Margin = new System.Windows.Forms.Padding(1);
-            this.progressTbox.Multiline = true;
-            this.progressTbox.Name = "progressTbox";
-            this.progressTbox.ReadOnly = true;
-            this.progressTbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.progressTbox.Size = new System.Drawing.Size(1489, 141);
-            this.progressTbox.TabIndex = 18;
-            // 
-            // taskCountLabel
-            // 
-            this.taskCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.taskCountLabel.AutoSize = true;
-            this.taskCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.taskCountLabel.Location = new System.Drawing.Point(1380, 0);
-            this.taskCountLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.taskCountLabel.Name = "taskCountLabel";
-            this.taskCountLabel.Size = new System.Drawing.Size(107, 17);
-            this.taskCountLabel.TabIndex = 19;
-            this.taskCountLabel.Text = "В процессе: [0]";
-            // 
-            // countryIsoTBox
-            // 
-            this.countryIsoTBox.Enabled = false;
-            this.countryIsoTBox.Location = new System.Drawing.Point(189, 585);
-            this.countryIsoTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.countryIsoTBox.Name = "countryIsoTBox";
-            this.countryIsoTBox.Size = new System.Drawing.Size(159, 22);
-            this.countryIsoTBox.TabIndex = 86;
-            // 
-            // countryIsoCB
-            // 
-            this.countryIsoCB.AutoSize = true;
-            this.countryIsoCB.Location = new System.Drawing.Point(5, 586);
-            this.countryIsoCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.countryIsoCB.Name = "countryIsoCB";
-            this.countryIsoCB.Size = new System.Drawing.Size(141, 21);
-            this.countryIsoCB.TabIndex = 85;
-            this.countryIsoCB.Text = "Country ISO code";
-            this.countryIsoCB.UseVisualStyleBackColor = true;
-            this.countryIsoCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
-            // 
-            // mainTLP
-            // 
-            this.mainTLP.ColumnCount = 2;
-            this.mainTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.mainTLP.Controls.Add(this.mainTabControl, 0, 0);
-            this.mainTLP.Controls.Add(this.tabsControl, 1, 0);
-            this.mainTLP.Controls.Add(this.progressTbox, 0, 1);
-            this.mainTLP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTLP.Location = new System.Drawing.Point(0, 0);
-            this.mainTLP.Margin = new System.Windows.Forms.Padding(4);
-            this.mainTLP.Name = "mainTLP";
-            this.mainTLP.RowCount = 3;
-            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.33334F));
-            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.mainTLP.Size = new System.Drawing.Size(1491, 888);
-            this.mainTLP.TabIndex = 24;
-            // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Controls.Add(this.mainTabPage);
-            this.mainTabControl.Controls.Add(this.replaceTabPage);
-            this.mainTabControl.Location = new System.Drawing.Point(4, 4);
-            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1020, 711);
-            this.mainTabControl.TabIndex = 27;
-            // 
-            // mainTabPage
-            // 
-            this.mainTabPage.AutoScroll = true;
-            this.mainTabPage.Controls.Add(this.themesGBox);
-            this.mainTabPage.Controls.Add(this.splashGBox);
-            this.mainTabPage.Controls.Add(this.otherGBox);
-            this.mainTabPage.Controls.Add(this.licenseGBox);
-            this.mainTabPage.Controls.Add(this.installerGBox);
-            this.mainTabPage.Controls.Add(this.signatureGBox);
-            this.mainTabPage.Controls.Add(this.deleteGBox);
-            this.mainTabPage.Controls.Add(this.analyticGBox);
-            this.mainTabPage.Location = new System.Drawing.Point(4, 25);
-            this.mainTabPage.Margin = new System.Windows.Forms.Padding(4);
-            this.mainTabPage.Name = "mainTabPage";
-            this.mainTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.mainTabPage.Size = new System.Drawing.Size(1012, 682);
-            this.mainTabPage.TabIndex = 0;
-            this.mainTabPage.Text = "Main";
-            this.mainTabPage.UseVisualStyleBackColor = true;
+            // licenseGBox
+            // 
+            this.licenseGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.licenseGBox.Controls.Add(this.licenseGoogleCB);
+            this.licenseGBox.Controls.Add(this.licenseAmazonCB);
+            this.licenseGBox.Location = new System.Drawing.Point(8, 450);
+            this.licenseGBox.Margin = new System.Windows.Forms.Padding(4);
+            this.licenseGBox.MinimumSize = new System.Drawing.Size(307, 0);
+            this.licenseGBox.Name = "licenseGBox";
+            this.licenseGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.licenseGBox.Size = new System.Drawing.Size(307, 44);
+            this.licenseGBox.TabIndex = 20;
+            this.licenseGBox.TabStop = false;
+            this.licenseGBox.Text = "Проверка лицензии";
+            // 
+            // licenseGoogleCB
+            // 
+            this.licenseGoogleCB.AutoSize = true;
+            this.licenseGoogleCB.Location = new System.Drawing.Point(3, 18);
+            this.licenseGoogleCB.Margin = new System.Windows.Forms.Padding(0);
+            this.licenseGoogleCB.Name = "licenseGoogleCB";
+            this.licenseGoogleCB.Size = new System.Drawing.Size(129, 21);
+            this.licenseGoogleCB.TabIndex = 1;
+            this.licenseGoogleCB.Text = "Google License";
+            this.licenseGoogleCB.UseVisualStyleBackColor = true;
+            this.licenseGoogleCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // licenseAmazonCB
+            // 
+            this.licenseAmazonCB.AutoSize = true;
+            this.licenseAmazonCB.Location = new System.Drawing.Point(140, 18);
+            this.licenseAmazonCB.Margin = new System.Windows.Forms.Padding(0);
+            this.licenseAmazonCB.Name = "licenseAmazonCB";
+            this.licenseAmazonCB.Size = new System.Drawing.Size(134, 21);
+            this.licenseAmazonCB.TabIndex = 0;
+            this.licenseAmazonCB.Text = "Amazon License";
+            this.licenseAmazonCB.UseVisualStyleBackColor = true;
+            this.licenseAmazonCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // installerGBox
+            // 
+            this.installerGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.installerGBox.Controls.Add(this.installerGoogleCB);
+            this.installerGBox.Controls.Add(this.installerAmazonCB);
+            this.installerGBox.Location = new System.Drawing.Point(8, 406);
+            this.installerGBox.Margin = new System.Windows.Forms.Padding(4);
+            this.installerGBox.MinimumSize = new System.Drawing.Size(307, 0);
+            this.installerGBox.Name = "installerGBox";
+            this.installerGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.installerGBox.Size = new System.Drawing.Size(307, 44);
+            this.installerGBox.TabIndex = 19;
+            this.installerGBox.TabStop = false;
+            this.installerGBox.Text = "Проверка установщика";
+            // 
+            // installerGoogleCB
+            // 
+            this.installerGoogleCB.AutoSize = true;
+            this.installerGoogleCB.Location = new System.Drawing.Point(3, 18);
+            this.installerGoogleCB.Margin = new System.Windows.Forms.Padding(0);
+            this.installerGoogleCB.Name = "installerGoogleCB";
+            this.installerGoogleCB.Size = new System.Drawing.Size(129, 21);
+            this.installerGoogleCB.TabIndex = 0;
+            this.installerGoogleCB.Text = "Google Installer";
+            this.installerGoogleCB.UseVisualStyleBackColor = true;
+            this.installerGoogleCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // installerAmazonCB
+            // 
+            this.installerAmazonCB.AutoSize = true;
+            this.installerAmazonCB.Location = new System.Drawing.Point(140, 17);
+            this.installerAmazonCB.Margin = new System.Windows.Forms.Padding(0);
+            this.installerAmazonCB.Name = "installerAmazonCB";
+            this.installerAmazonCB.Size = new System.Drawing.Size(134, 21);
+            this.installerAmazonCB.TabIndex = 1;
+            this.installerAmazonCB.Text = "Amazon Installer";
+            this.installerAmazonCB.UseVisualStyleBackColor = true;
+            this.installerAmazonCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // signatureGBox
+            // 
+            this.signatureGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.signatureGBox.Controls.Add(this.binSignatureCB);
+            this.signatureGBox.Controls.Add(this.binSignatureInstallerCB);
+            this.signatureGBox.Controls.Add(this.binInstallerCBox);
+            this.signatureGBox.Location = new System.Drawing.Point(8, 313);
+            this.signatureGBox.Margin = new System.Windows.Forms.Padding(4);
+            this.signatureGBox.MinimumSize = new System.Drawing.Size(307, 0);
+            this.signatureGBox.Name = "signatureGBox";
+            this.signatureGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.signatureGBox.Size = new System.Drawing.Size(307, 94);
+            this.signatureGBox.TabIndex = 21;
+            this.signatureGBox.TabStop = false;
+            this.signatureGBox.Text = "Проверка подписи";
+            // 
+            // binSignatureCB
+            // 
+            this.binSignatureCB.AutoSize = true;
+            this.binSignatureCB.Location = new System.Drawing.Point(3, 18);
+            this.binSignatureCB.Margin = new System.Windows.Forms.Padding(0);
+            this.binSignatureCB.Name = "binSignatureCB";
+            this.binSignatureCB.Size = new System.Drawing.Size(102, 21);
+            this.binSignatureCB.TabIndex = 0;
+            this.binSignatureCB.Text = "патчем Bin";
+            this.binSignatureCB.UseVisualStyleBackColor = true;
+            this.binSignatureCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // binSignatureInstallerCB
+            // 
+            this.binSignatureInstallerCB.AutoSize = true;
+            this.binSignatureInstallerCB.Location = new System.Drawing.Point(3, 39);
+            this.binSignatureInstallerCB.Margin = new System.Windows.Forms.Padding(0);
+            this.binSignatureInstallerCB.Name = "binSignatureInstallerCB";
+            this.binSignatureInstallerCB.Size = new System.Drawing.Size(223, 21);
+            this.binSignatureInstallerCB.TabIndex = 17;
+            this.binSignatureInstallerCB.Text = "патчем от Bin (+Установщик)";
+            this.binSignatureInstallerCB.UseVisualStyleBackColor = true;
+            this.binSignatureInstallerCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // binInstallerCBox
+            // 
+            this.binInstallerCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.binInstallerCBox.Enabled = false;
+            this.binInstallerCBox.FormattingEnabled = true;
+            this.binInstallerCBox.Items.AddRange(new object[] {
+            "Google",
+            "Amazon"});
+            this.binInstallerCBox.Location = new System.Drawing.Point(5, 63);
+            this.binInstallerCBox.Margin = new System.Windows.Forms.Padding(1);
+            this.binInstallerCBox.Name = "binInstallerCBox";
+            this.binInstallerCBox.Size = new System.Drawing.Size(252, 24);
+            this.binInstallerCBox.TabIndex = 18;
+            // 
+            // deleteGBox
+            // 
+            this.deleteGBox.Controls.Add(this.deleteLangsCBox);
+            this.deleteGBox.Controls.Add(this.deleteResourcesCB);
+            this.deleteGBox.Controls.Add(this.emulatorCB);
+            this.deleteGBox.Controls.Add(this.locationCB);
+            this.deleteGBox.Controls.Add(this.gmsCB);
+            this.deleteGBox.Controls.Add(this.autostartCB);
+            this.deleteGBox.Controls.Add(this.internetCB);
+            this.deleteGBox.Controls.Add(this.allToastsCB);
+            this.deleteGBox.Location = new System.Drawing.Point(8, 114);
+            this.deleteGBox.Margin = new System.Windows.Forms.Padding(4);
+            this.deleteGBox.MinimumSize = new System.Drawing.Size(307, 0);
+            this.deleteGBox.Name = "deleteGBox";
+            this.deleteGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.deleteGBox.Size = new System.Drawing.Size(307, 198);
+            this.deleteGBox.TabIndex = 18;
+            this.deleteGBox.TabStop = false;
+            this.deleteGBox.Text = "Удалить";
+            // 
+            // deleteLangsCBox
+            // 
+            this.deleteLangsCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteLangsCBox.Enabled = false;
+            this.deleteLangsCBox.FormattingEnabled = true;
+            this.deleteLangsCBox.Location = new System.Drawing.Point(4, 165);
+            this.deleteLangsCBox.Margin = new System.Windows.Forms.Padding(4);
+            this.deleteLangsCBox.Name = "deleteLangsCBox";
+            this.deleteLangsCBox.Size = new System.Drawing.Size(253, 24);
+            this.deleteLangsCBox.TabIndex = 26;
+            // 
+            // deleteResourcesCB
+            // 
+            this.deleteResourcesCB.AutoSize = true;
+            this.deleteResourcesCB.Location = new System.Drawing.Point(3, 140);
+            this.deleteResourcesCB.Margin = new System.Windows.Forms.Padding(0);
+            this.deleteResourcesCB.Name = "deleteResourcesCB";
+            this.deleteResourcesCB.Size = new System.Drawing.Size(142, 21);
+            this.deleteResourcesCB.TabIndex = 22;
+            this.deleteResourcesCB.Text = "Лишние ресурсы";
+            this.deleteResourcesCB.UseVisualStyleBackColor = true;
+            this.deleteResourcesCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // emulatorCB
+            // 
+            this.emulatorCB.AutoSize = true;
+            this.emulatorCB.Location = new System.Drawing.Point(3, 15);
+            this.emulatorCB.Margin = new System.Windows.Forms.Padding(0);
+            this.emulatorCB.Name = "emulatorCB";
+            this.emulatorCB.Size = new System.Drawing.Size(232, 21);
+            this.emulatorCB.TabIndex = 2;
+            this.emulatorCB.Text = "Проверку на эмулятор Android";
+            this.emulatorCB.UseVisualStyleBackColor = true;
+            this.emulatorCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // locationCB
+            // 
+            this.locationCB.AutoSize = true;
+            this.locationCB.Location = new System.Drawing.Point(3, 98);
+            this.locationCB.Margin = new System.Windows.Forms.Padding(0);
+            this.locationCB.Name = "locationCB";
+            this.locationCB.Size = new System.Drawing.Size(207, 21);
+            this.locationCB.TabIndex = 5;
+            this.locationCB.Text = "Доступ к местоположению";
+            this.locationCB.UseVisualStyleBackColor = true;
+            this.locationCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // gmsCB
+            // 
+            this.gmsCB.AutoSize = true;
+            this.gmsCB.Location = new System.Drawing.Point(3, 36);
+            this.gmsCB.Margin = new System.Windows.Forms.Padding(0);
+            this.gmsCB.Name = "gmsCB";
+            this.gmsCB.Size = new System.Drawing.Size(270, 21);
+            this.gmsCB.TabIndex = 1;
+            this.gmsCB.Text = "Зависимость от Google play services";
+            this.gmsCB.UseVisualStyleBackColor = true;
+            this.gmsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // autostartCB
+            // 
+            this.autostartCB.AutoSize = true;
+            this.autostartCB.Location = new System.Drawing.Point(3, 57);
+            this.autostartCB.Margin = new System.Windows.Forms.Padding(0);
+            this.autostartCB.Name = "autostartCB";
+            this.autostartCB.Size = new System.Drawing.Size(194, 21);
+            this.autostartCB.TabIndex = 17;
+            this.autostartCB.Text = "Автозапуск при загрузке";
+            this.autostartCB.UseVisualStyleBackColor = true;
+            this.autostartCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // internetCB
+            // 
+            this.internetCB.AutoSize = true;
+            this.internetCB.Location = new System.Drawing.Point(3, 78);
+            this.internetCB.Margin = new System.Windows.Forms.Padding(0);
+            this.internetCB.Name = "internetCB";
+            this.internetCB.Size = new System.Drawing.Size(155, 21);
+            this.internetCB.TabIndex = 4;
+            this.internetCB.Text = "Доступ в интернет";
+            this.internetCB.UseVisualStyleBackColor = true;
+            this.internetCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // allToastsCB
+            // 
+            this.allToastsCB.AutoSize = true;
+            this.allToastsCB.Location = new System.Drawing.Point(3, 119);
+            this.allToastsCB.Margin = new System.Windows.Forms.Padding(0);
+            this.allToastsCB.Name = "allToastsCB";
+            this.allToastsCB.Size = new System.Drawing.Size(173, 21);
+            this.allToastsCB.TabIndex = 7;
+            this.allToastsCB.Text = "Все Toast-сообщения";
+            this.allToastsCB.UseVisualStyleBackColor = true;
+            this.allToastsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // analyticGBox
+            // 
+            this.analyticGBox.Controls.Add(this.analyticFirebaseCB);
+            this.analyticGBox.Controls.Add(this.analyticMethodCB);
+            this.analyticGBox.Controls.Add(this.analyticLinksCB);
+            this.analyticGBox.Controls.Add(this.analyticServiceCB);
+            this.analyticGBox.Controls.Add(this.analyticReceiverCB);
+            this.analyticGBox.Controls.Add(this.analyticActivityCB);
+            this.analyticGBox.Controls.Add(this.analyticLayoutCB);
+            this.analyticGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.analyticGBox.Location = new System.Drawing.Point(8, 7);
+            this.analyticGBox.Margin = new System.Windows.Forms.Padding(1);
+            this.analyticGBox.MinimumSize = new System.Drawing.Size(307, 0);
+            this.analyticGBox.Name = "analyticGBox";
+            this.analyticGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.analyticGBox.Size = new System.Drawing.Size(307, 106);
+            this.analyticGBox.TabIndex = 25;
+            this.analyticGBox.TabStop = false;
+            this.analyticGBox.Text = "Аналитика/реклама";
+            // 
+            // analyticFirebaseCB
+            // 
+            this.analyticFirebaseCB.AutoSize = true;
+            this.analyticFirebaseCB.Location = new System.Drawing.Point(3, 81);
+            this.analyticFirebaseCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticFirebaseCB.Name = "analyticFirebaseCB";
+            this.analyticFirebaseCB.Size = new System.Drawing.Size(85, 21);
+            this.analyticFirebaseCB.TabIndex = 6;
+            this.analyticFirebaseCB.Text = "Firebase";
+            this.analyticFirebaseCB.UseVisualStyleBackColor = true;
+            this.analyticFirebaseCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticMethodCB
+            // 
+            this.analyticMethodCB.AutoSize = true;
+            this.analyticMethodCB.Location = new System.Drawing.Point(140, 60);
+            this.analyticMethodCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticMethodCB.Name = "analyticMethodCB";
+            this.analyticMethodCB.Size = new System.Drawing.Size(82, 21);
+            this.analyticMethodCB.TabIndex = 5;
+            this.analyticMethodCB.Text = "Методы";
+            this.analyticMethodCB.UseVisualStyleBackColor = true;
+            this.analyticMethodCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticLinksCB
+            // 
+            this.analyticLinksCB.AutoSize = true;
+            this.analyticLinksCB.Location = new System.Drawing.Point(3, 60);
+            this.analyticLinksCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticLinksCB.Name = "analyticLinksCB";
+            this.analyticLinksCB.Size = new System.Drawing.Size(79, 21);
+            this.analyticLinksCB.TabIndex = 4;
+            this.analyticLinksCB.Text = "Ссылки";
+            this.analyticLinksCB.UseVisualStyleBackColor = true;
+            this.analyticLinksCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticServiceCB
+            // 
+            this.analyticServiceCB.AutoSize = true;
+            this.analyticServiceCB.Location = new System.Drawing.Point(3, 39);
+            this.analyticServiceCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticServiceCB.Name = "analyticServiceCB";
+            this.analyticServiceCB.Size = new System.Drawing.Size(87, 21);
+            this.analyticServiceCB.TabIndex = 3;
+            this.analyticServiceCB.Text = "Сервисы";
+            this.analyticServiceCB.UseVisualStyleBackColor = true;
+            this.analyticServiceCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticReceiverCB
+            // 
+            this.analyticReceiverCB.AutoSize = true;
+            this.analyticReceiverCB.Location = new System.Drawing.Point(140, 17);
+            this.analyticReceiverCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticReceiverCB.Name = "analyticReceiverCB";
+            this.analyticReceiverCB.Size = new System.Drawing.Size(95, 21);
+            this.analyticReceiverCB.TabIndex = 2;
+            this.analyticReceiverCB.Text = "Ресиверы";
+            this.analyticReceiverCB.UseVisualStyleBackColor = true;
+            this.analyticReceiverCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticActivityCB
+            // 
+            this.analyticActivityCB.AutoSize = true;
+            this.analyticActivityCB.Location = new System.Drawing.Point(3, 18);
+            this.analyticActivityCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticActivityCB.Name = "analyticActivityCB";
+            this.analyticActivityCB.Size = new System.Drawing.Size(91, 21);
+            this.analyticActivityCB.TabIndex = 1;
+            this.analyticActivityCB.Text = "Активити";
+            this.analyticActivityCB.UseVisualStyleBackColor = true;
+            this.analyticActivityCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
+            // 
+            // analyticLayoutCB
+            // 
+            this.analyticLayoutCB.AutoSize = true;
+            this.analyticLayoutCB.Location = new System.Drawing.Point(140, 39);
+            this.analyticLayoutCB.Margin = new System.Windows.Forms.Padding(0);
+            this.analyticLayoutCB.Name = "analyticLayoutCB";
+            this.analyticLayoutCB.Size = new System.Drawing.Size(140, 21);
+            this.analyticLayoutCB.TabIndex = 0;
+            this.analyticLayoutCB.Text = "Разметка Layout";
+            this.analyticLayoutCB.UseVisualStyleBackColor = true;
+            this.analyticLayoutCB.CheckedChanged += new System.EventHandler(this.analytics_CheckedChanged);
             // 
             // replaceTabPage
             // 
             this.replaceTabPage.AutoScroll = true;
+            this.replaceTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.replaceTabPage.Controls.Add(this.replaceGBox);
             this.replaceTabPage.Location = new System.Drawing.Point(4, 25);
             this.replaceTabPage.Margin = new System.Windows.Forms.Padding(4);
             this.replaceTabPage.Name = "replaceTabPage";
             this.replaceTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.replaceTabPage.Size = new System.Drawing.Size(1012, 682);
+            this.replaceTabPage.Size = new System.Drawing.Size(1292, 667);
             this.replaceTabPage.TabIndex = 1;
             this.replaceTabPage.Text = "Replace";
-            this.replaceTabPage.UseVisualStyleBackColor = true;
             // 
             // replaceGBox
             // 
@@ -2151,38 +2164,536 @@
             this.imeiTBox.Size = new System.Drawing.Size(159, 22);
             this.imeiTBox.TabIndex = 88;
             // 
-            // pBar
+            // countryIsoTBox
             // 
-            this.pBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pBar.Location = new System.Drawing.Point(1, 0);
-            this.pBar.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
-            this.pBar.Name = "pBar";
-            this.pBar.Size = new System.Drawing.Size(1190, 24);
-            this.pBar.Step = 1;
-            this.pBar.TabIndex = 25;
+            this.countryIsoTBox.Enabled = false;
+            this.countryIsoTBox.Location = new System.Drawing.Point(189, 585);
+            this.countryIsoTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.countryIsoTBox.Name = "countryIsoTBox";
+            this.countryIsoTBox.Size = new System.Drawing.Size(159, 22);
+            this.countryIsoTBox.TabIndex = 86;
             // 
-            // progressTLP
+            // deviceIdCB
             // 
-            this.progressTLP.ColumnCount = 2;
-            this.progressTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.progressTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.progressTLP.Controls.Add(this.pBar, 0, 0);
-            this.progressTLP.Controls.Add(this.taskCountLabel, 1, 0);
-            this.progressTLP.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressTLP.Location = new System.Drawing.Point(0, 888);
-            this.progressTLP.Margin = new System.Windows.Forms.Padding(4);
-            this.progressTLP.MinimumSize = new System.Drawing.Size(0, 25);
-            this.progressTLP.Name = "progressTLP";
-            this.progressTLP.RowCount = 1;
-            this.progressTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.progressTLP.Size = new System.Drawing.Size(1491, 25);
-            this.progressTLP.TabIndex = 25;
+            this.deviceIdCB.Location = new System.Drawing.Point(4, 18);
+            this.deviceIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.deviceIdCB.Name = "deviceIdCB";
+            this.deviceIdCB.Size = new System.Drawing.Size(99, 22);
+            this.deviceIdCB.TabIndex = 1;
+            this.deviceIdCB.Text = "Device ID";
+            this.deviceIdCB.UseVisualStyleBackColor = true;
+            this.deviceIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // countryIsoCB
+            // 
+            this.countryIsoCB.AutoSize = true;
+            this.countryIsoCB.Location = new System.Drawing.Point(5, 586);
+            this.countryIsoCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.countryIsoCB.Name = "countryIsoCB";
+            this.countryIsoCB.Size = new System.Drawing.Size(141, 21);
+            this.countryIsoCB.TabIndex = 85;
+            this.countryIsoCB.Text = "Country ISO code";
+            this.countryIsoCB.UseVisualStyleBackColor = true;
+            this.countryIsoCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // operatorNameTBox
+            // 
+            this.operatorNameTBox.Enabled = false;
+            this.operatorNameTBox.Location = new System.Drawing.Point(188, 395);
+            this.operatorNameTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.operatorNameTBox.Name = "operatorNameTBox";
+            this.operatorNameTBox.Size = new System.Drawing.Size(159, 22);
+            this.operatorNameTBox.TabIndex = 75;
+            // 
+            // allManualCB
+            // 
+            this.allManualCB.AutoSize = true;
+            this.allManualCB.Location = new System.Drawing.Point(189, 613);
+            this.allManualCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.allManualCB.Name = "allManualCB";
+            this.allManualCB.Size = new System.Drawing.Size(99, 21);
+            this.allManualCB.TabIndex = 63;
+            this.allManualCB.Text = "Все (ручн)";
+            this.allManualCB.UseVisualStyleBackColor = true;
+            this.allManualCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // operatorTBox
+            // 
+            this.operatorTBox.Enabled = false;
+            this.operatorTBox.Location = new System.Drawing.Point(188, 422);
+            this.operatorTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.operatorTBox.Name = "operatorTBox";
+            this.operatorTBox.Size = new System.Drawing.Size(159, 22);
+            this.operatorTBox.TabIndex = 76;
+            // 
+            // gpsLatitudeTBox
+            // 
+            this.gpsLatitudeTBox.Enabled = false;
+            this.gpsLatitudeTBox.Location = new System.Drawing.Point(189, 503);
+            this.gpsLatitudeTBox.Margin = new System.Windows.Forms.Padding(0, 1, 1, 1);
+            this.gpsLatitudeTBox.Name = "gpsLatitudeTBox";
+            this.gpsLatitudeTBox.Size = new System.Drawing.Size(77, 22);
+            this.gpsLatitudeTBox.TabIndex = 83;
+            // 
+            // productTBox
+            // 
+            this.productTBox.Enabled = false;
+            this.productTBox.Location = new System.Drawing.Point(188, 368);
+            this.productTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.productTBox.Name = "productTBox";
+            this.productTBox.Size = new System.Drawing.Size(159, 22);
+            this.productTBox.TabIndex = 74;
+            // 
+            // deviceIdTBox
+            // 
+            this.deviceIdTBox.Enabled = false;
+            this.deviceIdTBox.Location = new System.Drawing.Point(188, 16);
+            this.deviceIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.deviceIdTBox.Name = "deviceIdTBox";
+            this.deviceIdTBox.Size = new System.Drawing.Size(159, 22);
+            this.deviceIdTBox.TabIndex = 62;
+            // 
+            // subscriderIdTBox
+            // 
+            this.subscriderIdTBox.Enabled = false;
+            this.subscriderIdTBox.Location = new System.Drawing.Point(188, 449);
+            this.subscriderIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.subscriderIdTBox.Name = "subscriderIdTBox";
+            this.subscriderIdTBox.Size = new System.Drawing.Size(159, 22);
+            this.subscriderIdTBox.TabIndex = 77;
+            // 
+            // gpsLongitudeTBox
+            // 
+            this.gpsLongitudeTBox.Enabled = false;
+            this.gpsLongitudeTBox.Location = new System.Drawing.Point(271, 503);
+            this.gpsLongitudeTBox.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
+            this.gpsLongitudeTBox.Name = "gpsLongitudeTBox";
+            this.gpsLongitudeTBox.Size = new System.Drawing.Size(77, 22);
+            this.gpsLongitudeTBox.TabIndex = 84;
+            // 
+            // manufacturerTBox
+            // 
+            this.manufacturerTBox.Enabled = false;
+            this.manufacturerTBox.Location = new System.Drawing.Point(188, 341);
+            this.manufacturerTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.manufacturerTBox.Name = "manufacturerTBox";
+            this.manufacturerTBox.Size = new System.Drawing.Size(159, 22);
+            this.manufacturerTBox.TabIndex = 73;
+            // 
+            // wifiMacAddressCB
+            // 
+            this.wifiMacAddressCB.Location = new System.Drawing.Point(4, 73);
+            this.wifiMacAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.wifiMacAddressCB.Name = "wifiMacAddressCB";
+            this.wifiMacAddressCB.Size = new System.Drawing.Size(165, 22);
+            this.wifiMacAddressCB.TabIndex = 7;
+            this.wifiMacAddressCB.Text = "WiFi Mac Address";
+            this.wifiMacAddressCB.UseVisualStyleBackColor = true;
+            this.wifiMacAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // modelTBox
+            // 
+            this.modelTBox.Enabled = false;
+            this.modelTBox.Location = new System.Drawing.Point(188, 178);
+            this.modelTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.modelTBox.Name = "modelTBox";
+            this.modelTBox.Size = new System.Drawing.Size(159, 22);
+            this.modelTBox.TabIndex = 67;
+            // 
+            // gpsCB
+            // 
+            this.gpsCB.Location = new System.Drawing.Point(5, 506);
+            this.gpsCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.gpsCB.Name = "gpsCB";
+            this.gpsCB.Size = new System.Drawing.Size(64, 22);
+            this.gpsCB.TabIndex = 55;
+            this.gpsCB.Text = "GPS";
+            this.gpsCB.UseVisualStyleBackColor = true;
+            this.gpsCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // brandTBox
+            // 
+            this.brandTBox.Enabled = false;
+            this.brandTBox.Location = new System.Drawing.Point(188, 206);
+            this.brandTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.brandTBox.Name = "brandTBox";
+            this.brandTBox.Size = new System.Drawing.Size(159, 22);
+            this.brandTBox.TabIndex = 68;
+            // 
+            // androidIdCB
+            // 
+            this.androidIdCB.Location = new System.Drawing.Point(4, 46);
+            this.androidIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.androidIdCB.Name = "androidIdCB";
+            this.androidIdCB.Size = new System.Drawing.Size(101, 22);
+            this.androidIdCB.TabIndex = 4;
+            this.androidIdCB.Text = "Android ID";
+            this.androidIdCB.UseVisualStyleBackColor = true;
+            this.androidIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // subscriberIdCB
+            // 
+            this.subscriberIdCB.Location = new System.Drawing.Point(4, 452);
+            this.subscriberIdCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.subscriberIdCB.Name = "subscriberIdCB";
+            this.subscriberIdCB.Size = new System.Drawing.Size(120, 22);
+            this.subscriberIdCB.TabIndex = 46;
+            this.subscriberIdCB.Text = "Subscriber ID";
+            this.subscriberIdCB.UseVisualStyleBackColor = true;
+            this.subscriberIdCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // timeCB
+            // 
+            this.timeCB.AutoSize = true;
+            this.timeCB.Location = new System.Drawing.Point(5, 533);
+            this.timeCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.timeCB.Name = "timeCB";
+            this.timeCB.Size = new System.Drawing.Size(72, 21);
+            this.timeCB.TabIndex = 58;
+            this.timeCB.Text = "Время";
+            this.timeCB.UseVisualStyleBackColor = true;
+            this.timeCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // ipTBox
+            // 
+            this.ipTBox.Enabled = false;
+            this.ipTBox.Location = new System.Drawing.Point(188, 233);
+            this.ipTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.ipTBox.Name = "ipTBox";
+            this.ipTBox.Size = new System.Drawing.Size(159, 22);
+            this.ipTBox.TabIndex = 69;
+            // 
+            // boardTBox
+            // 
+            this.boardTBox.Enabled = false;
+            this.boardTBox.Location = new System.Drawing.Point(188, 314);
+            this.boardTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.boardTBox.Name = "boardTBox";
+            this.boardTBox.Size = new System.Drawing.Size(159, 22);
+            this.boardTBox.TabIndex = 72;
+            // 
+            // accountCB
+            // 
+            this.accountCB.Location = new System.Drawing.Point(5, 559);
+            this.accountCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.accountCB.Name = "accountCB";
+            this.accountCB.Size = new System.Drawing.Size(129, 22);
+            this.accountCB.TabIndex = 60;
+            this.accountCB.Text = "Account Name";
+            this.accountCB.UseVisualStyleBackColor = true;
+            this.accountCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // modelCB
+            // 
+            this.modelCB.Location = new System.Drawing.Point(4, 181);
+            this.modelCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.modelCB.Name = "modelCB";
+            this.modelCB.Size = new System.Drawing.Size(73, 22);
+            this.modelCB.TabIndex = 16;
+            this.modelCB.Text = "Model";
+            this.modelCB.UseVisualStyleBackColor = true;
+            this.modelCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // wifiMacTBox
+            // 
+            this.wifiMacTBox.Enabled = false;
+            this.wifiMacTBox.Location = new System.Drawing.Point(188, 70);
+            this.wifiMacTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.wifiMacTBox.Name = "wifiMacTBox";
+            this.wifiMacTBox.Size = new System.Drawing.Size(159, 22);
+            this.wifiMacTBox.TabIndex = 64;
+            // 
+            // operatorCB
+            // 
+            this.operatorCB.Location = new System.Drawing.Point(4, 425);
+            this.operatorCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.operatorCB.Name = "operatorCB";
+            this.operatorCB.Size = new System.Drawing.Size(89, 22);
+            this.operatorCB.TabIndex = 43;
+            this.operatorCB.Text = "Operator";
+            this.operatorCB.UseVisualStyleBackColor = true;
+            this.operatorCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // allAutoCB
+            // 
+            this.allAutoCB.AutoSize = true;
+            this.allAutoCB.Location = new System.Drawing.Point(5, 613);
+            this.allAutoCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.allAutoCB.Name = "allAutoCB";
+            this.allAutoCB.Size = new System.Drawing.Size(98, 21);
+            this.allAutoCB.TabIndex = 62;
+            this.allAutoCB.Text = "Все (авто)";
+            this.allAutoCB.UseVisualStyleBackColor = true;
+            this.allAutoCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // serialTBox
+            // 
+            this.serialTBox.Enabled = false;
+            this.serialTBox.Location = new System.Drawing.Point(188, 151);
+            this.serialTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.serialTBox.Name = "serialTBox";
+            this.serialTBox.Size = new System.Drawing.Size(159, 22);
+            this.serialTBox.TabIndex = 66;
+            // 
+            // brandCB
+            // 
+            this.brandCB.Location = new System.Drawing.Point(4, 208);
+            this.brandCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.brandCB.Name = "brandCB";
+            this.brandCB.Size = new System.Drawing.Size(72, 22);
+            this.brandCB.TabIndex = 19;
+            this.brandCB.Text = "Brand";
+            this.brandCB.UseVisualStyleBackColor = true;
+            this.brandCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // deviceTBox
+            // 
+            this.deviceTBox.Enabled = false;
+            this.deviceTBox.Location = new System.Drawing.Point(188, 287);
+            this.deviceTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.deviceTBox.Name = "deviceTBox";
+            this.deviceTBox.Size = new System.Drawing.Size(159, 22);
+            this.deviceTBox.TabIndex = 71;
+            // 
+            // androidIdTBox
+            // 
+            this.androidIdTBox.Enabled = false;
+            this.androidIdTBox.Location = new System.Drawing.Point(188, 43);
+            this.androidIdTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.androidIdTBox.Name = "androidIdTBox";
+            this.androidIdTBox.Size = new System.Drawing.Size(159, 22);
+            this.androidIdTBox.TabIndex = 63;
+            // 
+            // bluetoothMacAddressCB
+            // 
+            this.bluetoothMacAddressCB.Location = new System.Drawing.Point(4, 100);
+            this.bluetoothMacAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.bluetoothMacAddressCB.Name = "bluetoothMacAddressCB";
+            this.bluetoothMacAddressCB.Size = new System.Drawing.Size(181, 22);
+            this.bluetoothMacAddressCB.TabIndex = 10;
+            this.bluetoothMacAddressCB.Text = "Bluetooth Mac Address";
+            this.bluetoothMacAddressCB.UseVisualStyleBackColor = true;
+            this.bluetoothMacAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // simSerialNumberCB
+            // 
+            this.simSerialNumberCB.Location = new System.Drawing.Point(4, 479);
+            this.simSerialNumberCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.simSerialNumberCB.Name = "simSerialNumberCB";
+            this.simSerialNumberCB.Size = new System.Drawing.Size(149, 22);
+            this.simSerialNumberCB.TabIndex = 49;
+            this.simSerialNumberCB.Text = "Sim Serial Number";
+            this.simSerialNumberCB.UseVisualStyleBackColor = true;
+            this.simSerialNumberCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // operatorNameCB
+            // 
+            this.operatorNameCB.Location = new System.Drawing.Point(4, 398);
+            this.operatorNameCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.operatorNameCB.Name = "operatorNameCB";
+            this.operatorNameCB.Size = new System.Drawing.Size(131, 22);
+            this.operatorNameCB.TabIndex = 40;
+            this.operatorNameCB.Text = "Operator Name";
+            this.operatorNameCB.UseVisualStyleBackColor = true;
+            this.operatorNameCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // simSerialNumberTBox
+            // 
+            this.simSerialNumberTBox.Enabled = false;
+            this.simSerialNumberTBox.Location = new System.Drawing.Point(188, 476);
+            this.simSerialNumberTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.simSerialNumberTBox.Name = "simSerialNumberTBox";
+            this.simSerialNumberTBox.Size = new System.Drawing.Size(159, 22);
+            this.simSerialNumberTBox.TabIndex = 78;
+            // 
+            // bluetoothAddressTBox
+            // 
+            this.bluetoothAddressTBox.Enabled = false;
+            this.bluetoothAddressTBox.Location = new System.Drawing.Point(188, 124);
+            this.bluetoothAddressTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.bluetoothAddressTBox.Name = "bluetoothAddressTBox";
+            this.bluetoothAddressTBox.Size = new System.Drawing.Size(159, 22);
+            this.bluetoothAddressTBox.TabIndex = 79;
+            // 
+            // bssidCB
+            // 
+            this.bssidCB.Location = new System.Drawing.Point(4, 262);
+            this.bssidCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.bssidCB.Name = "bssidCB";
+            this.bssidCB.Size = new System.Drawing.Size(77, 22);
+            this.bssidCB.TabIndex = 25;
+            this.bssidCB.Text = "BSSID";
+            this.bssidCB.UseVisualStyleBackColor = true;
+            this.bssidCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // bssidTBox
+            // 
+            this.bssidTBox.Enabled = false;
+            this.bssidTBox.Location = new System.Drawing.Point(188, 260);
+            this.bssidTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.bssidTBox.Name = "bssidTBox";
+            this.bssidTBox.Size = new System.Drawing.Size(159, 22);
+            this.bssidTBox.TabIndex = 70;
+            // 
+            // timeTBox
+            // 
+            this.timeTBox.Enabled = false;
+            this.timeTBox.Location = new System.Drawing.Point(189, 530);
+            this.timeTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.timeTBox.Name = "timeTBox";
+            this.timeTBox.Size = new System.Drawing.Size(159, 22);
+            this.timeTBox.TabIndex = 81;
+            // 
+            // serialCB
+            // 
+            this.serialCB.Location = new System.Drawing.Point(4, 154);
+            this.serialCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.serialCB.Name = "serialCB";
+            this.serialCB.Size = new System.Drawing.Size(69, 22);
+            this.serialCB.TabIndex = 13;
+            this.serialCB.Text = "Serial";
+            this.serialCB.UseVisualStyleBackColor = true;
+            this.serialCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // deviceCB
+            // 
+            this.deviceCB.Location = new System.Drawing.Point(4, 289);
+            this.deviceCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.deviceCB.Name = "deviceCB";
+            this.deviceCB.Size = new System.Drawing.Size(80, 22);
+            this.deviceCB.TabIndex = 28;
+            this.deviceCB.Text = "Device";
+            this.deviceCB.UseVisualStyleBackColor = true;
+            this.deviceCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // productCB
+            // 
+            this.productCB.Location = new System.Drawing.Point(4, 370);
+            this.productCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.productCB.Name = "productCB";
+            this.productCB.Size = new System.Drawing.Size(84, 22);
+            this.productCB.TabIndex = 37;
+            this.productCB.Text = "Product";
+            this.productCB.UseVisualStyleBackColor = true;
+            this.productCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // accountTBox
+            // 
+            this.accountTBox.Enabled = false;
+            this.accountTBox.Location = new System.Drawing.Point(189, 558);
+            this.accountTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.accountTBox.Name = "accountTBox";
+            this.accountTBox.Size = new System.Drawing.Size(159, 22);
+            this.accountTBox.TabIndex = 82;
+            // 
+            // bluetoothAddressCB
+            // 
+            this.bluetoothAddressCB.Location = new System.Drawing.Point(4, 127);
+            this.bluetoothAddressCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.bluetoothAddressCB.Name = "bluetoothAddressCB";
+            this.bluetoothAddressCB.Size = new System.Drawing.Size(149, 22);
+            this.bluetoothAddressCB.TabIndex = 52;
+            this.bluetoothAddressCB.Text = "Bluetooth Address";
+            this.bluetoothAddressCB.UseVisualStyleBackColor = true;
+            this.bluetoothAddressCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // bluetoothMacTBox
+            // 
+            this.bluetoothMacTBox.Enabled = false;
+            this.bluetoothMacTBox.Location = new System.Drawing.Point(188, 97);
+            this.bluetoothMacTBox.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.bluetoothMacTBox.Name = "bluetoothMacTBox";
+            this.bluetoothMacTBox.Size = new System.Drawing.Size(159, 22);
+            this.bluetoothMacTBox.TabIndex = 65;
+            // 
+            // manufacturerCB
+            // 
+            this.manufacturerCB.Location = new System.Drawing.Point(4, 343);
+            this.manufacturerCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.manufacturerCB.Name = "manufacturerCB";
+            this.manufacturerCB.Size = new System.Drawing.Size(119, 22);
+            this.manufacturerCB.TabIndex = 34;
+            this.manufacturerCB.Text = "Manufacturer";
+            this.manufacturerCB.UseVisualStyleBackColor = true;
+            this.manufacturerCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // boardCB
+            // 
+            this.boardCB.Location = new System.Drawing.Point(4, 316);
+            this.boardCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.boardCB.Name = "boardCB";
+            this.boardCB.Size = new System.Drawing.Size(72, 22);
+            this.boardCB.TabIndex = 31;
+            this.boardCB.Text = "Board";
+            this.boardCB.UseVisualStyleBackColor = true;
+            this.boardCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // ipCB
+            // 
+            this.ipCB.Location = new System.Drawing.Point(4, 235);
+            this.ipCB.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.ipCB.Name = "ipCB";
+            this.ipCB.Size = new System.Drawing.Size(48, 22);
+            this.ipCB.TabIndex = 22;
+            this.ipCB.Text = "IP";
+            this.ipCB.UseVisualStyleBackColor = true;
+            this.ipCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // mainTLP
+            // 
+            this.mainTLP.ColumnCount = 2;
+            this.mainTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.mainTLP.Controls.Add(this.mainTabControl, 0, 0);
+            this.mainTLP.Controls.Add(this.tabsControl, 1, 0);
+            this.mainTLP.Controls.Add(this.progressTbox, 0, 1);
+            this.mainTLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainTLP.Location = new System.Drawing.Point(0, 0);
+            this.mainTLP.Margin = new System.Windows.Forms.Padding(4);
+            this.mainTLP.Name = "mainTLP";
+            this.mainTLP.RowCount = 4;
+            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.94144F));
+            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.05855F));
+            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 9F));
+            this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.mainTLP.Size = new System.Drawing.Size(1770, 888);
+            this.mainTLP.TabIndex = 24;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(321, 488);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(279, 22);
+            this.textBox2.TabIndex = 42;
+            this.textBox2.Text = "Имя картинки";
+            // 
+            // mod_image_naneTbox
+            // 
+            this.mod_image_naneTbox.Enabled = false;
+            this.mod_image_naneTbox.Location = new System.Drawing.Point(321, 488);
+            this.mod_image_naneTbox.Margin = new System.Windows.Forms.Padding(1);
+            this.mod_image_naneTbox.Name = "mod_image_naneTbox";
+            this.mod_image_naneTbox.Size = new System.Drawing.Size(279, 22);
+            this.mod_image_naneTbox.TabIndex = 42;
+            this.mod_image_naneTbox.Text = "Имя картинки";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(321, 516);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(279, 22);
+            this.textBox4.TabIndex = 43;
+            this.textBox4.Text = "Имя файла из ченджлогом";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1491, 913);
+            this.ClientSize = new System.Drawing.Size(1770, 913);
             this.Controls.Add(this.mainTLP);
             this.Controls.Add(this.progressTLP);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2193,38 +2704,41 @@
             this.Text = "AllInOne - сборник патчей";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.progressTLP.ResumeLayout(false);
+            this.progressTLP.PerformLayout();
+            this.tabsControl.ResumeLayout(false);
+            this.mainTab.ResumeLayout(false);
+            this.mainTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.app_iconPB)).EndInit();
+            this.toolsTab.ResumeLayout(false);
+            this.aboutTab.ResumeLayout(false);
+            this.aboutTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eggs_picture)).EndInit();
+            this.mainTabControl.ResumeLayout(false);
+            this.mainTabPage.ResumeLayout(false);
             this.themesGBox.ResumeLayout(false);
             this.themesGBox.PerformLayout();
-            this.analyticGBox.ResumeLayout(false);
-            this.analyticGBox.PerformLayout();
-            this.deleteGBox.ResumeLayout(false);
-            this.deleteGBox.PerformLayout();
-            this.signatureGBox.ResumeLayout(false);
-            this.signatureGBox.PerformLayout();
+            this.otherGBox.ResumeLayout(false);
+            this.otherGBox.PerformLayout();
+            this.IconGB.ResumeLayout(false);
+            this.IconGB.PerformLayout();
+            this.splashGBox.ResumeLayout(false);
+            this.splashGBox.PerformLayout();
             this.licenseGBox.ResumeLayout(false);
             this.licenseGBox.PerformLayout();
             this.installerGBox.ResumeLayout(false);
             this.installerGBox.PerformLayout();
-            this.splashGBox.ResumeLayout(false);
-            this.splashGBox.PerformLayout();
-            this.otherGBox.ResumeLayout(false);
-            this.otherGBox.PerformLayout();
-            this.tabsControl.ResumeLayout(false);
-            this.mainTab.ResumeLayout(false);
-            this.mainTab.PerformLayout();
-            this.toolsTab.ResumeLayout(false);
-            this.aboutTab.ResumeLayout(false);
-            this.aboutTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.mainTLP.ResumeLayout(false);
-            this.mainTLP.PerformLayout();
-            this.mainTabControl.ResumeLayout(false);
-            this.mainTabPage.ResumeLayout(false);
+            this.signatureGBox.ResumeLayout(false);
+            this.signatureGBox.PerformLayout();
+            this.deleteGBox.ResumeLayout(false);
+            this.deleteGBox.PerformLayout();
+            this.analyticGBox.ResumeLayout(false);
+            this.analyticGBox.PerformLayout();
             this.replaceTabPage.ResumeLayout(false);
             this.replaceGBox.ResumeLayout(false);
             this.replaceGBox.PerformLayout();
-            this.progressTLP.ResumeLayout(false);
-            this.progressTLP.PerformLayout();
+            this.mainTLP.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2232,462 +2746,208 @@
         // Token: 0x04000047 RID: 71
         private global::System.ComponentModel.IContainer components;
 
-        // Token: 0x04000048 RID: 72
-        private global::System.Windows.Forms.Button clearAll;
-
-        // Token: 0x04000049 RID: 73
-        private global::System.Windows.Forms.TabControl tabsControl;
-
-        // Token: 0x0400004A RID: 74
-        private global::System.Windows.Forms.ListView orderLv;
-
-        // Token: 0x0400004B RID: 75
-        public global::System.Windows.Forms.TabPage mainTab;
-
-        // Token: 0x0400004C RID: 76
-        public global::System.Windows.Forms.ColumnHeader columnName;
-
-        // Token: 0x0400004D RID: 77
-        private global::System.Windows.Forms.Button startButton;
-
-        // Token: 0x0400004E RID: 78
-        public global::System.Windows.Forms.TextBox progressTbox;
-
-        // Token: 0x0400004F RID: 79
-        private global::System.Windows.Forms.Button addDebugInfoButton;
-
-        // Token: 0x04000050 RID: 80
-        private global::System.Windows.Forms.Button helpSmaliButton;
-
-        // Token: 0x04000051 RID: 81
-        private global::System.Windows.Forms.TabPage aboutTab;
-
-        // Token: 0x04000052 RID: 82
-        private global::System.Windows.Forms.TextBox textBox1;
-
-        // Token: 0x04000053 RID: 83
-        private global::System.Windows.Forms.LinkLabel linkLabel1;
-
-        // Token: 0x04000054 RID: 84
-        private global::System.Windows.Forms.Label authorLabel;
-
-        // Token: 0x04000055 RID: 85
-        private global::System.Windows.Forms.Label versionLabel;
-
-        // Token: 0x04000056 RID: 86
-        private global::System.Windows.Forms.Label yandexMoneyLabel;
-
-        // Token: 0x04000057 RID: 87
-        private global::System.Windows.Forms.Label label5;
-
-        // Token: 0x04000058 RID: 88
-        private global::System.Windows.Forms.LinkLabel yanMoneyLink;
-
-        // Token: 0x04000059 RID: 89
-        private global::System.Windows.Forms.Button remDebugInfoButton;
-
-        // Token: 0x0400005A RID: 90
-        private global::System.Windows.Forms.Button saveCheckboxButton;
-
-        // Token: 0x0400005B RID: 91
-        private global::System.Windows.Forms.GroupBox analyticGBox;
-
-        // Token: 0x0400005C RID: 92
-        public global::System.Windows.Forms.CheckBox analyticFirebaseCB;
-
-        // Token: 0x0400005D RID: 93
-        public global::System.Windows.Forms.CheckBox analyticMethodCB;
-
-        // Token: 0x0400005E RID: 94
-        public global::System.Windows.Forms.CheckBox analyticLinksCB;
-
-        // Token: 0x0400005F RID: 95
-        public global::System.Windows.Forms.CheckBox analyticServiceCB;
-
-        // Token: 0x04000060 RID: 96
-        public global::System.Windows.Forms.CheckBox analyticReceiverCB;
-
-        // Token: 0x04000061 RID: 97
-        public global::System.Windows.Forms.CheckBox analyticActivityCB;
-
-        // Token: 0x04000062 RID: 98
-        public global::System.Windows.Forms.CheckBox analyticLayoutCB;
-
-        // Token: 0x04000063 RID: 99
-        private global::System.Windows.Forms.GroupBox deleteGBox;
-
-        // Token: 0x04000064 RID: 100
-        private global::System.Windows.Forms.CheckBox emulatorCB;
-
-        // Token: 0x04000065 RID: 101
-        private global::System.Windows.Forms.CheckBox locationCB;
-
-        // Token: 0x04000066 RID: 102
-        private global::System.Windows.Forms.CheckBox gmsCB;
-
-        // Token: 0x04000067 RID: 103
-        public global::System.Windows.Forms.CheckBox autostartCB;
-
-        // Token: 0x04000068 RID: 104
-        private global::System.Windows.Forms.CheckBox internetCB;
-
-        // Token: 0x04000069 RID: 105
-        private global::System.Windows.Forms.CheckBox allToastsCB;
-
-        // Token: 0x0400006A RID: 106
-        private global::System.Windows.Forms.GroupBox signatureGBox;
-
-        // Token: 0x0400006B RID: 107
-        private global::System.Windows.Forms.CheckBox binSignatureCB;
-
-        // Token: 0x0400006C RID: 108
-        public global::System.Windows.Forms.CheckBox binSignatureInstallerCB;
-
-        // Token: 0x0400006D RID: 109
-        public global::System.Windows.Forms.ComboBox binInstallerCBox;
-
-        // Token: 0x0400006E RID: 110
-        private global::System.Windows.Forms.GroupBox licenseGBox;
-
-        // Token: 0x0400006F RID: 111
-        private global::System.Windows.Forms.CheckBox licenseGoogleCB;
-
-        // Token: 0x04000070 RID: 112
-        private global::System.Windows.Forms.CheckBox licenseAmazonCB;
-
-        // Token: 0x04000071 RID: 113
-        private global::System.Windows.Forms.GroupBox installerGBox;
-
-        // Token: 0x04000072 RID: 114
-        private global::System.Windows.Forms.CheckBox installerGoogleCB;
-
-        // Token: 0x04000073 RID: 115
-        private global::System.Windows.Forms.CheckBox installerAmazonCB;
-
-        // Token: 0x04000074 RID: 116
-        private global::System.Windows.Forms.GroupBox splashGBox;
-
-        // Token: 0x04000075 RID: 117
-        private global::System.Windows.Forms.CheckBox splashInstallCB;
-
-        // Token: 0x04000076 RID: 118
-        private global::System.Windows.Forms.CheckBox splashRemoveCB;
-
-        // Token: 0x04000077 RID: 119
-        private global::System.Windows.Forms.GroupBox otherGBox;
-
-        // Token: 0x04000078 RID: 120
-        public global::System.Windows.Forms.ComboBox installLocationCBox;
-
-        // Token: 0x04000079 RID: 121
-        private global::System.Windows.Forms.CheckBox installLocationCB;
-
-        // Token: 0x0400007A RID: 122
-        private global::System.Windows.Forms.CheckBox addSaveCB;
-
-        // Token: 0x0400007B RID: 123
-        private global::System.Windows.Forms.CheckBox minSdkCB;
-
-        // Token: 0x0400007C RID: 124
-        private global::System.Windows.Forms.CheckBox fullscreenCB;
-
-        // Token: 0x0400007D RID: 125
-        private global::System.Windows.Forms.CheckBox addToastCB;
-
-        // Token: 0x0400007E RID: 126
-        private global::System.Windows.Forms.CheckBox rootCheckCB;
-
-        // Token: 0x0400007F RID: 127
-        public global::System.Windows.Forms.ComboBox minSdkCBox;
-
-        // Token: 0x04000080 RID: 128
-        private global::System.Windows.Forms.CheckBox hideIconCB;
-
-        // Token: 0x04000081 RID: 129
-        private global::System.Windows.Forms.CheckBox noUpdateCB;
-
-        // Token: 0x04000082 RID: 130
-        public global::System.Windows.Forms.TextBox toastMessageTBox;
-
-        // Token: 0x04000083 RID: 131
-        private global::System.Windows.Forms.CheckBox mockLocationCB;
-
-        // Token: 0x04000084 RID: 132
-        private global::System.Windows.Forms.CheckBox googleMapsCB;
-
-        // Token: 0x04000085 RID: 133
-        private global::System.Windows.Forms.CheckBox dexCB;
-
-        // Token: 0x04000086 RID: 134
-        private global::System.Windows.Forms.CheckBox reflectionLogCB;
-
-        // Token: 0x04000087 RID: 135
-        private global::System.Windows.Forms.CheckBox gpsCB;
-
-        // Token: 0x04000088 RID: 136
-        private global::System.Windows.Forms.CheckBox timeCB;
-
-        // Token: 0x04000089 RID: 137
-        public global::System.Windows.Forms.TextBox deviceIdTBox;
-
-        // Token: 0x0400008A RID: 138
-        private global::System.Windows.Forms.CheckBox accountCB;
-
-        // Token: 0x0400008B RID: 139
-        public global::System.Windows.Forms.TextBox androidIdTBox;
-
-        // Token: 0x0400008C RID: 140
-        private global::System.Windows.Forms.CheckBox allAutoCB;
-
-        // Token: 0x0400008D RID: 141
-        private global::System.Windows.Forms.CheckBox brandCB;
-
-        // Token: 0x0400008E RID: 142
-        private global::System.Windows.Forms.CheckBox allManualCB;
-
-        // Token: 0x0400008F RID: 143
-        public global::System.Windows.Forms.TextBox wifiMacTBox;
-
-        // Token: 0x04000090 RID: 144
-        private global::System.Windows.Forms.CheckBox ipCB;
-
-        // Token: 0x04000091 RID: 145
-        public global::System.Windows.Forms.TextBox bluetoothMacTBox;
-
-        // Token: 0x04000092 RID: 146
-        public global::System.Windows.Forms.TextBox bluetoothAddressTBox;
-
-        // Token: 0x04000093 RID: 147
-        public global::System.Windows.Forms.TextBox serialTBox;
-
-        // Token: 0x04000094 RID: 148
-        private global::System.Windows.Forms.CheckBox bssidCB;
-
-        // Token: 0x04000095 RID: 149
-        private global::System.Windows.Forms.CheckBox deviceIdCB;
-
-        // Token: 0x04000096 RID: 150
-        private global::System.Windows.Forms.CheckBox deviceCB;
-
-        // Token: 0x04000097 RID: 151
-        public global::System.Windows.Forms.TextBox modelTBox;
-
-        // Token: 0x04000098 RID: 152
-        public global::System.Windows.Forms.TextBox brandTBox;
-
-        // Token: 0x04000099 RID: 153
-        private global::System.Windows.Forms.CheckBox boardCB;
-
-        // Token: 0x0400009A RID: 154
-        private global::System.Windows.Forms.CheckBox androidIdCB;
-
-        // Token: 0x0400009B RID: 155
-        private global::System.Windows.Forms.CheckBox manufacturerCB;
-
-        // Token: 0x0400009C RID: 156
-        public global::System.Windows.Forms.TextBox ipTBox;
-
-        // Token: 0x0400009D RID: 157
-        private global::System.Windows.Forms.CheckBox productCB;
-
-        // Token: 0x0400009E RID: 158
-        public global::System.Windows.Forms.TextBox bssidTBox;
-
-        // Token: 0x0400009F RID: 159
-        private global::System.Windows.Forms.CheckBox operatorNameCB;
-
-        // Token: 0x040000A0 RID: 160
-        public global::System.Windows.Forms.TextBox deviceTBox;
-
-        // Token: 0x040000A1 RID: 161
-        private global::System.Windows.Forms.CheckBox operatorCB;
-
-        // Token: 0x040000A2 RID: 162
-        public global::System.Windows.Forms.TextBox boardTBox;
-
-        // Token: 0x040000A3 RID: 163
-        private global::System.Windows.Forms.CheckBox subscriberIdCB;
-
-        // Token: 0x040000A4 RID: 164
-        private global::System.Windows.Forms.CheckBox wifiMacAddressCB;
-
-        // Token: 0x040000A5 RID: 165
-        private global::System.Windows.Forms.CheckBox simSerialNumberCB;
-
-        // Token: 0x040000A6 RID: 166
-        public global::System.Windows.Forms.TextBox manufacturerTBox;
-
-        // Token: 0x040000A7 RID: 167
-        public global::System.Windows.Forms.TextBox productTBox;
-
-        // Token: 0x040000A8 RID: 168
-        private global::System.Windows.Forms.CheckBox modelCB;
-
-        // Token: 0x040000A9 RID: 169
-        public global::System.Windows.Forms.TextBox operatorNameTBox;
-
-        // Token: 0x040000AA RID: 170
-        public global::System.Windows.Forms.TextBox operatorTBox;
-
-        // Token: 0x040000AB RID: 171
-        private global::System.Windows.Forms.CheckBox bluetoothMacAddressCB;
-
-        // Token: 0x040000AC RID: 172
-        public global::System.Windows.Forms.TextBox subscriderIdTBox;
-
-        // Token: 0x040000AD RID: 173
-        public global::System.Windows.Forms.TextBox simSerialNumberTBox;
-
-        // Token: 0x040000AE RID: 174
-        private global::System.Windows.Forms.CheckBox serialCB;
-
-        // Token: 0x040000AF RID: 175
-        public global::System.Windows.Forms.TextBox timeTBox;
-
-        // Token: 0x040000B0 RID: 176
-        private global::System.Windows.Forms.CheckBox bluetoothAddressCB;
-
-        // Token: 0x040000B1 RID: 177
-        public global::System.Windows.Forms.TextBox accountTBox;
-
-        // Token: 0x040000B2 RID: 178
-        public global::System.Windows.Forms.TextBox gpsLatitudeTBox;
-
-        // Token: 0x040000B3 RID: 179
-        public global::System.Windows.Forms.TextBox gpsLongitudeTBox;
-
-        // Token: 0x040000B4 RID: 180
-        private global::System.Windows.Forms.Label donateLabel;
-
-        // Token: 0x040000B5 RID: 181
-        private global::System.Windows.Forms.GroupBox themesGBox;
-
-        // Token: 0x040000B6 RID: 182
-        private global::System.Windows.Forms.CheckBox themesLCB;
-
-        // Token: 0x040000B7 RID: 183
-        private global::System.Windows.Forms.CheckBox themesLHMACB;
-
-        // Token: 0x040000B8 RID: 184
-        private global::System.Windows.Forms.CheckBox themesDCB;
-
-        // Token: 0x040000B9 RID: 185
-        private global::System.Windows.Forms.CheckBox themesDHMACB;
-
-        // Token: 0x040000BA RID: 186
-        private global::System.Windows.Forms.Button openFolderButton;
-
         // Token: 0x040000BB RID: 187
         private global::System.Windows.Forms.FolderBrowserDialog folderBrowser;
-
-        // Token: 0x040000BC RID: 188
-        private global::System.Windows.Forms.PictureBox pictureBox1;
-
-        // Token: 0x040000BD RID: 189
-        private global::System.Windows.Forms.TabPage toolsTab;
-
-        // Token: 0x040000BE RID: 190
-        private global::System.Windows.Forms.Button collectStringsButton;
-
-        // Token: 0x040000BF RID: 191
-        private global::System.Windows.Forms.Button hideIdsButton;
-
-        // Token: 0x040000C0 RID: 192
-        private global::System.Windows.Forms.Button interestingPlacesButton;
-
-        // Token: 0x040000C1 RID: 193
-        private global::System.Windows.Forms.CheckBox deleteResourcesCB;
-
-        // Token: 0x040000C2 RID: 194
-        private global::System.Windows.Forms.Button mergeStringsButton;
-
-        // Token: 0x040000C3 RID: 195
-        private global::System.Windows.Forms.CheckBox cloneCB;
-
-        // Token: 0x040000C4 RID: 196
-        public global::System.Windows.Forms.TextBox cloneTBox;
-
-        // Token: 0x040000C5 RID: 197
-        public global::System.Windows.Forms.ComboBox deleteLangsCBox;
-
-        // Token: 0x040000C6 RID: 198
-        private global::System.Windows.Forms.Button mehButton;
-
-        // Token: 0x040000C7 RID: 199
-        private global::System.Windows.Forms.CheckBox countryIsoCB;
-
-        // Token: 0x040000C8 RID: 200
-        public global::System.Windows.Forms.TextBox countryIsoTBox;
-
-        // Token: 0x040000C9 RID: 201
-        private global::System.Windows.Forms.TableLayoutPanel mainTLP;
-
-        // Token: 0x040000CA RID: 202
-        private global::System.Windows.Forms.GroupBox replaceGBox;
 
         // Token: 0x040000CC RID: 204
         public global::System.Windows.Forms.Label taskCountLabel;
 
         // Token: 0x040000CD RID: 205
         public global::System.Windows.Forms.ProgressBar pBar;
-
-        // Token: 0x040000CE RID: 206
-        private global::System.Windows.Forms.CheckBox blockSensorsCB;
-
-        // Token: 0x040000CF RID: 207
-        public global::System.Windows.Forms.ComboBox blockSensorsCBox;
-
-        // Token: 0x040000D0 RID: 208
-        private global::System.Windows.Forms.Button btnHelp;
-
-        // Token: 0x040000D2 RID: 210
-        private global::System.Windows.Forms.Label lblBuild;
-
-        // Token: 0x040000D3 RID: 211
-        private global::System.Windows.Forms.Label buildDateLabel;
-
-        // Token: 0x040000D4 RID: 212
-        private global::System.Windows.Forms.Label authorLabel2;
-
-        // Token: 0x040000D5 RID: 213
-        private global::System.Windows.Forms.LinkLabel linkLabel2;
-
-        // Token: 0x040000D6 RID: 214
-        private global::System.Windows.Forms.CheckBox imeiCB;
-
-        // Token: 0x040000D7 RID: 215
-        public global::System.Windows.Forms.TextBox imeiTBox;
-
-        // Token: 0x040000D8 RID: 216
-        private global::System.Windows.Forms.CheckBox deviceNameCB;
-
-        // Token: 0x040000D9 RID: 217
-        public global::System.Windows.Forms.TextBox deviceNameTBox;
-
-        // Token: 0x040000DA RID: 218
-        public global::System.Windows.Forms.TextBox idTBox;
-
-        // Token: 0x040000DB RID: 219
-        private global::System.Windows.Forms.CheckBox idCB;
-
-        // Token: 0x040000DC RID: 220
-        private global::System.Windows.Forms.Button btnSettings;
-
-        // Token: 0x040000DE RID: 222
-        private global::System.Windows.Forms.TabControl mainTabControl;
-
-        // Token: 0x040000DF RID: 223
-        private global::System.Windows.Forms.TabPage mainTabPage;
-
-        // Token: 0x040000E0 RID: 224
-        private global::System.Windows.Forms.TabPage replaceTabPage;
         private System.Windows.Forms.TableLayoutPanel progressTLP;
-        private System.Windows.Forms.Label authorLabel3;
-        private System.Windows.Forms.LinkLabel new_author2;
-        private System.Windows.Forms.Button Changelog_btn;
-        public System.Windows.Forms.ComboBox backKillCBox;
+        public System.Windows.Forms.RichTextBox progressTbox;
+        private System.Windows.Forms.TableLayoutPanel mainTLP;
+        private System.Windows.Forms.TabControl mainTabControl;
+        private System.Windows.Forms.TabPage mainTabPage;
+        private System.Windows.Forms.GroupBox themesGBox;
+        private System.Windows.Forms.CheckBox themesLCB;
+        private System.Windows.Forms.CheckBox themesLHMACB;
+        private System.Windows.Forms.CheckBox themesDCB;
+        private System.Windows.Forms.CheckBox themesDHMACB;
+        private System.Windows.Forms.GroupBox otherGBox;
+        private System.Windows.Forms.Button open_btn;
+        private System.Windows.Forms.CheckBox add_permissionCB;
+        public System.Windows.Forms.ComboBox add_permissionCBox;
+        private System.Windows.Forms.CheckBox fix_auth_fb_vkCB;
+        private System.Windows.Forms.CheckBox screenOrientationCB;
+        public System.Windows.Forms.ComboBox screenOrientationCBox;
+        public System.Windows.Forms.TextBox file_unpackTBox;
+        private System.Windows.Forms.CheckBox unpackfileCB;
+        public System.Windows.Forms.TextBox folder_unpackTBox;
+        public System.Windows.Forms.TextBox mask_icon_patchTBox;
+        private System.Windows.Forms.CheckBox maskCB;
+        public System.Windows.Forms.TextBox mask_nameTBox;
+        private System.Windows.Forms.CheckBox fix18_9CB;
+        private System.Windows.Forms.GroupBox splashGBox;
+        private System.Windows.Forms.Button open_btn_image;
+        private System.Windows.Forms.CheckBox splashInstallCB;
+        public System.Windows.Forms.TextBox splash_image_patchTBox;
+        private System.Windows.Forms.CheckBox splashRemoveCB;
         private System.Windows.Forms.CheckBox screenshotCB;
         private System.Windows.Forms.CheckBox backKillCB;
+        public System.Windows.Forms.ComboBox backKillCBox;
+        public System.Windows.Forms.ComboBox blockSensorsCBox;
+        private System.Windows.Forms.CheckBox blockSensorsCB;
+        public System.Windows.Forms.TextBox cloneTBox;
+        public System.Windows.Forms.ComboBox installLocationCBox;
+        private System.Windows.Forms.CheckBox cloneCB;
+        private System.Windows.Forms.CheckBox installLocationCB;
+        private System.Windows.Forms.CheckBox addSaveCB;
+        private System.Windows.Forms.CheckBox minSdkCB;
+        private System.Windows.Forms.CheckBox fullscreenCB;
+        private System.Windows.Forms.CheckBox addToastCB;
+        private System.Windows.Forms.CheckBox rootCheckCB;
+        public System.Windows.Forms.ComboBox minSdkCBox;
+        private System.Windows.Forms.CheckBox hideIconCB;
+        private System.Windows.Forms.CheckBox noUpdateCB;
+        public System.Windows.Forms.TextBox toastMessageTBox;
+        private System.Windows.Forms.CheckBox mockLocationCB;
+        private System.Windows.Forms.CheckBox googleMapsCB;
+        private System.Windows.Forms.CheckBox dexCB;
+        private System.Windows.Forms.CheckBox reflectionLogCB;
+        private System.Windows.Forms.GroupBox licenseGBox;
+        private System.Windows.Forms.CheckBox licenseGoogleCB;
+        private System.Windows.Forms.CheckBox licenseAmazonCB;
+        private System.Windows.Forms.GroupBox installerGBox;
+        private System.Windows.Forms.CheckBox installerGoogleCB;
+        private System.Windows.Forms.CheckBox installerAmazonCB;
+        private System.Windows.Forms.GroupBox signatureGBox;
+        private System.Windows.Forms.CheckBox binSignatureCB;
+        public System.Windows.Forms.CheckBox binSignatureInstallerCB;
+        public System.Windows.Forms.ComboBox binInstallerCBox;
+        private System.Windows.Forms.GroupBox deleteGBox;
+        public System.Windows.Forms.ComboBox deleteLangsCBox;
+        private System.Windows.Forms.CheckBox deleteResourcesCB;
+        private System.Windows.Forms.CheckBox emulatorCB;
+        private System.Windows.Forms.CheckBox locationCB;
+        private System.Windows.Forms.CheckBox gmsCB;
+        public System.Windows.Forms.CheckBox autostartCB;
+        private System.Windows.Forms.CheckBox internetCB;
+        private System.Windows.Forms.CheckBox allToastsCB;
+        private System.Windows.Forms.GroupBox analyticGBox;
+        public System.Windows.Forms.CheckBox analyticFirebaseCB;
+        public System.Windows.Forms.CheckBox analyticMethodCB;
+        public System.Windows.Forms.CheckBox analyticLinksCB;
+        public System.Windows.Forms.CheckBox analyticServiceCB;
+        public System.Windows.Forms.CheckBox analyticReceiverCB;
+        public System.Windows.Forms.CheckBox analyticActivityCB;
+        public System.Windows.Forms.CheckBox analyticLayoutCB;
+        private System.Windows.Forms.TabPage replaceTabPage;
+        private System.Windows.Forms.GroupBox replaceGBox;
+        public System.Windows.Forms.TextBox idTBox;
+        private System.Windows.Forms.CheckBox idCB;
+        private System.Windows.Forms.CheckBox deviceNameCB;
+        private System.Windows.Forms.CheckBox imeiCB;
+        public System.Windows.Forms.TextBox deviceNameTBox;
+        public System.Windows.Forms.TextBox imeiTBox;
+        public System.Windows.Forms.TextBox countryIsoTBox;
+        private System.Windows.Forms.CheckBox deviceIdCB;
+        private System.Windows.Forms.CheckBox countryIsoCB;
+        public System.Windows.Forms.TextBox operatorNameTBox;
+        private System.Windows.Forms.CheckBox allManualCB;
+        public System.Windows.Forms.TextBox operatorTBox;
+        public System.Windows.Forms.TextBox gpsLatitudeTBox;
+        public System.Windows.Forms.TextBox productTBox;
+        public System.Windows.Forms.TextBox deviceIdTBox;
+        public System.Windows.Forms.TextBox subscriderIdTBox;
+        public System.Windows.Forms.TextBox gpsLongitudeTBox;
+        public System.Windows.Forms.TextBox manufacturerTBox;
+        private System.Windows.Forms.CheckBox wifiMacAddressCB;
+        public System.Windows.Forms.TextBox modelTBox;
+        private System.Windows.Forms.CheckBox gpsCB;
+        public System.Windows.Forms.TextBox brandTBox;
+        private System.Windows.Forms.CheckBox androidIdCB;
+        private System.Windows.Forms.CheckBox subscriberIdCB;
+        private System.Windows.Forms.CheckBox timeCB;
+        public System.Windows.Forms.TextBox ipTBox;
+        public System.Windows.Forms.TextBox boardTBox;
+        private System.Windows.Forms.CheckBox accountCB;
+        private System.Windows.Forms.CheckBox modelCB;
+        public System.Windows.Forms.TextBox wifiMacTBox;
+        private System.Windows.Forms.CheckBox operatorCB;
+        private System.Windows.Forms.CheckBox allAutoCB;
+        public System.Windows.Forms.TextBox serialTBox;
+        private System.Windows.Forms.CheckBox brandCB;
+        public System.Windows.Forms.TextBox deviceTBox;
+        public System.Windows.Forms.TextBox androidIdTBox;
+        private System.Windows.Forms.CheckBox bluetoothMacAddressCB;
+        private System.Windows.Forms.CheckBox simSerialNumberCB;
+        private System.Windows.Forms.CheckBox operatorNameCB;
+        public System.Windows.Forms.TextBox simSerialNumberTBox;
+        public System.Windows.Forms.TextBox bluetoothAddressTBox;
+        private System.Windows.Forms.CheckBox bssidCB;
+        public System.Windows.Forms.TextBox bssidTBox;
+        public System.Windows.Forms.TextBox timeTBox;
+        private System.Windows.Forms.CheckBox serialCB;
+        private System.Windows.Forms.CheckBox deviceCB;
+        private System.Windows.Forms.CheckBox productCB;
+        public System.Windows.Forms.TextBox accountTBox;
+        private System.Windows.Forms.CheckBox bluetoothAddressCB;
+        public System.Windows.Forms.TextBox bluetoothMacTBox;
+        private System.Windows.Forms.CheckBox manufacturerCB;
+        private System.Windows.Forms.CheckBox boardCB;
+        private System.Windows.Forms.CheckBox ipCB;
+        private System.Windows.Forms.TabControl tabsControl;
+        public System.Windows.Forms.TabPage mainTab;
+        private System.Windows.Forms.Button openFolderButton;
+        private System.Windows.Forms.Button saveCheckboxButton;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.ListView orderLv;
+        public System.Windows.Forms.ColumnHeader columnName;
+        private System.Windows.Forms.Button clearAll;
+        private System.Windows.Forms.TabPage toolsTab;
+        private System.Windows.Forms.Button res_cruptBtn;
+        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button mehButton;
+        private System.Windows.Forms.Button mergeStringsButton;
+        private System.Windows.Forms.Button interestingPlacesButton;
+        private System.Windows.Forms.Button hideIdsButton;
+        private System.Windows.Forms.Button collectStringsButton;
+        private System.Windows.Forms.Button addDebugInfoButton;
+        private System.Windows.Forms.Button remDebugInfoButton;
+        private System.Windows.Forms.Button helpSmaliButton;
+        private System.Windows.Forms.TabPage aboutTab;
+        private System.Windows.Forms.LinkLabel tg_link;
+        private System.Windows.Forms.Label tg_label;
+        private System.Windows.Forms.Button Changelog_btn;
+        private System.Windows.Forms.Label authorLabel3;
+        private System.Windows.Forms.LinkLabel new_author2;
+        private System.Windows.Forms.Label authorLabel2;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Label buildDateLabel;
+        private System.Windows.Forms.Label lblBuild;
         public System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Label authorLabel;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.PictureBox eggs_picture;
+        public System.Windows.Forms.TextBox mod_changelog_nameTBox;
+        public System.Windows.Forms.TextBox mod_image_nameTBox;
+        private System.Windows.Forms.CheckBox add_modDialogCB;
+        public System.Windows.Forms.TextBox mod_linkTBox;
+        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox mod_image_naneTbox;
+        public System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label mask_nameLbl;
+        private System.Windows.Forms.Label mask_icon_patchLbl;
+        private System.Windows.Forms.Label splash_image_patchLbl;
+        private System.Windows.Forms.Label file_unpackLbl;
+        private System.Windows.Forms.Label folder_unpackLbl;
+        private System.Windows.Forms.Label mod_change_log_nameLbl;
+        private System.Windows.Forms.Label mod_image_nameLbl;
+        private System.Windows.Forms.Label mod_linkLbl;
+        private System.Windows.Forms.Button obfuscate_lib_btn;
+        private System.Windows.Forms.Button color_editorBtn;
+        private System.Windows.Forms.Button asmto_hexBtn;
+        private System.Windows.Forms.Button check_protectBtn;
+        private System.Windows.Forms.GroupBox IconGB;
+        private System.Windows.Forms.CheckBox visibleIconCB;
+        public System.Windows.Forms.Label app_package;
+        public System.Windows.Forms.Label app_versionLbl;
+        public System.Windows.Forms.Label app_nameLbl;
+        public System.Windows.Forms.PictureBox app_iconPB;
+        public System.Windows.Forms.Label version_code;
+        private System.Windows.Forms.Button mergeDexBtn;
     }
 }

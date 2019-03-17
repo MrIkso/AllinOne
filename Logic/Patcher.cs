@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,24 +14,33 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using AllInOne.Forms;
+using AllInOne.Logic.Util;
 
 namespace AllInOne.Logic
 {
     public static class Patcher
     {
-        private static object locker = new object();
         public static MainForm mainf;
         public static int replacedCount = 0;
         public static string patchName = "";
 
         public static void loadAllInOne(string[] args)
         {
-            FileInfo fileInfo;
+            FileInfo fi;
+            //args
+            //[0] имя exe AllInOne.exe
+            //[1] папка апк * или ABC epta
+            //[2] язык russian
+            //[3] папка проекта . или имя -не обязательно при standalone
+            //[4] папка BatchApkTool
+
+            //
             if (!Program.standalone)
             {
                 Program.workdir = args[3];
                 Program.ApkDir = args[1];
                 Program.pathToBatchapktool = args[4].Replace("\"", "");
+
                 if ("*".Equals(Program.ApkDir))
                 {
                     if (".".Equals(Program.workdir))
@@ -42,119 +52,163 @@ namespace AllInOne.Logic
                         Program.processApkPath = Program.pathToBatchapktool + "\\" + Program.workdir + "\\_INPUT_APK";
                     }
                 }
-                else if (".".Equals(Program.workdir))
-                {
-                    Program.processApkPath = Program.pathToBatchapktool + "\\_INPUT_APK\\" + Program.ApkDir;
-                }
                 else
                 {
-                    Program.processApkPath = string.Concat(new string[]
+                    if (".".Equals(Program.workdir))
                     {
-                        Program.pathToBatchapktool,
-                        "\\",
-                        Program.workdir,
-                        "\\_INPUT_APK\\",
-                        Program.ApkDir
-                    });
+                        Program.processApkPath = Program.pathToBatchapktool + "\\_INPUT_APK\\" + Program.ApkDir;
+                    }
+                    else
+                    {
+                        Program.processApkPath = Program.pathToBatchapktool + "\\" + Program.workdir + "\\_INPUT_APK\\" + Program.ApkDir;
+                    }
                 }
-                fileInfo = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
-                Program.pathToMyPluginDir = fileInfo.DirectoryName;
+                fi = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
+                Program.pathToMyPluginDir = fi.DirectoryName;
+
                 Language.Load(args[2]);
                 return;
+
             }
-            fileInfo = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
-            Program.pathToMyPluginDir = fileInfo.DirectoryName;
-            Program.pathToBatchapktool = fileInfo.DirectoryName.Substring(0, fileInfo.DirectoryName.IndexOf("\\bin\\"));
+
+            fi = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
+            Program.pathToMyPluginDir = fi.DirectoryName;
+            Program.pathToBatchapktool = fi.DirectoryName.Substring(0, fi.DirectoryName.IndexOf("\\bin\\"));
             Program.workdir = ".";
             Program.ApkDir = "NONE";
             Program.processApkPath = "";
             Language.Load(Settings.language);
         }
-
         public static void setMainForm(ref MainForm f)
         {
-            Patcher.mainf = f;
-        }
-
-        public static void WriteLog(string str)
-        {
-            object obj = Patcher.locker;
-            lock (obj)
-            {
-                File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_log.txt", DateTime.Now.ToString("HH:mm:ss") + " :\n" + str);
-            }
-        }
-
-        public static string getJavaPath()
-        {
-            string result;
-            try
-            {
-                result = Directory.GetFiles(Program.pathToBatchapktool + "\\bin", "java.exe", SearchOption.AllDirectories)[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("getJavaPath\n" + ex.Message + "\n" + ex.ToString());
-                result = "java.exe";
-            }
-            return result;
+            mainf = f;
         }
 
         public static ExcludeRes deSerializeExcludeResFromXml(string filePath)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExcludeRes));
-            FileStream fileStream = new FileStream(filePath, FileMode.Open);
-            ExcludeRes result = (ExcludeRes)xmlSerializer.Deserialize(fileStream);
-            fileStream.Close();
+            XmlSerializer xmlS = new XmlSerializer(typeof(ExcludeRes));
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            ExcludeRes result = (ExcludeRes)xmlS.Deserialize(fs);
+            fs.Close();
             return result;
         }
 
         public static Sensors deSerializeSensorsFromXml(string filePath)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Sensors));
-            FileStream fileStream = new FileStream(filePath, FileMode.Open);
-            Sensors result = (Sensors)xmlSerializer.Deserialize(fileStream);
-            fileStream.Close();
+            XmlSerializer xmlS = new XmlSerializer(typeof(Sensors));
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            Sensors result = (Sensors)xmlS.Deserialize(fs);
+            fs.Close();
             return result;
-        }
-
-        public static void WriteDebugLog(string str)
-        {
-            object obj = Patcher.locker;
-            lock (obj)
-            {
-                File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_DEBUG.txt", str);
-            }
-        }
-
-        public static void DelDebugLogFile()
-        {
-            object obj = Patcher.locker;
-            lock (obj)
-            {
-                File.Delete(Program.pathToBatchapktool + "\\AllInOne_DEBUG.txt");
-            }
         }
 
         public static string getSignatureData(string apkPath)
         {
-            Process process = new Process();
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.FileName = Patcher.getJavaPath();
-            process.StartInfo.Arguments = string.Concat(new string[]
+            Process p = new Process();
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.FileName = Utils.getJavaPath();
+            p.StartInfo.Arguments = "-jar \"" + Program.pathToMyPluginDir + "\\tools\\nkstoolMod.jar\" " + "\"" + apkPath + "\"";
+            p.Start();
+
+            string signatureData = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            return signatureData;
+        }
+
+        public static void resCrupt(string apkPath)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_res_crupt + ":::::");
+            Process p = new Process();
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.FileName = Utils.getJavaPath();
+            p.StartInfo.Arguments = "-jar \"" + Program.pathToMyPluginDir + "\\tools\\arp.jar\" " + "\"" + apkPath + "\"";
+            p.Start();
+
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_res_crupt_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+            p.WaitForExit();
+        }
+       
+        public static void LibObfuscated(string soPatch)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            mainf.appendProgressTbox(Color.Blue, ":::::" + "Lib Obfuscate: Start" + ":::::");
+            string newFilename = Path.GetFileNameWithoutExtension(soPatch) + "-obfuscated" + Path.GetExtension(soPatch);
+            string p = Path.GetDirectoryName(soPatch);
+            string s = Path.Combine(Path.GetDirectoryName(soPatch), newFilename);
+            Dictionary<string, string> pattern = new Dictionary<string, string>();
+            //  pattern.Add("00 00 A0 E3", "00 00 40 E0");
+            pattern.Add("00 20 A0 E3", "02 20 22 E0");
+            pattern.Add("00 10 A0 E3", "01 10 41 E0");
+            //pattern.Add("00 30 A0 E3", "03 30 23 E0");
+            //pattern.Add("00 40 A0 E3", "04 40 24 E0");
+            //pattern.Add("00 50 A0 E3", "05 50 25 E0");
+            //pattern.Add("00 60 A0 E3", "06 60 26 E0");
+            //pattern.Add("00 70 A0 E3", "07 70 27 E0");
+            //pattern.Add("00 80 A0 E3", "08 80 28 E0");
+            //pattern.Add("00 90 A0 E3", "09 90 29 E0");
+            //pattern.Add("00 A0 A0 E3", "0A A0 2A E0");
+            //pattern.Add("00 B0 B0 E3", "0B B0 2B E0");
+            //pattern.Add("00 C0 A0 E3", "0C C0 2C E0");
+            //pattern.Add("1E FF 2F E1", "3E FF 2F E1");
+            StringBuilder stringBuilder = new StringBuilder();
+            bool flag = false;
+            byte[] array = File.ReadAllBytes(soPatch);
+            foreach (KeyValuePair<string, string> keyValuePair in pattern)
             {
-                "-jar \"",
-                Program.pathToMyPluginDir,
-                "\\nkstoolMod.jar\" \"",
-                apkPath,
-                "\""
-            });
-            process.Start();
-            string result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return result;
+                byte[] array2 = Utils.stringToBytes(keyValuePair.Key);
+                byte[] array3 = Utils.stringToBytes(keyValuePair.Value);
+                List<int> list = Patcher.indexOfBlock(array, array2);
+                if (list.Count > 0)
+                {
+                    flag = true;
+                }
+                if (Settings.writeDebug && flag)
+                {
+                    stringBuilder.AppendLine("AllinOne version= " + mainf.version);
+                    stringBuilder.AppendLine("Patch= " + Patcher.patchName);
+                    stringBuilder.AppendLine(string.Concat(new string[]
+                    {
+                        "File= ",
+                        (soPatch),
+                        "\nOld=\n",
+                        keyValuePair.Key,
+                        "\nNew=\n"
+                       // keyValuePair.Value,
+                      //  "\nOffset= "
+                    }));
+                    //  stringBuilder.AppendLine("Offset= " + );
+                    stringBuilder.AppendLine("====================================================================================================================================================");
+                }
+                foreach (int num in list)
+                {
+                    for (int i = 0; i < array2.Length; i++)
+                    {
+                        array[num + i] = array3[i];
+                    }
+                }
+            }
+            if (flag)
+            {
+                //if (formlogging)
+                //{
+                //    Patcher.mainf.appendProgressTbox("     " + Language.log_patched + Patcher.TrimPathToInput(soPath));
+                //}
+                File.WriteAllBytes(s, array);
+            }
+
+            if (flag == false)
+            {
+                mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_foundet_pattern);
+            }
+            Utils.WriteDebugLog(stringBuilder.ToString());
+            mainf.appendProgressTbox(Color.Green, ":::::" + "File saved to: " + s + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + "Lib Obfuscate: Done" + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+            MessageBox.Show("Lib Obfuscate: Done" + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")", "Done", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         public static void filterExclude(ref List<string> list, ExcludeRes eRes)
@@ -327,219 +381,48 @@ namespace AllInOne.Logic
             catch (Exception ex)
             {
                 MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("Error in copyFileOrNot\nError message:" + ex.Message + "\n" + ex.ToString());
+                Utils.WriteLog("Error in copyFileOrNot\nError message:" + ex.Message + "\n" + ex.ToString());
             }
-        }
-
-        public static byte[] stringToBytes(string str)
-        {
-            string[] array = str.Split(new char[]
-            {
-                ' '
-            });
-            byte[] array2 = new byte[array.Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                array2[i] = Convert.ToByte(array[i], 16);
-            }
-            return array2;
-        }
-
-        public static string stringToHex(string str)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (byte b in Encoding.UTF8.GetBytes(str))
-            {
-                stringBuilder.Append(b.ToString("X2"));
-                stringBuilder.Append(" ");
-            }
-            return stringBuilder.ToString().TrimEnd(new char[0]);
-        }
-
-        public static string convertUnicodeToText(string text)
-        {
-            string result = "";
-            try
-            {
-                UTF8Encoding utf = new UTF8Encoding();
-                UnicodeEncoding unicode = new UnicodeEncoding();
-                foreach (Match m in Regex.Matches(text, @"\\u([0-9a-fA-F]+)"))
-                {
-                    text = text.Replace(m.Value, ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString());
-                }
-                result = utf.GetString(Encoding.Convert(unicode, utf, unicode.GetBytes(text))).Replace("\r", "").Replace("\n", "");
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-            return result;
-        }
-
-        public static string convertBase64ToText(string text)
-        {
-            UTF8Encoding utf = new UTF8Encoding();
-            UnicodeEncoding unicode = new UnicodeEncoding();
-            string result = "";
-            byte[] resultBytes;
-
-            try
-            {
-                if (text.Length % 4 == 0 && text.Length >= 4)
-                {
-                    if (text.Length == 4 && text.IndexOf("=") == -1) { return ""; }
-
-                    resultBytes = Convert.FromBase64String(text);
-
-                    result = utf.GetString(resultBytes).Replace("\r", "").Replace("\n", "");
-                    foreach (char c in result)
-                    {
-                        if (Char.GetUnicodeCategory(c) == UnicodeCategory.OtherLetter || Char.GetUnicodeCategory(c) == UnicodeCategory.OtherSymbol || Char.GetUnicodeCategory(c) == UnicodeCategory.Control)
-                        {
-                            result = "";
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-            return result;
-        }
-
-        public static string convertArrayDataToString(string text)
-        {
-            try
-            {
-                string result = "";
-                List<string> replaced = new List<string>();
-                string[] letters = new string[] { "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я", "а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", ",", "\'", "\"", "%", "\\", "@", ":", ";", "(", ")", "*", "&", "[", "]", "/", "_", "-", "+", "=", "?", "{", "}", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", " " };
-                string[] lettersHex = new string[] { "-0x30t-0x70t", "-0x30t-0x6ft", "-0x30t-0x6et", "-0x30t-0x6dt", "-0x30t-0x6ct", "-0x30t-0x6bt", "-0x30t-0x7ft", "-0x30t-0x6at", "-0x30t-0x69t", "-0x30t-0x68t", "-0x30t-0x67t", "-0x30t-0x66t", "-0x30t-0x65t", "-0x30t-0x64t", "-0x30t-0x63t", "-0x30t-0x62t", "-0x30t-0x61t", "-0x30t-0x60t", "-0x30t-0x5ft", "-0x30t-0x5et", "-0x30t-0x5dt", "-0x30t-0x5ct", "-0x30t-0x5bt", "-0x30t-0x5at", "-0x30t-0x59t", "-0x30t-0x58t", "-0x30t-0x57t", "-0x30t-0x56t", "-0x30t-0x55t", "-0x30t-0x54t", "-0x30t-0x53t", "-0x30t-0x52t", "-0x30t-0x51t", "-0x30t-0x50t", "-0x30t-0x4ft", "-0x30t-0x4et", "-0x30t-0x4dt", "-0x30t-0x4ct", "-0x30t-0x4bt", "-0x2ft-0x6ft", "-0x30t-0x4at", "-0x30t-0x49t", "-0x30t-0x48t", "-0x30t-0x47t", "-0x30t-0x46t", "-0x30t-0x45t", "-0x30t-0x44t", "-0x30t-0x43t", "-0x30t-0x42t", "-0x30t-0x41t", "-0x2ft-0x80t", "-0x2ft-0x7ft", "-0x2ft-0x7et", "-0x2ft-0x7dt", "-0x2ft-0x7ct", "-0x2ft-0x7bt", "-0x2ft-0x7at", "-0x2ft-0x79t", "-0x2ft-0x78t", "-0x2ft-0x77t", "-0x2ft-0x76t", "-0x2ft-0x75t", "-0x2ft-0x74t", "-0x2ft-0x73t", "-0x2ft-0x72t", "-0x2ft-0x71t", "0x41t", "0x42t", "0x43t", "0x44t", "0x45t", "0x46t", "0x47t", "0x48t", "0x49t", "0x4at", "0x4bt", "0x4ct", "0x4dt", "0x4et", "0x4ft", "0x50t", "0x51t", "0x52t", "0x53t", "0x54t", "0x55t", "0x56t", "0x57t", "0x58t", "0x59t", "0x5at", "0x61t", "0x62t", "0x63t", "0x64t", "0x65t", "0x66t", "0x67t", "0x68t", "0x69t", "0x6at", "0x6bt", "0x6ct", "0x6dt", "0x6et", "0x6ft", "0x70t", "0x71t", "0x72t", "0x73t", "0x74t", "0x75t", "0x76t", "0x77t", "0x78t", "0x79t", "0x7at", "0x2et", "0x2ct", "0x27t", "0x22t", "0x25t", "0x5ct", "0x40t", "0x3at", "0x3bt", "0x28t", "0x29t", "0x2at", "0x26t", "0x5bt", "0x5dt", "0x2ft", "0x5ft", "0x2dt", "0x2bt", "0x3dt", "0x3ft", "0x7bt", "0x7dt", "0x31t", "0x32t", "0x33t", "0x34t", "0x35t", "0x36t", "0x37t", "0x38t", "0x39t", "0x30t", "0x20t" };
-                UTF8Encoding utf = new UTF8Encoding();
-                ASCIIEncoding asci = new ASCIIEncoding();
-                UnicodeEncoding unicode = new UnicodeEncoding();
-
-                text = text.Replace("\r\n", "");
-                text = text.Replace(" ", "");
-
-                for (int i = 0; i < letters.Length; i++)
-                {
-                    if (replaced.Contains(letters[i])) { continue; }
-
-                    text = text.Replace(lettersHex[i], letters[i]);
-                    replaced.Add(letters[i]);
-                }
-                if (Regex.Matches(text, @"-?0x[a-fA-F0-9]+t").Count != 0) { return ""; }
-
-                replaced.Clear();
-                result = utf.GetString(Encoding.Convert(unicode, utf, unicode.GetBytes(text))).Replace("\r", "").Replace("\n", "");
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-        }
-
-        public static string getCurrentTime()
-        {
-            return "0x" + ((long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds).ToString("X") + "L";
-        }
-
-        public static string parseDateTime(string dateTime, string path)
-        {
-            string result;
-            try
-            {
-                result = "0x" + ((long)(Convert.ToDateTime(dateTime) - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds).ToString("X") + "L";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
-                Patcher.WriteLog("Error in parseDateTime\nError message:" + ex.Message + "\n" + ex.ToString());
-                result = "";
-            }
-            return result;
-        }
-
-        public static string ReadRSA(string path)
-        {
-            if (!File.Exists(path + "\\original\\META-INF\\CERT.RSA"))
-            {
-                MessageBox.Show(path + Language.errorMsgRsa, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return "";
-            }
-            FileStream fileStream = new FileStream(path + "\\original\\META-INF\\CERT.RSA", FileMode.Open);
-            string text = "";
-            int num = 0;
-            int num2;
-            while ((num2 = fileStream.ReadByte()) != -1)
-            {
-                text += string.Format("{0:X2}", num2);
-                num++;
-            }
-            return text;
         }
 
         public static string TrimPathToInput(string str)
         {
-            string result;
             try
             {
-                result = str.Remove(0, str.IndexOf("_INPUT_APK") + "_INPUT_APK\\".Length);
+                return str.Remove(0, str.IndexOf("_INPUT_APK") + "_INPUT_APK\\".Length);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("Error in TrimPathToInput\nError message: " + ex.Message + "\n" + ex.ToString());
-                result = str;
+                Utils.WriteLog("Error in TrimPathToInput\nError message:" + e.Message + "\n" + e.ToString());
+                return str;
             }
-            return result;
         }
 
         public static string getPathToSmali(string path, string activityName)
-        {
-            string result = "";
+        {//epta.my.yoba
+            string pathToSmaliClass = "";
+
             if (activityName.StartsWith("."))
             {
-                activityName = Patcher.GetAppPackage(path) + activityName;
+                activityName = GetAppPackage(path) + activityName;
             }
+
             if (File.Exists(path + "\\smali\\" + activityName.Replace(".", "\\") + ".smali"))
             {
-                result = path + "\\smali\\" + activityName.Replace(".", "\\") + ".smali";
+                pathToSmaliClass = path + "\\smali\\" + activityName.Replace(".", "\\") + ".smali";
             }
             else
             {
-                for (int i = 0; i < 150; i++)
+                for (int k = 0; k < 150; k++)
                 {
-                    if (File.Exists(string.Concat(new string[]
+                    if (File.Exists(path + "\\smali_classes" + k.ToString() + "\\" + activityName.Replace(".", "\\") + ".smali"))
                     {
-                        path,
-                        "\\smali_classes",
-                        i.ToString(),
-                        "\\",
-                        activityName.Replace(".", "\\"),
-                        ".smali"
-                    })))
-                    {
-                        result = string.Concat(new string[]
-                        {
-                            path,
-                            "\\smali_classes",
-                            i.ToString(),
-                            "\\",
-                            activityName.Replace(".", "\\"),
-                            ".smali"
-                        });
+                        pathToSmaliClass = path + "\\smali_classes" + k.ToString() + "\\" + activityName.Replace(".", "\\") + ".smali";
                         break;
                     }
                 }
             }
-            return result;
+            return pathToSmaliClass;
         }
 
         public static bool ReplaceInFile(string path, Dictionary<string, string> Patterns, bool formlogging = true)
@@ -552,6 +435,7 @@ namespace AllInOne.Logic
             {
                 string fileContent = File.ReadAllText(path, Encoding.UTF8);
                 int orig = fileContent.GetHashCode();
+                bool flag = false;
                 foreach (var patternPair in Patterns)
                 {
                     fileContent = Regex.Replace(fileContent, patternPair.Key, (m) =>
@@ -566,16 +450,27 @@ namespace AllInOne.Logic
                         return newValue;
                     });
                 }
+                if (fileContent.Length == 0)
+                {
+                    mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_foundet_pattern);
+                }
                 if (orig != fileContent.GetHashCode())
                 {
                     using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(false), 65536))
                     {
                         sw.WriteLine(fileContent);
                     }
-                    if (formlogging) { mainf.appendProgressTbox("    " + Language.log_patched + TrimPathToInput(path)); }
+                    if (formlogging)
+                    {
+                        mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(path));
+                        flag = true;
+                    }
+
+
+
                     if (Settings.writeDebug)
                     {
-                        WriteDebugLog(log.ToString());
+                        Utils.WriteDebugLog(log.ToString());
                     }
                     return true;
                 }
@@ -583,9 +478,10 @@ namespace AllInOne.Logic
             catch (Exception e)
             {
                 MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                WriteLog("Error in ReplaceInFile\nError message:" + e.Message + "\n" + e.ToString());
+                Utils.WriteLog("Error in ReplaceInFile\nError message:" + e.Message + "\n" + e.ToString());
                 return false;
             }
+
             return false;
         }
 
@@ -619,14 +515,14 @@ namespace AllInOne.Logic
                 {
                     if (Settings.writeDebug)
                     {
-                        WriteDebugLog(log.ToString());
+                        Utils.WriteDebugLog(log.ToString());
                     }
                 }
 
             }
             catch (Exception e)
             {
-                WriteLog("Error in ReplaceInFileEx\nError message:" + e.Message + "\n" + e.ToString());
+                Utils.WriteLog("Error in ReplaceInFileEx\nError message:" + e.Message + "\n" + e.ToString());
             }
         }
 
@@ -664,8 +560,8 @@ namespace AllInOne.Logic
             byte[] array = File.ReadAllBytes(soPath);
             foreach (KeyValuePair<string, string> keyValuePair in values)
             {
-                byte[] array2 = Patcher.stringToBytes(keyValuePair.Key);
-                byte[] array3 = Patcher.stringToBytes(keyValuePair.Value);
+                byte[] array2 = Utils.stringToBytes(keyValuePair.Key);
+                byte[] array3 = Utils.stringToBytes(keyValuePair.Value);
                 List<int> list = Patcher.indexOfBlock(array, array2);
                 if (list.Count > 0)
                 {
@@ -698,11 +594,19 @@ namespace AllInOne.Logic
             {
                 if (formlogging)
                 {
-                    Patcher.mainf.appendProgressTbox("    "+ Language.log_patched + Patcher.TrimPathToInput(soPath));
+                    Patcher.mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + Patcher.TrimPathToInput(soPath));
+
                 }
                 File.WriteAllBytes(soPath, array);
             }
-            Patcher.WriteDebugLog(stringBuilder.ToString());
+            if (flag == false)
+            {
+                if (formlogging)
+                {
+                    mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_foundet_pattern);
+                }
+            }
+            Utils.WriteDebugLog(stringBuilder.ToString());
         }
 
         public static void ReplaceInSoLibs(string path, Dictionary<string, string> values, bool formlogging = true)
@@ -726,7 +630,17 @@ namespace AllInOne.Logic
 
         public static string GetAppPackage(string path)
         {
-            return Regex.Match(File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8), "package=\\\"([^\\\"]+)\\\"").Groups[1].Value;
+            string result = "";
+            try
+            {
+                result = Regex.Match(File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8), "package=\\\"([^\\\"]+)\\\"").Groups[1].Value;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                Utils.WriteLog("GetAppPackage\n" + ex.Message + "\n" + ex.ToString());
+            }
+            return result;
         }
 
         public static string GetLauncherActivity(string path)
@@ -751,7 +665,7 @@ namespace AllInOne.Logic
             catch (Exception ex)
             {
                 MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("GetLauncherActivityNoRegex\n" + ex.Message + "\n" + ex.ToString());
+                Utils.WriteLog("GetLauncherActivityNoRegex\n" + ex.Message + "\n" + ex.ToString());
             }
             return result;
         }
@@ -792,7 +706,7 @@ namespace AllInOne.Logic
                 catch (Exception e)
                 {
                     MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    WriteLog("Error in openTextEditor\nError message:" + e.Message + "\n" + e.ToString());
+                    Utils.WriteLog("Error in openTextEditor\nError message:" + e.Message + "\n" + e.ToString());
                 }
             }).Start();
         }
@@ -808,7 +722,7 @@ namespace AllInOne.Logic
 
         public static void remDebugInfo(string path)
         {
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_remove_dbg_info + Patcher.TrimPathToInput(path) + " :::::");
+            Patcher.mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_remove_dbg_info + Patcher.TrimPathToInput(path) + " :::::");
             Patcher.ReplaceInFiles(path, new Dictionary<string, string>
             {
                 {
@@ -816,14 +730,14 @@ namespace AllInOne.Logic
                     ""
                 }
             }, "*.smali", "smali*", false);
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_remove_dbg_info_done + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_remove_dbg_info_done + ":::::");
         }
 
         public static void addDebugInfo(string path)
         {
             List<string> foundedFiles = new List<string>();
             TaskPool work = new TaskPool(Settings.TaskCount, ref mainf.taskCountLabel, ref mainf.pBar);
-            mainf.appendProgressTbox(":::::" + Language.log_add_dbg_info + TrimPathToInput(path) + " :::::");
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_add_dbg_info + TrimPathToInput(path) + " :::::");
             int fileNum = 1;
 
             foreach (string foundedDir in Directory.GetDirectories(path, "smali*"))
@@ -957,8 +871,8 @@ namespace AllInOne.Logic
             }
 
             work.Start();
-            mainf.appendProgressTbox("    " + Language.log_patched + fileNum.ToString() + " files");
-            mainf.appendProgressTbox(":::::" + Language.log_add_dbg_info_done + ":::::");
+            mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + fileNum.ToString() + " files");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_add_dbg_info_done + ":::::");
         }
 
         public static string raiseVersion(string str)
@@ -987,7 +901,7 @@ namespace AllInOne.Logic
                 }
                 return newValue;
             });
-            mainf.appendProgressTbox("    "+ Language.log_patched + TrimPathToInput(path + "\\apktool.yml"));
+            mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(path + "\\apktool.yml"));
             using (StreamWriter sw = new StreamWriter(path + "\\apktool.yml", false, new UTF8Encoding(false), 65536))
             {
                 sw.WriteLine(imlContent);
@@ -996,14 +910,14 @@ namespace AllInOne.Logic
             pattern.Add("\"" + versionName.Replace("'", "") + "\"", "\"" + raiseVersion(versionName.Replace("'", "")) + "\"");
 
             ReplaceInFiles(path, pattern, "*.smali", "smali*");
-            WriteDebugLog(log.ToString());
+            Utils.WriteDebugLog(log.ToString());
         }
 
         public static void addSecondaryInfo(string path)
         {
             List<string> foundedFiles = new List<string>();
             TaskPool work = new TaskPool(Settings.TaskCount, ref mainf.taskCountLabel, ref mainf.pBar);
-            mainf.appendProgressTbox(":::::" + Language.log_add_smali_secondary_info + TrimPathToInput(path) + " :::::");
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_add_smali_secondary_info + TrimPathToInput(path) + " :::::");
             //key=id value={type, name, value}
             Dictionary<string, string[]> foundedInPublic = new Dictionary<string, string[]>();//key=id value={type, name}
             Dictionary<string, string> stringRuValues = new Dictionary<string, string>();//key=name value=value
@@ -1083,7 +997,7 @@ namespace AllInOne.Logic
                         {
                             if (replacedSubs.Contains(m.Value)) { continue; }
 
-                            string tmp = convertUnicodeToText(m.Groups[1].Value);
+                            string tmp = Utils.convertUnicodeToText(m.Groups[1].Value);
                             if (!"".Equals(tmp))
                             {
                                 fileContent = fileContent.Replace(m.Value, pattern[1] + tmp + "\n    " + m.Value);
@@ -1099,14 +1013,18 @@ namespace AllInOne.Logic
                             sw.WriteLine(fileContent);
                         }
 
-                        mainf.appendProgressTbox("    " + Language.log_patched + TrimPathToInput(foundedfile));
+                        mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(foundedfile));
                     }
+                    //else
+                    //{
+                    //   mainf.appendProgressTbox(Color.Green, "     " + "Language.log_no_pathed");
+                    //}
                 }));
 
             }
 
             work.Start();
-            mainf.appendProgressTbox(":::::" + Language.log_add_smali_secondary_info_done + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_add_smali_secondary_info_done + ":::::");
         }
 
         public static void RepairGoogleMaps(string path)
@@ -1218,7 +1136,7 @@ namespace AllInOne.Logic
                 sw.WriteLine(binContent);
             }
             moveToClassesNorNot(path, path + "\\smali\\cc\\binmt\\signature\\PmsHookApplication.smali");
-            WriteDebugLog(log.ToString());
+            Utils.WriteDebugLog(log.ToString());
         }
 
         public static void SignanureBinInstallerPatch(string path)
@@ -1331,7 +1249,7 @@ namespace AllInOne.Logic
                 sw.WriteLine(binContent);
             }
             moveToClassesNorNot(path, path + "\\smali\\cc\\binmt\\signature\\PmsHookApplication.smali");
-            WriteDebugLog(log.ToString());
+            Utils.WriteDebugLog(log.ToString());
         }
 
         public static void InstallerGooglePatch(string path)
@@ -1381,36 +1299,30 @@ namespace AllInOne.Logic
 
         public static void LicenseGooglePatch(string path)
         {
-            if (path == "")
+            if (path == "") { return; }
+
+            string ManifestContent = File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8);
+            string package = Regex.Match(ManifestContent, @"package=\""([^\""]+)\""").Groups[1].Value;
+            string ymlContent = File.ReadAllText(path + "\\apktool.yml", Encoding.UTF8);
+
+            string versionCode = Regex.Match(ymlContent, @"versionCode: \'(.+)\'").Groups[1].Value;
+
+            bool copy = ReplaceInFiles(path, Patterns.LicensePatchGoogle, "*.smali", "smali*");
+            if (copy)
             {
-                return;
-            }
-            string value = Regex.Match(File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8), "package=\\\"([^\\\"]+)\\\"").Groups[1].Value;
-            string value2 = Regex.Match(File.ReadAllText(path + "\\apktool.yml", Encoding.UTF8), "versionCode: \\'(.+)\\'").Groups[1].Value;
-            if (Patcher.ReplaceInFiles(path, Patterns.LicensePatchGoogle, "*.smali", "smali*", true))
-            {
-                string value3 = string.Concat(new string[]
+                string fixLic = ".class public LfixLicense;\n.super Landroid/os/Binder;\n\n.method public static reworkRequestCode(Ljava/lang/String;)Ljava/lang/String;\n    .locals 21\n\n    const-string v13, \"0|136040138|" + package + "|" + versionCode + "|ANlOHQOShF3uJUwv3Ql+fbsgEG9FD35Hag==|1352549288191\"\n    \n    if-eqz p0, :cond_7\n\n    :try_start_0\n    const-string v18, \"1|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z\n\n    move-result v18\n\n    if-eqz v18, :cond_7\n\n    const-string v18, \"\\\\|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;\n\n    move-result-object v6\n    \n    const-string v11, \"\"\n    \n    const/4 v12, 0x0\n    \n    const/4 v10, 0x0\n    \n    :goto_0\n    array-length v0, v6\n\n    move/from16 v18, v0\n\n    move/from16 v0, v18\n\n    if-lt v10, v0, :cond_1\n\n    new-instance v18, Ljava/io/File;\n\n    const-string v19, \"/mnt/sdcard/debug.on\"\n\n    invoke-direct/range {v18 .. v19}, Ljava/io/File;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual/range {v18 .. v18}, Ljava/io/File;->exists()Z\n\n    move-result v18\n\n    if-eqz v18, :cond_0\n\n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    move-object/from16 v0, v18\n\n    invoke-virtual {v0, v11}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n\n    :cond_0\n    :goto_1\n    return-object v11\n\n    :cond_1\n    if-nez v10, :cond_2\n\n    aget-object v18, v6, v10\n\n    const-string v19, \"1\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z\n\n    move-result v18\n\n    if-eqz v18, :cond_6\n\n    const-string v11, \"0\"\n\n    const/4 v12, 0x1\n\n    :cond_2\n    :goto_2\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_3\n\n    if-eqz v12, :cond_3\n\n    const-string v18, \"31536000000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v2\n    \n    const-string v18, \"31622400000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v4\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v14, v18, v2\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v16, v18, v4\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v18, v18, v2\n\n    add-long v8, v18, v2\n    \n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v14, v15}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \":GR=10&VT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static/range {v16 .. v17}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"&\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"GT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v8, v9}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_3\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_4\n\n    if-nez v12, :cond_4\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_4\n    if-eqz v10, :cond_5\n\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-eq v10, v0, :cond_5\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_5\n    add-int/lit8 v10, v10, 0x1\n\n    goto/16 :goto_0\n\n    :cond_6\n    aget-object v11, v6, v10\n\n    goto/16 :goto_2\n\n    :cond_7\n    move-object/from16 p0, v13\n\n    const-string v18, \"\\\\|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;\n\n    move-result-object v6\n\n    const-string v11, \"\"\n\n    const/4 v10, 0x0\n\n    :goto_3\n    array-length v0, v6\n\n    move/from16 v18, v0\n\n    move/from16 v0, v18\n\n    if-lt v10, v0, :cond_8\n\n\n    new-instance v18, Ljava/io/File;\n\n    const-string v19, \"/mnt/sdcard/debug.on\"\n\n    invoke-direct/range {v18 .. v19}, Ljava/io/File;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual/range {v18 .. v18}, Ljava/io/File;->exists()Z\n\n    move-result v18\n\n    if-eqz v18, :cond_0\n\n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    move-object/from16 v0, v18\n\n    invoke-virtual {v0, v11}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n    :try_end_0\n    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0\n\n    goto/16 :goto_1\n\n    :catch_0\n    move-exception v7\n    \n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    new-instance v19, Ljava/lang/StringBuilder;\n\n    const-string v20, \"Exception: \"\n\n    invoke-direct/range {v19 .. v20}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    move-object/from16 v0, v19\n\n    move-object/from16 v1, p0\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v19\n\n    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n\n    move-object/from16 v11, p0\n\n    goto/16 :goto_1\n\n    :cond_8\n    if-nez v10, :cond_9\n\n    :try_start_1\n    aget-object v11, v6, v10\n\n    :cond_9\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_a\n\n    const-string v18, \"31536000000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v2\n\n    const-string v18, \"31622400000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v4\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v14, v18, v2\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v16, v18, v4\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v18, v18, v2\n\n    add-long v8, v18, v2\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v14, v15}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \":GR=10&VT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static/range {v16 .. v17}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"&\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"GT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v8, v9}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_a\n    if-eqz v10, :cond_b\n\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-eq v10, v0, :cond_b\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n    :try_end_1\n    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0\n\n    move-result-object v11\n\n    :cond_b\n    add-int/lit8 v10, v10, 0x1\n\n    goto/16 :goto_3\n.end method";
+                using (StreamWriter sw = new StreamWriter(path + "\\smali\\fixLicense.smali", false, new UTF8Encoding(false), 65536))
                 {
-                    ".class public LfixLicense;\n.super Landroid/os/Binder;\n\n.method public static reworkRequestCode(Ljava/lang/String;)Ljava/lang/String;\n    .locals 21\n\n    const-string v13, \"0|136040138|",
-                    value,
-                    "|",
-                    value2,
-                    "|ANlOHQOShF3uJUwv3Ql+fbsgEG9FD35Hag==|1352549288191\"\n    \n    if-eqz p0, :cond_7\n\n    :try_start_0\n    const-string v18, \"1|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z\n\n    move-result v18\n\n    if-eqz v18, :cond_7\n\n    const-string v18, \"\\\\|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;\n\n    move-result-object v6\n    \n    const-string v11, \"\"\n    \n    const/4 v12, 0x0\n    \n    const/4 v10, 0x0\n    \n    :goto_0\n    array-length v0, v6\n\n    move/from16 v18, v0\n\n    move/from16 v0, v18\n\n    if-lt v10, v0, :cond_1\n\n    new-instance v18, Ljava/io/File;\n\n    const-string v19, \"/mnt/sdcard/debug.on\"\n\n    invoke-direct/range {v18 .. v19}, Ljava/io/File;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual/range {v18 .. v18}, Ljava/io/File;->exists()Z\n\n    move-result v18\n\n    if-eqz v18, :cond_0\n\n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    move-object/from16 v0, v18\n\n    invoke-virtual {v0, v11}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n\n    :cond_0\n    :goto_1\n    return-object v11\n\n    :cond_1\n    if-nez v10, :cond_2\n\n    aget-object v18, v6, v10\n\n    const-string v19, \"1\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z\n\n    move-result v18\n\n    if-eqz v18, :cond_6\n\n    const-string v11, \"0\"\n\n    const/4 v12, 0x1\n\n    :cond_2\n    :goto_2\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_3\n\n    if-eqz v12, :cond_3\n\n    const-string v18, \"31536000000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v2\n    \n    const-string v18, \"31622400000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v4\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v14, v18, v2\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v16, v18, v4\n    \n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v18, v18, v2\n\n    add-long v8, v18, v2\n    \n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v14, v15}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \":GR=10&VT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static/range {v16 .. v17}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"&\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"GT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v8, v9}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_3\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_4\n\n    if-nez v12, :cond_4\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_4\n    if-eqz v10, :cond_5\n\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-eq v10, v0, :cond_5\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_5\n    add-int/lit8 v10, v10, 0x1\n\n    goto/16 :goto_0\n\n    :cond_6\n    aget-object v11, v6, v10\n\n    goto/16 :goto_2\n\n    :cond_7\n    move-object/from16 p0, v13\n\n    const-string v18, \"\\\\|\"\n\n    move-object/from16 v0, p0\n\n    move-object/from16 v1, v18\n\n    invoke-virtual {v0, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;\n\n    move-result-object v6\n\n    const-string v11, \"\"\n\n    const/4 v10, 0x0\n\n    :goto_3\n    array-length v0, v6\n\n    move/from16 v18, v0\n\n    move/from16 v0, v18\n\n    if-lt v10, v0, :cond_8\n\n\n    new-instance v18, Ljava/io/File;\n\n    const-string v19, \"/mnt/sdcard/debug.on\"\n\n    invoke-direct/range {v18 .. v19}, Ljava/io/File;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual/range {v18 .. v18}, Ljava/io/File;->exists()Z\n\n    move-result v18\n\n    if-eqz v18, :cond_0\n\n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    move-object/from16 v0, v18\n\n    invoke-virtual {v0, v11}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n    :try_end_0\n    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0\n\n    goto/16 :goto_1\n\n    :catch_0\n    move-exception v7\n    \n    sget-object v18, Ljava/lang/System;->out:Ljava/io/PrintStream;\n\n    new-instance v19, Ljava/lang/StringBuilder;\n\n    const-string v20, \"Exception: \"\n\n    invoke-direct/range {v19 .. v20}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    move-object/from16 v0, v19\n\n    move-object/from16 v1, p0\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v19\n\n    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V\n\n    move-object/from16 v11, p0\n\n    goto/16 :goto_1\n\n    :cond_8\n    if-nez v10, :cond_9\n\n    :try_start_1\n    aget-object v11, v6, v10\n\n    :cond_9\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-ne v10, v0, :cond_a\n\n    const-string v18, \"31536000000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v2\n\n    const-string v18, \"31622400000\"\n\n    invoke-static/range {v18 .. v18}, Ljava/lang/Long;->valueOf(Ljava/lang/String;)Ljava/lang/Long;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/Long;->longValue()J\n\n    move-result-wide v4\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v14, v18, v2\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v16, v18, v4\n\n    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J\n\n    move-result-wide v18\n\n    add-long v18, v18, v2\n\n    add-long v8, v18, v2\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v14, v15}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \":GR=10&VT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static/range {v16 .. v17}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"&\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    const-string v19, \"GT=\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-static {v8, v9}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v11\n\n    :cond_a\n    if-eqz v10, :cond_b\n\n    const/16 v18, 0x5\n\n    move/from16 v0, v18\n\n    if-eq v10, v0, :cond_b\n\n    new-instance v18, Ljava/lang/StringBuilder;\n\n    invoke-static {v11}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v19\n\n    invoke-direct/range {v18 .. v19}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    const-string v19, \"|\"\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    aget-object v19, v6, v10\n\n    invoke-virtual/range {v18 .. v19}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v18\n\n    invoke-virtual/range {v18 .. v18}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n    :try_end_1\n    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0\n\n    move-result-object v11\n\n    :cond_b\n    add-int/lit8 v10, v10, 0x1\n\n    goto/16 :goto_3\n.end method"
-                });
-                using (StreamWriter streamWriter = new StreamWriter(path + "\\smali\\fixLicense.smali", false, new UTF8Encoding(false), 65536))
-                {
-                    streamWriter.WriteLine(value3);
+                    sw.WriteLine(fixLic);
                 }
             }
         }
 
         public static void LicenseAmazonPatch(string path)
         {
-            if (path == "")
-            {
-                return;
-            }
-            Patcher.ReplaceInFiles(path, Patterns.LicensePatchAmazon, "*.smali", "smali*", true);
+            if (path == "") { return; }
+
+            ReplaceInFiles(path, Patterns.LicensePatchAmazon, "*.smali", "smali*");
         }
 
         public static void DeleteToastsPatch(string path)
@@ -1443,6 +1355,11 @@ namespace AllInOne.Logic
             Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.hideIconPatch, true);
         }
 
+        public static void visibleIconPatch(string path)
+        {
+            Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.visibleIconPatch, true);
+        }
+
         public static void darkLightDHMAPatch(string path)
         {
             Patcher.ReplaceInFiles(path + "\\res\\", Patterns.darkLightPatchDhma, "*.xml", "*", true);
@@ -1470,7 +1387,7 @@ namespace AllInOne.Logic
             if (!File.Exists(pathToSmali))
             {
                 MessageBox.Show(pathToSmali + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("Error in AddSavePatch\nError message:" + pathToSmali + " not exists");
+                Utils.WriteLog("Error in AddSavePatch\nError message:" + pathToSmali + " not exists");
                 return;
             }
             bool copy = Patcher.ReplaceInFile(pathToSmali, Patterns.AddSavePatch, true);
@@ -1485,151 +1402,109 @@ namespace AllInOne.Logic
 
         public static void splashInstallPatch(string path)
         {
-            string text = Patcher.GetLauncherActivity(path);
-            string appPackage = Patcher.GetAppPackage(path);
-            if (text.Equals(string.Empty))
+            StringBuilder log = new StringBuilder();
+            string launcheractiv = GetLauncherActivity(path);
+            string package = GetAppPackage(path);
+
+
+            if (launcheractiv.Equals(string.Empty))
             {
-                MessageBox.Show(Language.errorMsgNoLaunchActivity, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(Language.errorMsgNoLaunchActivity, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (text.StartsWith("."))
+            else if (launcheractiv.StartsWith("."))
             {
-                text = appPackage + text;
+                launcheractiv = package + launcheractiv;
             }
-            string text2 = ".class public L%PACKAGE%SSSplashAAActivity;\n.super Landroid/app/Activity;\n.source \"SSSplashAAActivity.java\"\n\n.method public constructor <init>()V\n    .locals 1\n\n    invoke-direct {p0}, Landroid/app/Activity;-><init>()V\n\n    return-void\n.end method\n\n.method protected onCreate(Landroid/os/Bundle;)V\n    .locals 4\n\n    invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V\n\n    new-instance v0, Landroid/content/Intent;\n\n    const-class v1, L%MAIN_ACTIVITY%;\n\n    invoke-direct {v0, p0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V\n\n    invoke-virtual {p0, v0}, L%PACKAGE%SSSplashAAActivity;->startActivity(Landroid/content/Intent;)V\n\n    invoke-virtual {p0}, L%PACKAGE%SSSplashAAActivity;->finish()V\n\n    return-void\n.end method";
-            string value = "<?xml version='1.0' encoding='utf-8' ?>\n<layer-list xmlns:android=\"http://schemas.android.com/apk/res/android\">\n\t<item android:drawable=\"@color/sssplashgray\" />\n\t<item>\n\t\t<bitmap android:gravity=\"center\" android:src=\"@drawable/sssplasssh\" />\n\t</item>\n</layer-list>";
-            text2 = text2.Replace("%MAIN_ACTIVITY%", text.Replace(".", "/")).Replace("%PACKAGE%", appPackage.Replace(".", "/") + "/");
+
+            string splashtxt = ".class public L%PACKAGE%SSSplashAAActivity;\n.super Landroid/app/Activity;\n.source \"SSSplashAAActivity.java\"\n\n.method public constructor <init>()V\n    .locals 1\n\n    invoke-direct {p0}, Landroid/app/Activity;-><init>()V\n\n    return-void\n.end method\n\n.method protected onCreate(Landroid/os/Bundle;)V\n    .locals 4\n\n    invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V\n\n    new-instance v0, Landroid/content/Intent;\n\n    const-class v1, L%MAIN_ACTIVITY%;\n\n    invoke-direct {v0, p0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V\n\n    invoke-virtual {p0, v0}, L%PACKAGE%SSSplashAAActivity;->startActivity(Landroid/content/Intent;)V\n\n    invoke-virtual {p0}, L%PACKAGE%SSSplashAAActivity;->finish()V\n\n    return-void\n.end method";
+            string splashxmltxt = "<?xml version='1.0' encoding='utf-8' ?>\n<layer-list xmlns:android=\"http://schemas.android.com/apk/res/android\">\n	<item android:drawable=\"@color/sssplashgray\" />\n	<item>\n		<bitmap android:gravity=\"center\" android:src=\"@drawable/sssplasssh\" />\n	</item>\n</layer-list>";
+
+            splashtxt = splashtxt.Replace("%MAIN_ACTIVITY%", launcheractiv.Replace(".", "/")).Replace("%PACKAGE%", package.Replace(".", "/") + "/");
             if (Settings.writeDebug)
             {
-                Patcher.WriteDebugLog("File= " + Patcher.TrimPathToInput(path + "\\smali\\" + appPackage.Replace(".", "\\") + "\\SSSplashAAActivity.smali") + "\nPattern=\n" + "\nOldText=\n%MAIN_ACTIVITY%\nNewText=\n" + text.Replace(".", "/"));
-                Patcher.WriteDebugLog("File= " + Patcher.TrimPathToInput(path + "\\smali\\" + appPackage.Replace(".", "\\") + "\\SSSplashAAActivity.smali") + "\nPattern=\n" + "\nOldText=\n%PACKAGE%\nNewText=\n" + appPackage.Replace(".", "/") + "/");
+                log.AppendLine("File= " + TrimPathToInput(path + "\\smali\\" + package.Replace(".", "\\") + "\\SSSplashAAActivity.smali") + "\nPattern=\n" + "" + "\nOldText=\n" + "%MAIN_ACTIVITY%" + "\nNewText=\n" + launcheractiv.Replace(".", "/"));
+                log.AppendLine("File= " + TrimPathToInput(path + "\\smali\\" + package.Replace(".", "\\") + "\\SSSplashAAActivity.smali") + "\nPattern=\n" + "" + "\nOldText=\n" + "%PACKAGE%" + "\nNewText=\n" + package.Replace(".", "/") + "/");
             }
-            using (StreamWriter streamWriter = new StreamWriter(path + "\\smali\\" + appPackage.Replace(".", "\\") + "\\SSSplashAAActivity.smali", false, new UTF8Encoding(false), 65536))
+
+            using (StreamWriter sw = new StreamWriter(path + "\\smali\\" + package.Replace(".", "\\") + "\\SSSplashAAActivity.smali", false, new UTF8Encoding(false), 65536))
             {
-                streamWriter.WriteLine(text2);
+                sw.WriteLine(splashtxt);
             }
-            using (StreamWriter streamWriter2 = new StreamWriter(path + "\\res\\drawable\\ssscreen_sssplasssh.xml", false, new UTF8Encoding(false), 65536))
+
+            using (StreamWriter sw = new StreamWriter(path + "\\res\\drawable\\ssscreen_sssplasssh.xml", false, new UTF8Encoding(false), 65536))
             {
-                streamWriter2.WriteLine(value);
+                sw.WriteLine(splashxmltxt);
             }
+
             if (!File.Exists(path + "\\res\\values\\colors.xml"))
             {
-                using (StreamWriter streamWriter3 = new StreamWriter(path + "\\res\\values\\colors.xml", false, new UTF8Encoding(false), 65536))
+                using (StreamWriter sw = new StreamWriter(path + "\\res\\values\\colors.xml", false, new UTF8Encoding(false), 65536))
                 {
-                    streamWriter3.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>");
+                    sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>");
                 }
             }
             if (!File.Exists(path + "\\res\\values\\styles.xml"))
             {
-                using (StreamWriter streamWriter4 = new StreamWriter(path + "\\res\\values\\styles.xml", false, new UTF8Encoding(false), 65536))
+                using (StreamWriter sw = new StreamWriter(path + "\\res\\values\\styles.xml", false, new UTF8Encoding(false), 65536))
                 {
-                    streamWriter4.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>");
+                    sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>");
                 }
             }
-            bool flag = Patcher.ReplaceInFile(path + "\\res\\values\\colors.xml", new Dictionary<string, string>
+            bool copy = ReplaceInFile(path + "\\res\\values\\colors.xml", new Dictionary<string, string> { { "<resources>", "<resources>\n<color name=\"sssplashgray\">#ffffffff</color>" } });
+            bool copy2 = ReplaceInFile(path + "\\res\\values\\styles.xml", new Dictionary<string, string> { { "<resources>", "<resources>\n<style name=\"SSSplashTTTheme\" parent=\"@android:style/Theme.NoTitleBar\"><item name=\"android:windowBackground\">@drawable/ssscreen_sssplasssh</item></style>" } });
+            bool copy3 = ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string> { { @"[\r\n\s]*<category\s*android:name=\""android\.intent\.category\.LAUNCHER\""[^>]*>", "" }, { "(<application[^>]+>)", "$1\n        <activity android:name=\".SSSplashAAActivity\" android:theme=\"@style/SSSplashTTTheme\">\n			<intent-filter>\n				<action android:name=\"android.intent.action.MAIN\" />\n				<category android:name=\"android.intent.category.LAUNCHER\" />\n			</intent-filter>\n		</activity>" } });
+            if (mainf.splash_image_patchTBox.Text.Length == 0)
             {
-                {
-                    "<resources>",
-                    "<resources>\n<color name=\"sssplashgray\">#ffffffff</color>"
-                }
-            }, true);
-            bool flag2 = Patcher.ReplaceInFile(path + "\\res\\values\\styles.xml", new Dictionary<string, string>
+                string path_image = Program.pathToMyPluginDir + "\\sssplasssh.png";
+                copyFileOrNot(path_image, path + "\\res\\drawable\\sssplasssh.png", copy && copy2 && copy3);
+            }
+            else
             {
-                {
-                    "<resources>",
-                    "<resources>\n<style name=\"SSSplashTTTheme\" parent=\"@android:style/Theme.NoTitleBar\"><item name=\"android:windowBackground\">@drawable/ssscreen_sssplasssh</item></style>"
-                }
-            }, true);
-            bool flag3 = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
-            {
-                {
-                    "[\\r\\n\\s]*<category\\s*android:name=\\\"android\\.intent\\.category\\.LAUNCHER\\\"[^>]*>",
-                    ""
-                },
-                {
-                    "(<application[^>]+>)",
-                    "$1\n        <activity android:name=\".SSSplashAAActivity\" android:theme=\"@style/SSSplashTTTheme\">\n\t\t\t<intent-filter>\n\t\t\t\t<action android:name=\"android.intent.action.MAIN\" />\n\t\t\t\t<category android:name=\"android.intent.category.LAUNCHER\" />\n\t\t\t</intent-filter>\n\t\t</activity>"
-                }
-            }, true);
-            Patcher.copyFileOrNot(Program.pathToMyPluginDir + "\\sssplasssh.png", path + "\\res\\drawable\\sssplasssh.png", flag && flag2 && flag3);
+                string path_image = mainf.splash_image_patchTBox.Text;
+                copyFileOrNot(path_image, path + "\\res\\drawable\\sssplasssh.png", copy && copy2 && copy3);
+            }
+
         }
 
         public static void splashRemovePatch(string path)
         {
-            string text = Patcher.GetLauncherActivity(path);
-            string appPackage = Patcher.GetAppPackage(path);
-            if (text.Equals(string.Empty))
+            string launcheractiv = GetLauncherActivity(path);
+            string package = GetAppPackage(path);
+
+            if (launcheractiv.Equals(string.Empty))
             {
-                MessageBox.Show(Language.errorMsgNoLaunchActivity, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(Language.errorMsgNoLaunchActivity, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (text.StartsWith("."))
+            else if (launcheractiv.StartsWith("."))
             {
-                text = appPackage + text;
+                launcheractiv = package + launcheractiv;
             }
-            if (!File.Exists(path + "\\smali\\" + appPackage.Replace(".", "\\") + "\\SSSplashAAActivity.smali"))
+
+            if (!File.Exists(path + "\\smali\\" + package.Replace(".", "\\") + "\\SSSplashAAActivity.smali"))
             {
-                MessageBox.Show(Language.errorMsgNoSplash, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(Language.errorMsgNoSplash, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
                 File.Delete(path + "\\res\\drawable\\ssscreen_sssplasssh.xml");
-                File.Delete(path + "\\smali\\" + appPackage.Replace(".", "\\") + "\\SSSplashAAActivity.smali");
+                File.Delete(path + "\\smali\\" + package.Replace(".", "\\") + "\\SSSplashAAActivity.smali");
                 File.Delete(path + "\\res\\drawable\\sssplasssh.png");
-                goto IL_FE;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                MessageBox.Show(Language.errorMsg, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                Patcher.WriteLog("Error in splashRemovePatch\nError message:" + ex.Message + "\n" + ex.ToString());
+                MessageBox.Show(Language.errorMsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Utils.WriteLog("Error in splashRemovePatch\nError message:" + e.Message + "\n" + e.ToString());
+                return;
             }
+
+            ReplaceInFile(path + "\\res\\values\\colors.xml", new Dictionary<string, string> { { @"[\r\n\s]*<color name=\""sssplashgray\"">#ffffffff</color>", "" } });
+            ReplaceInFile(path + "\\res\\values\\styles.xml", new Dictionary<string, string> { { @"[\r\n\s]*<style name=\""SSSplashTTTheme\"" parent=\""@android:style/Theme\.NoTitleBar\"">[\r\n\s]*<item name=\""android:windowBackground\"">@drawable/ssscreen_sssplasssh</item>[\r\n\s]*</style>", "" } });
+            ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string> { { @"[\r\n]+\s+<activity.*android:name=\""\.SSSplashAAActivity[^>]+>(?<!/>)(\r|\n|.)+?</activity>", "" }, { @"(<action android:name=\""android.intent\.action\.MAIN\""\s*/>)", "$1\n                <category android:name=\"android.intent.category.LAUNCHER\" />" } });
+            ReplaceInFile(path + "\\res\\values\\public.xml", new Dictionary<string, string> { { @"<public type=\""style\"" name=\""SSSplashTTTheme\"" id=\"".+?\"" />", "" }, { @"<public type=\""color\"" name=\""sssplashgray\"" id=\"".+?\"" />", "" }, { @"<public type=\""drawable\"" name=\""ssscreen_sssplasssh\"" id=\"".+?\"" />", "" }, { @"<public type=\""drawable\"" name=\""sssplasssh\"" id=\"".+?\"" />", "" }, });
             return;
-        IL_FE:
-            Patcher.ReplaceInFile(path + "\\res\\values\\colors.xml", new Dictionary<string, string>
-            {
-                {
-                    "[\\r\\n\\s]*<color name=\\\"sssplashgray\\\">#ffffffff</color>",
-                    ""
-                }
-            }, true);
-            Patcher.ReplaceInFile(path + "\\res\\values\\styles.xml", new Dictionary<string, string>
-            {
-                {
-                    "[\\r\\n\\s]*<style name=\\\"SSSplashTTTheme\\\" parent=\\\"@android:style/Theme\\.NoTitleBar\\\">[\\r\\n\\s]*<item name=\\\"android:windowBackground\\\">@drawable/ssscreen_sssplasssh</item>[\\r\\n\\s]*</style>",
-                    ""
-                }
-            }, true);
-            Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
-            {
-                {
-                    "[\\r\\n]+\\s+<activity.*android:name=\\\"\\.SSSplashAAActivity[^>]+>(?<!/>)(\\r|\\n|.)+?</activity>",
-                    ""
-                },
-                {
-                    "(<action android:name=\\\"android.intent\\.action\\.MAIN\\\"\\s*/>)",
-                    "$1\n                <category android:name=\"android.intent.category.LAUNCHER\" />"
-                }
-            }, true);
-            Patcher.ReplaceInFile(path + "\\res\\values\\public.xml", new Dictionary<string, string>
-            {
-                {
-                    "<public type=\\\"style\\\" name=\\\"SSSplashTTTheme\\\" id=\\\".+?\\\" />",
-                    ""
-                },
-                {
-                    "<public type=\\\"color\\\" name=\\\"sssplashgray\\\" id=\\\".+?\\\" />",
-                    ""
-                },
-                {
-                    "<public type=\\\"drawable\\\" name=\\\"ssscreen_sssplasssh\\\" id=\\\".+?\\\" />",
-                    ""
-                },
-                {
-                    "<public type=\\\"drawable\\\" name=\\\"sssplasssh\\\" id=\\\".+?\\\" />",
-                    ""
-                }
-            }, true);
         }
 
         public static void toastFirstRunPatch(string path)
@@ -1699,7 +1574,7 @@ namespace AllInOne.Logic
 
             TaskPool work = new TaskPool(Settings.TaskCount, ref mainf.taskCountLabel, ref mainf.pBar);
             ConcurrentDictionary<string, string> foundedStrings = new ConcurrentDictionary<string, string>();
-            mainf.appendProgressTbox(":::::" + Language.log_collecting_string + TrimPathToInput(path) + " :::::");
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_collecting_string + TrimPathToInput(path) + " :::::");
 
             foreach (string dirmask in new string[] { "layout*", "menu*", "xml*" })
             {
@@ -1732,7 +1607,7 @@ namespace AllInOne.Logic
                             }
                             if (foudedStringCount > 0)
                             {
-                                mainf.appendProgressTbox(string.Format("    {0}:{1} strings", TrimPathToInput(filepath), foudedStringCount));
+                                mainf.appendProgressTbox(Color.Blue, string.Format("    {0}:{1} strings", TrimPathToInput(filepath), foudedStringCount));
                                 using (StreamWriter sw = new StreamWriter(filepath, false, new UTF8Encoding(false), 65536))
                                 {
                                     sw.WriteLine(fileContent);
@@ -1771,7 +1646,7 @@ namespace AllInOne.Logic
                 }
             }
 
-            mainf.appendProgressTbox(":::::" + Language.log_collecting_string_done + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_collecting_string_done + ":::::");
         }
 
         public static int getLastPrefixNum(string path)
@@ -1817,7 +1692,7 @@ namespace AllInOne.Logic
                                 tmpIdType.Add(m.Groups[2].Value, m.Groups[1].Value);
                             }
                         }
-                        lock (locker) { result.Add(foundedFile, tmpIdType); }
+                        lock (Utils.locker) { result.Add(foundedFile, tmpIdType); }
                     }));
                 }
             }
@@ -1883,7 +1758,7 @@ namespace AllInOne.Logic
                             foreach (Match m in mCollection)
                             {
                                 int pos = getLineNumberInFileContent(fileContent, m.Value);
-                                lock (locker)
+                                lock (Utils.locker)
                                 {
                                     if (!places.ContainsKey(pos))
                                     {
@@ -1892,7 +1767,7 @@ namespace AllInOne.Logic
                                 }
                             }
                         });
-                        lock (locker) { result.Add(foundedFile, places); }
+                        lock (Utils.locker) { result.Add(foundedFile, places); }
                     }));
                 }
             }
@@ -1902,11 +1777,49 @@ namespace AllInOne.Logic
             return result;
         }
 
+        public static Dictionary<string, Dictionary<string, string>> getAllColors(string path)
+        {
+            if ("".Equals(path)) { return new Dictionary<string, Dictionary<string, string>>(); }
+            TaskPool work = new TaskPool(Settings.TaskCount, lbl: ref mainf.taskCountLabel, pBar: ref mainf.pBar);
+
+            Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (string foundedDir in Directory.GetDirectories(path + "\\res\\", "values*"))
+            {
+                foreach (string foundedFile in Directory.GetFiles(foundedDir, "*.xml", SearchOption.AllDirectories))
+                {
+                    work.Add(new Task(() =>
+                    {
+                        Dictionary<string, string> tmpIdType = new Dictionary<string, string>();
+
+                        string fileContent = File.ReadAllText(foundedFile, Encoding.UTF8);
+
+                        MatchCollection mCollection = Regex.Matches(fileContent,
+                            @"<color name=\""(.+?)\"">([^\s]+?)</color>");
+                        ///  @"<([^\s]+?)\s.*?(?:android|n\d+):id=\""@id/(.+?)\"".*?/>");
+                        if (mCollection.Count == 0) { return; }
+
+                        foreach (Match m in mCollection)
+                        {
+                            if (!tmpIdType.ContainsKey(m.Groups[2].Value))
+                            {
+                                tmpIdType.Add(m.Groups[1].Value, m.Groups[2].Value);
+                            }
+                        }
+                        lock (Utils.locker) { result.Add(foundedFile, tmpIdType); }
+                    }));
+                }
+            }
+
+            work.Start();
+            return result;
+        }
+
         public static void hideAllChecked(Dictionary<string, Dictionary<string, string>> checkedItems)
         {
             List<string> list = new List<string>();
             TaskPool taskPool = new TaskPool(Settings.TaskCount, ref Patcher.mainf.taskCountLabel, ref Patcher.mainf.pBar);
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_hide_id + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_hide_id + ":::::");
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in checkedItems)
             {
                 foreach (KeyValuePair<string, string> keyValuePair2 in keyValuePair.Value)
@@ -1957,7 +1870,7 @@ namespace AllInOne.Logic
                 }
             }
             taskPool.Start();
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_hide_id_done + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_hide_id_done + ":::::");
         }
 
         public static void blockSensorsPatch(string path)
@@ -2090,7 +2003,7 @@ namespace AllInOne.Logic
             long totalsize = 0;
 
             TaskPool work = new TaskPool(Settings.TaskCount, ref mainf.taskCountLabel, ref mainf.pBar);
-            mainf.appendProgressTbox(":::::" + Language.log_delete_resource + ":::::");
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_delete_resource + ":::::");
             string[] xmlFiles = new string[]
             {
                 "arrays.xml",
@@ -2248,7 +2161,7 @@ namespace AllInOne.Logic
                         dsb.AppendLine(TrimPathToInput(dir));
                     }
                 }
-                mainf.appendProgressTbox("     -"+ Language.log_delete_resource_lib + libCount.ToString());
+                mainf.appendProgressTbox(Color.Green, "     -" + Language.log_delete_resource_lib + libCount.ToString());
             }
 
             //
@@ -2261,7 +2174,7 @@ namespace AllInOne.Logic
             {
                 sw.WriteLine("Apk: " + TrimPathToInput(path) + "\nDeleted directories:\n" + dsb.ToString() + "\nDeleted files:\n" + fsb.ToString() + "=====Total size of deleted files: ~" + Math.Round(totalsize / 1024.0 / 1024.0, 3).ToString() + "Mb =====");
             }
-            mainf.appendProgressTbox(":::::" + Language.log_delete_resource_done + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_delete_resource_done + ":::::");
         }
 
         public static void mergeXml(string[] fromFilePath, string toFilePath, bool replace, bool appendComment = false)
@@ -2276,7 +2189,7 @@ namespace AllInOne.Logic
             catch (Exception e)
             {
                 MessageBox.Show(string.Format(Language.corruptedFileError, toFilePath), Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                WriteLog("Error in mergeXml\nError message:" + e.Message + "\n" + e.ToString());
+                Utils.WriteLog("Error in mergeXml\nError message:" + e.Message + "\n" + e.ToString());
                 return;
             }
             ConcurrentDictionary<string, KeyValuePair<XmlNode, string>> fromNodeList = new ConcurrentDictionary<string, KeyValuePair<XmlNode, string>>();
@@ -2293,7 +2206,7 @@ namespace AllInOne.Logic
                 catch (Exception e)
                 {
                     MessageBox.Show(string.Format(Language.corruptedFileError, toFilePath), Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    WriteLog("Error in mergeXml\nError message:" + e.Message + "\n" + e.ToString());
+                    Utils.WriteLog("Error in mergeXml\nError message:" + e.Message + "\n" + e.ToString());
                     continue;
                 }
                 Parallel.ForEach(docFrom.ChildNodes[1].ChildNodes.Cast<XmlNode>(), (node) =>
@@ -2337,11 +2250,11 @@ namespace AllInOne.Logic
             {
                 docTo.Save(toFilePath);
             }
-            lock (locker)
+            lock (Utils.locker)
             {
-                mainf.appendProgressTbox("     -" + Language.log_from + Path.GetFileName(toFilePath) + "\n   -"+ Language.log_to + TrimPathToInput(toFilePath));
-                mainf.appendProgressTbox("     " + Language.replaced + " " + replacedCount.ToString());
-                mainf.appendProgressTbox("     " + Language.added + " " + addedCount.ToString());
+                mainf.appendProgressTbox(Color.Blue, "     -" + Language.log_from + Path.GetFileName(toFilePath) + "\n   -" + Language.log_to + TrimPathToInput(toFilePath));
+                mainf.appendProgressTbox(Color.Green, "     " + Language.replaced + " " + replacedCount.ToString());
+                mainf.appendProgressTbox(Color.Green, "     " + Language.added + " " + addedCount.ToString());
             }
         }
 
@@ -2378,7 +2291,7 @@ namespace AllInOne.Logic
                 MessageBox.Show(Language.cloneError, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            mainf.appendProgressTbox(":::::"+ Language.log_clone + ":::::");
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_clone + ":::::");
 
             string[] packageSp = package.Split('.');
             string[] newpackageSp = newpackage.Split('.');
@@ -2406,9 +2319,9 @@ namespace AllInOne.Logic
             }
             //замена в либах
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values.Add(stringToHex(package), stringToHex(newpackage));
-            values.Add(stringToHex(package.Replace(".", "/")), stringToHex(newpackage.Replace(".", "/")));
-            values.Add(stringToHex(package.Replace(".", "_")), stringToHex(newpackage.Replace(".", "_")));
+            values.Add(Utils.stringToHex(package), Utils.stringToHex(newpackage));
+            values.Add(Utils.stringToHex(package.Replace(".", "/")), Utils.stringToHex(newpackage.Replace(".", "/")));
+            values.Add(Utils.stringToHex(package.Replace(".", "_")), Utils.stringToHex(newpackage.Replace(".", "_")));
 
             if (package.Split('.').Length > 2)
             {
@@ -2417,9 +2330,9 @@ namespace AllInOne.Logic
                     package = package.Substring(0, package.LastIndexOf("."));
                     newpackage = newpackage.Substring(0, newpackage.LastIndexOf("."));
                     if (package.Equals(newpackage)) { continue; }
-                    values.Add(stringToHex(package), stringToHex(newpackage));
-                    values.Add(stringToHex(package.Replace(".", "/")), stringToHex(newpackage.Replace(".", "/")));
-                    values.Add(stringToHex(package.Replace(".", "_")), stringToHex(newpackage.Replace(".", "_")));
+                    values.Add(Utils.stringToHex(package), Utils.stringToHex(newpackage));
+                    values.Add(Utils.stringToHex(package.Replace(".", "/")), Utils.stringToHex(newpackage.Replace(".", "/")));
+                    values.Add(Utils.stringToHex(package.Replace(".", "_")), Utils.stringToHex(newpackage.Replace(".", "_")));
                     patterns.Add(package.Replace(".", "\\."), newpackage);
                     patterns.Add(package.Replace(".", "/"), newpackage.Replace(".", "/"));
                 }
@@ -2430,7 +2343,7 @@ namespace AllInOne.Logic
             ReplaceInFiles(path, patterns, "*.xml", "res", false);
             ReplaceInSoLibs(path, values);
 
-            mainf.appendProgressTbox(":::::" + Language.log_clone_done + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_clone_done + ":::::");
         }
 
         public static List<int> indexOfBlock(byte[] where, byte[] what)
@@ -2569,13 +2482,17 @@ namespace AllInOne.Logic
                                 sw.WriteLine(fileContent);
                             }
                             if (founded.EndsWith(".smali")) { Interlocked.Increment(ref copy); }
-                            mainf.appendProgressTbox("    " + Language.log_patched  + TrimPathToInput(founded));
+                            mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(founded));
                         }
+                        //else
+                        //{
+                        //     mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_pathed);
+                        //}
 
                     }
                     catch (Exception e)
                     {
-                        WriteLog("Error in StartAntiReklalytics\nError message:" + e.Message + "\n" + e.ToString());
+                        Utils.WriteLog("Error in StartAntiReklalytics\nError message:" + e.Message + "\n" + e.ToString());
                     }
                 }));
             }
@@ -2609,6 +2526,16 @@ namespace AllInOne.Logic
             Patcher.ReplaceInFiles(path, Patterns.screenshotPatch, "*.smali", "smali*", true);
 
         }
+
+        public static void fix_18_9Patch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.fix_18_9Patch, true);
+        }
+
         public static void backKillPatch(string path)
         {
             if (path == "")
@@ -2656,6 +2583,328 @@ namespace AllInOne.Logic
             }
 
         }
+
+        public static void mask_appPatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            string launcherActivity = Patcher.GetLauncherActivity(path);
+            string mask_icon_patch = Patcher.mainf.mask_icon_patchTBox.Text;
+            string mask_icon_name = Path.GetFileName(mask_icon_patch);
+            string mask_icon_name_no_extension = Path.GetFileNameWithoutExtension(mask_icon_patch);
+            string mask_app_name = Patcher.mainf.mask_nameTBox.Text;
+
+            if (launcherActivity != string.Empty)
+            {
+                string text = File.ReadAllLines(Patcher.getPathToSmali(path, launcherActivity))[0];
+                text = text.Remove(0, text.IndexOf(" L") + 1);
+                string value = "# virtual methods\n\n.method public appmask()V\n    .registers 10\n    .annotation system Ldalvik/annotation/Signature;\n        value = {\n            \"()V\"\n        }\n    .end annotation\n\n    .prologue\n    .line 22\n    move-object v0, p0\n    move-object v2, v0\n    invoke-virtual {v2}, " + text + "->getPackageManager()Landroid/content/pm/PackageManager;\n    move-result-object v2\n    new-instance v3, Landroid/content/ComponentName;\n    move-object v8, v3\n    move-object v3, v8\n    move-object v4, v8\n    move-object v5, v0\n    invoke-virtual {v5}, " + text + "->getPackageName()Ljava/lang/String;\n    move-result-object v5\n    new-instance v6, Ljava/lang/StringBuffer;\n    move-object v8, v6\n    move-object v6, v8\n    move-object v7, v8\n    invoke-direct {v7}, Ljava/lang/StringBuffer;-><init>()V\n    move-object v7, v0\n    invoke-virtual {v7}, " + text + "->getPackageName()Ljava/lang/String;\n    move-result-object v7\n    invoke-virtual {v6, v7}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n    move-result-object v6\n    const-string v7, \".appmaskactivity\"\n    invoke-virtual {v6, v7}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n    move-result-object v6\n    invoke-virtual {v6}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;\n    move-result-object v6\n    invoke-direct {v4, v5, v6}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V\n    const/4 v4, 0x1\n    const/4 v5, 0x1\n    invoke-virtual {v2, v3, v4, v5}, Landroid/content/pm/PackageManager;->setComponentEnabledSetting(Landroid/content/ComponentName;II)V\n    .line 25\n    move-object v2, v0\n    invoke-virtual {v2}, " + text + "->getPackageManager()Landroid/content/pm/PackageManager;\n    move-result-object v2\n    new-instance v3, Landroid/content/ComponentName;\n    move-object v8, v3\n    move-object v3, v8\n    move-object v4, v8\n    move-object v5, v0\n    invoke-virtual {v5}, " + text + "->getPackageName()Ljava/lang/String;\n    move-result-object v5\n    const-string v6, \"" + launcherActivity + "\"\n    invoke-direct {v4, v5, v6}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V\n    const/4 v4, 0x2\n    const/4 v5, 0x1\n    invoke-virtual {v2, v3, v4, v5}, Landroid/content/pm/PackageManager;->setComponentEnabledSetting(Landroid/content/ComponentName;II)V\n    return-void\n.end method";
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                //добвление в onCreate
+                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->appmask()V");
+                dictionary.Add("\\# virtual methods", value);
+                bool strings_patch = Patcher.ReplaceInFile(path + "\\res\\values\\strings.xml", new Dictionary<string, string>
+            {
+                {
+                    "<resources>",
+                    "<resources>\n<string name=\"new_app_name\">"+ mask_app_name + "</string>"
+                }
+            }, true);
+
+                bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+            {
+
+                {
+                    "</application",
+                        "<activity-alias android:enabled=\"false\" android:icon=\"@drawable/"+ mask_icon_name_no_extension +"\" android:label=\"@string/new_app_name\" android:name=\".appmaskactivity\" android:targetActivity=\""+launcherActivity+"\">\n<intent-filter>\n<action android:name=\"android.intent.action.MAIN\" />\n<category android:name=\"android.intent.category.LAUNCHER\" />\n</intent-filter>\n</activity-alias>\n</application"
+            }
+            }, true);
+                Patcher.copyFileOrNot(mask_icon_patch, path + "\\res\\drawable\\" + mask_icon_name, strings_patch && manifest_path);
+                Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+            }
+
+        }
+
+        public static void unpackfilePatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            string folder_unpack = mainf.folder_unpackTBox.Text;
+            string file_unpack = mainf.file_unpackTBox.Text;
+            string launcherActivity = Patcher.GetLauncherActivity(path);
+            if (launcherActivity != string.Empty)
+            {
+                //добавление расспаковки файлов в папку
+                string text = File.ReadAllLines(Patcher.getPathToSmali(path, launcherActivity))[0];
+                text = text.Remove(0, text.IndexOf(" L") + 1);
+                string direct = "# direct methods\n\n.method private UnPacker()V\n    .registers 26\n\n    const/16 v4, 0x800\n\n    const-string v17, \"/\"\n\n    const-string v19, \"sdcard\"\n\n    const-string v21, \"" + folder_unpack + "\"  #название папки в которую распакуется сохранение\n\n    const-string v20, \"" + file_unpack + "\"  #название файла с сохранением\n\n    invoke-virtual/range {p0 .. p0}, " + text + "->getAssets()Landroid/content/res/AssetManager;\n\n    move-result-object v6\n\n    new-instance v23, Ljava/lang/StringBuilder;\n\n    invoke-static/range {v17 .. v17}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v24\n\n    invoke-direct/range {v23 .. v24}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v19\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v17\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v21\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v17\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v17\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    move-object/from16 v0, v23\n\n    move-object/from16 v1, v17\n\n    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    invoke-virtual/range {v23 .. v23}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v16\n\n    const/4 v9, 0x0\n\n    :try_start_4c\n    move-object v0, v6\n\n    move-object/from16 v1, v20\n\n    invoke-virtual {v0, v1}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;\n\n    move-result-object v15\n\n    new-instance v22, Ljava/util/zip/ZipInputStream;\n\n    move-object/from16 v0, v22\n\n    move-object v1, v15\n\n    invoke-direct {v0, v1}, Ljava/util/zip/ZipInputStream;-><init>(Ljava/io/InputStream;)V\n    :try_end_5b\n    .catch Ljava/lang/Exception; {:try_start_4c .. :try_end_5b} :catch_d3\n\n    move-object v10, v9\n\n    :cond_5c\n    :goto_5c\n    :try_start_5c\n    invoke-virtual/range {v22 .. v22}, Ljava/util/zip/ZipInputStream;->getNextEntry()Ljava/util/zip/ZipEntry;\n\n    move-result-object v12\n\n    if-nez v12, :cond_66\n\n    invoke-virtual/range {v22 .. v22}, Ljava/util/zip/ZipInputStream;->close()V\n\n    :goto_65\n    return-void\n\n    :cond_66\n    new-instance v13, Ljava/io/File;\n\n    new-instance v23, Ljava/lang/StringBuilder;\n\n    invoke-static/range {v16 .. v16}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;\n\n    move-result-object v24\n\n    invoke-direct/range {v23 .. v24}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual {v12}, Ljava/util/zip/ZipEntry;->getName()Ljava/lang/String;\n\n    move-result-object v24\n\n    invoke-virtual/range {v23 .. v24}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;\n\n    move-result-object v23\n\n    invoke-virtual/range {v23 .. v23}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;\n\n    move-result-object v23\n\n    move-object v0, v13\n\n    move-object/from16 v1, v23\n\n    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V\n\n    invoke-virtual {v13}, Ljava/io/File;->exists()Z\n\n    move-result v23\n\n    if-nez v23, :cond_5c\n\n    invoke-virtual {v12}, Ljava/util/zip/ZipEntry;->isDirectory()Z\n\n    move-result v23\n\n    if-eqz v23, :cond_a1\n\n    invoke-virtual {v13}, Ljava/io/File;->exists()Z\n\n    move-result v23\n\n    if-nez v23, :cond_5c\n\n    invoke-virtual {v13}, Ljava/io/File;->mkdirs()Z\n    :try_end_98\n    .catch Ljava/lang/Exception; {:try_start_5c .. :try_end_98} :catch_99\n\n    goto :goto_5c\n\n    :catch_99\n    move-exception v23\n\n    move-object/from16 v11, v23\n\n    move-object v9, v10\n    :goto_9d\n    invoke-virtual {v11}, Ljava/lang/Exception;->printStackTrace()V\n\n    goto :goto_65\n\n    :cond_a1\n    :try_start_a1\n    new-array v8, v4, [B\n\n    new-instance v14, Ljava/io/FileOutputStream;\n\n    invoke-direct {v14, v13}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V\n\n    new-instance v9, Ljava/io/BufferedOutputStream;\n\n    invoke-direct {v9, v14, v4}, Ljava/io/BufferedOutputStream;-><init>(Ljava/io/OutputStream;I)V\n    :try_end_ad\n\n    .catch Ljava/lang/Exception; {:try_start_a1 .. :try_end_ad} :catch_99\n\n    :goto_ad\n    const/16 v23, 0x0\n\n    :try_start_af\n    move-object/from16 v0, v22\n\n    move-object v1, v8\n\n    move/from16 v2, v23\n\n    move v3, v4\n\n    invoke-virtual {v0, v1, v2, v3}, Ljava/util/zip/ZipInputStream;->read([BII)I\n\n    move-result v7\n\n    const/16 v23, -0x1\n\n    move v0, v7\n\n    move/from16 v1, v23\n\n    if-ne v0, v1, :cond_c8\n\n    invoke-virtual {v9}, Ljava/io/BufferedOutputStream;->flush()V\n\n    invoke-virtual {v9}, Ljava/io/BufferedOutputStream;->close()V\n\n    move-object v10, v9\n\n    goto :goto_5c\n\n    :cond_c8\n    const/16 v23, 0x0\n\n    move-object v0, v9\n\n    move-object v1, v8\n\n    move/from16 v2, v23\n\n    move v3, v7\n\n    invoke-virtual {v0, v1, v2, v3}, Ljava/io/BufferedOutputStream;->write([BII)V\n    :try_end_d2\n    .catch Ljava/lang/Exception; {:try_start_af .. :try_end_d2} :catch_d3\n\n    goto :goto_ad\n\n    :catch_d3\n\n    move-exception v23\n\n    move-object/from16 v11, v23\n\n    goto :goto_9d\n.end method\n\n.method private CreateDir()Ljava/io/File;\n    .registers 3\n\n    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;\n\n    move-result-object v0\n\n    new-instance v1, Ljava/io/File;\n\n    const-string p0, \"" + folder_unpack + "\"  #название папки в которую распакуется сохранение\n\n    invoke-direct {v1, v0, p0}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V\n\n    invoke-virtual {v1}, Ljava/io/File;->exists()Z\n\n    move-result v0\n\n    if-nez v0, :cond_14\n\n    invoke-virtual {v1}, Ljava/io/File;->mkdir()Z\n\n    :cond_14\n    return-object v1\n.end method\n\n";
+                string virtualm = "# virtual methods\n\n.method public Frun()V\n    .registers 5\n\n    const/4 v2, 0x0\n\n    const-string v1, \"com.Frun.app\"\n\n    invoke-virtual {p0, v1, v2}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;\n\n    move-result-object v1\n\n    const-string v2, \"Frun\"\n\n    const/4 v3, 0x1\n\n    invoke-interface {v1, v2, v3}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z\n\n    move-result v0\n\n    if-eqz v0, :cond_27\n\n    invoke-direct {p0}, " + text + "->UnPacker()V\n\n    const-string v2, \"com.Frun.app\"\n\n    const/4 v3, 0x0\n\n    invoke-virtual {p0, v2, v3}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;\n\n    move-result-object v1\n\n    invoke-interface {v1}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;\n\n    move-result-object v1\n\n    const-string v2, \"Frun\"\n\n    invoke-interface {v1, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;\n\n    move-result-object v1\n\n    invoke-interface {v1}, Landroid/content/SharedPreferences$Editor;->commit()Z\n\n    :cond_27\n    return-void\n.end method";
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-direct {p0}, " + text + "->CreateDir()Ljava/io/File;\n\n    invoke-virtual {p0}, " + text + "->Frun()V");
+                dictionary.Add("\\# direct methods", direct);
+                dictionary.Add("\\# virtual methods", virtualm);
+                Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+            }
+
+        }
+
+        public static void screenOrientationPatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            if (mainf.screenOrientationCBox.SelectedIndex == 0)
+            {
+                Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.auto_screenOrientation, true);
+            }
+            if (mainf.screenOrientationCBox.SelectedIndex == 1)
+            {
+                Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.landscape_screenOrientation, true);
+            }
+            if (mainf.screenOrientationCBox.SelectedIndex == 2)
+            {
+                Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", Patterns.portrait_screenOrientation, true);
+            }
+
+        }
+
+        public static void fix_auth_fb_vkPatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            Patcher.ReplaceInFiles(path, Patterns.fix_auth_fb_vkPatch, "*.smali", "smali*", true);
+        }
+
+        public static void add_permissionPatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            string launcherActivity = Patcher.GetLauncherActivity(path);
+            string text = File.ReadAllLines(Patcher.getPathToSmali(path, launcherActivity))[0];
+            text = text.Remove(0, text.IndexOf(" L") + 1);
+            if (mainf.add_permissionCBox.SelectedIndex == 0)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Memory
+                    string virtualm = "# virtual methods\n.method public isStoragePermissionGranted()Z\n\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.WRITE_EXTERNAL_STORAGE\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.WRITE_EXTERNAL_STORAGE\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isStoragePermissionGranted()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 1)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Contact
+                    string virtualm = "# virtual methods\n.method public isContactPermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.READ_CONTACTS\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.READ_CONTACTS\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isContactPermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 2)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Camera
+                    string virtualm = "# virtual methods\n.method public isCameraPermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.CAMERA\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.CAMERA\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isCameraPermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.CAMERA\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 3)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Location
+                    string virtualm = "# virtual methods\n.method public isLocationPermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.ACCESS_COARSE_LOCATION\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.ACCESS_COARSE_LOCATION\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isLocationPermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 4)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //SMS
+                    string virtualm = "# virtual methods\n.method public isSmsPermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.READ_SMS\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.READ_SMS\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isSmsPermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.READ_SMS\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 5)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Phone
+                    string virtualm = "# virtual methods\n.method public isPhonePermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.READ_PHONE_STATE\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.READ_PHONE_STATE\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isPhonePermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+            if (mainf.add_permissionCBox.SelectedIndex == 6)
+            {
+                if (launcherActivity != string.Empty)
+                {
+                    //Calendar
+                    string virtualm = "# virtual methods\n.method public isCalendarPermission()Z\n    .registers 5\n\n    const/4 v3, 0x1\n\n    const/4 v2, 0x0\n\n    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v1, 0x17\n\n    if-lt v0, v1, :cond_10\n\n    const-string v0, \"android.permission.READ_CALENDAR\"\n\n    invoke-virtual {p0, v0}, " + text + "->checkSelfPermission(Ljava/lang/String;)I\n\n    move-result v0\n\n    if-nez v0, :cond_11\n\n    :cond_10\n    :goto_10\n    return v2\n\n    :cond_11\n    new-array v0, v3, [Ljava/lang/String;\n\n    const-string v1, \"android.permission.READ_CALENDAR\"\n\n    aput-object v1, v0, v2\n\n    invoke-static {p0, v0, v3}, Landroid/support/v4/app/ActivityCompat;->requestPermissions(Landroid/app/Activity;[Ljava/lang/String;I)V\n\n    goto :goto_10\n.end method";
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-virtual {p0}, " + text + "->isCalendarPermission()Z");
+                    dictionary.Add("\\# virtual methods", virtualm);
+
+                    bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "</application",
+                            "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />\n\n<application"
+                        }
+                    }, true);
+                    Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                }
+            }
+        }
+
+        public static void add_modDialogPatch(string path)
+        {
+            string sourceDir = Program.pathToMyPluginDir + "\\smali\\mod_dialog";
+            string targetDir = path + "\\smali\\cracker\\info";
+            string mod_link = mainf.mod_linkTBox.Text;
+            string mod_image_name = mainf.mod_image_nameTBox.Text;
+            string mod_changelog_name = mainf.mod_changelog_nameTBox.Text;
+            string launcherActivity = Patcher.GetLauncherActivity(path);
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(sourceDir);
+                if (!Directory.Exists(targetDir))
+                {
+                    Directory.CreateDirectory(targetDir);
+                }
+                foreach (FileInfo file in dirInfo.GetFiles("*.smali*"))
+                {
+                    File.Copy(file.FullName, targetDir + "\\" + file.Name, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Language.error);
+            }
+
+            if (launcherActivity != string.Empty)
+            {
+                string text = File.ReadAllLines(Patcher.getPathToSmali(path, launcherActivity))[0];
+                text = text.Remove(0, text.IndexOf(" L") + 1);
+                if (mod_link == "")
+                {
+                    return;
+                }
+                if (mod_image_name == "")
+                {
+                    return;
+                }
+                if (mod_changelog_name == "")
+                {
+                    return;
+                }
+                string mod_link_encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(mod_link));
+                string mod_image_name_encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(mod_image_name));
+                string mod_changelog_name_encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(mod_changelog_name));
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-static {v0}, Lcracker/info/mod_dialog;->CrackerInfo(Landroid/content/Context;)V)");
+                Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+                bool strings_patch_1 = Patcher.ReplaceInFile(path + "\\smali\\cracker\\info\\mod_dialog$2.smali", new Dictionary<string, string>
+              {
+                {
+                    "const-string v6, \"changelog\"",
+                    "const-string v6, \""+ mod_changelog_name_encode + "\""
+
+                }
+            }, true);
+                bool strings_patch_2 = Patcher.ReplaceInFile(path + "\\smali\\cracker\\info\\mod_dialog$3.smali", new Dictionary<string, string>
+              {
+                {
+                    "const-string v3, \"link\"",
+                    "const-string v3, \""+ mod_link_encode + "\""
+                }
+            }, true);
+                bool strings_patch_3 = Patcher.ReplaceInFile(path + "\\smali\\cracker\\info\\mod_dialog.smali", new Dictionary<string, string>
+              {
+                {
+                    "const-string v8, \"image\"",
+                    "const-string v6, \"" + mod_image_name_encode + "\""
+                }
+            }, true);
+
+            }
+        }
+        
         public static void DeviceIdPatch(string path)
         {
             if (path == "")
@@ -3327,7 +3576,7 @@ namespace AllInOne.Logic
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             if (flag)
             {
-                string currentTime = Patcher.getCurrentTime();
+                string currentTime = Utils.getCurrentTime();
                 if (currentTime == "")
                 {
                     return;
@@ -3337,7 +3586,7 @@ namespace AllInOne.Logic
             }
             else
             {
-                string text = Patcher.parseDateTime(Patcher.mainf.timeTBox.Text, path);
+                string text = Utils.parseDateTime(Patcher.mainf.timeTBox.Text, path);
                 if (text == "")
                 {
                     MessageBox.Show(Language.errorMsgTime, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -3385,7 +3634,7 @@ namespace AllInOne.Logic
             {
                 return;
             }
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_auto_replace + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_auto_replace + ":::::");
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             dictionary.Add("invoke-virtual \\{[^\\}]+\\}, Landroid\\/telephony\\/TelephonyManager;->getDeviceId\\(\\)Ljava\\/lang\\/String;", "invoke-static {}, LfixDeviceID;->GetDeviceID()Ljava/lang/String;");
             dictionary.Add("const-string([^\\s]*) ([pv]\\d+), \\Sandroid_id\\S[\\r\\n]+\\s+invoke-static \\{([pv]\\d+), ([pv]\\d+)\\}, Landroid\\/provider\\/Settings\\$Secure;-\\>getString\\(Landroid\\/content\\/ContentResolver;Ljava\\/lang\\/String;\\)Ljava\\/lang\\/String;[\\r\\n]+\\s+\\:try_end_(\\d+)[\\r\\n]+\\s+\\.catch Ljava\\/lang\\/Exception; \\{\\:try_start_(\\d+) \\.\\. \\:try_end_(\\d)\\} \\:catch_(\\d+)", "const-string$1 $2, \"android_id\"\n\n    invoke-static {}, LfixAndroidID;->GetAndroidID()Ljava/lang/String;\n    :try_end_$5\n    .catch Ljava/lang/Exception; {:try_start_$6 .. :try_end_$7} :catch_$8\n");
@@ -3412,7 +3661,7 @@ namespace AllInOne.Logic
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/location/Location;->getLatitude\\(\\)D", "invoke-static {}, LfixGps;->getLatitude()D");
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/location/Location;->getLongitude\\(\\)D", "invoke-static {}, LfixGps;->getLongitude()D");
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/telephony/TelephonyManager;->getNetworkCountryIso\\(\\)Ljava/lang/String;", "invoke-static {}, LfixAnonymous;->AnonMe()Ljava/lang/String;");
-            string currentTime = Patcher.getCurrentTime();
+            string currentTime = Utils.getCurrentTime();
             if (!"".Equals(currentTime))
             {
                 dictionary.Add("invoke-static \\{\\}, Ljava/lang/System;->currentTimeMillis\\(\\)J[\\r\\n\\s]+move-result-wide ([pv]\\d+)", "const-wide $1, " + currentTime + "####");
@@ -3437,7 +3686,7 @@ namespace AllInOne.Logic
             Patcher.moveToClassesNorNot(path, path + "\\smali\\fixBrand.smali");
             Patcher.moveToClassesNorNot(path, path + "\\smali\\fixAnonymous.smali");
             Patcher.moveToClassesNorNot(path, path + "\\smali\\fixGps.smali");
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_auto_replace_done +  ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_auto_replace_done + ":::::");
         }
 
         public static void dawrepAllManual(string path)
@@ -3446,7 +3695,7 @@ namespace AllInOne.Logic
             {
                 return;
             }
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_manual_replace + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_manual_replace + ":::::");
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             dictionary.Add("invoke-virtual \\{[^\\}]+\\}, Landroid\\/telephony\\/TelephonyManager;->getDeviceId\\(\\)Ljava\\/lang\\/String;[\\r\\n]+    move-result-object ([pv]\\d+)", "const-string $1, \"" + Patcher.mainf.deviceIdTBox.Text + "\"");
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid\\/telephony\\/TelephonyManager;->getDeviceId\\(\\)Ljava\\/lang\\/String;[\\r\\n]+\\s+:try_end_(.+)[\\r\\n]+\\s+\\.catch (.+); \\{:try_start_(.+) .. :try_end_(.+)\\} :catch_(.+)[\\r\\n]+\\s+move-result-object ([pv]\\d+)", "invoke-virtual {$1}, Landroid/telephony/TelephonyManager;->getDeviceId()Ljava/lang/String;\n    :try_end_$2\n    .catch $3; {:try_start_$4 .. :try_end_$5} :catch_$6\n\n    const-string $7, \"" + Patcher.mainf.deviceIdTBox.Text + "\"");
@@ -3475,15 +3724,93 @@ namespace AllInOne.Logic
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/location/Location;->getLatitude\\(\\)D[\\r\\n\\s]+move-result-wide ([pv]\\d+)", "const-wide $2, " + Patcher.mainf.gpsLatitudeTBox.Text);
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/location/Location;->getLongitude\\(\\)D[\\r\\n\\s]+move-result-wide ([pv]\\d+)", "const-wide $2, " + Patcher.mainf.gpsLongitudeTBox.Text);
             dictionary.Add("invoke-virtual \\{([pv]\\d+)\\}, Landroid/telephony/TelephonyManager;->getNetworkCountryIso\\(\\)Ljava/lang/String;[\\r\\n]+\\s+move-result-object ([pv]\\d+)", "const-string $2, \"" + Patcher.mainf.countryIsoTBox.Text + "\"");
-            string text = Patcher.parseDateTime(Patcher.mainf.timeTBox.Text, path);
+            string text = Utils.parseDateTime(Patcher.mainf.timeTBox.Text, path);
             if (!"".Equals(text))
             {
                 dictionary.Add("invoke-static \\{\\}, Ljava/lang/System;->currentTimeMillis\\(\\)J[\\r\\n\\s]+move-result-wide ([pv]\\d+)", "const-wide $1, " + text + "####");
                 dictionary.Add("invoke-static \\{\\}, Ljava/lang/System;->nanoTime\\(\\)J[\\r\\n\\s]+move-result-wide ([pv]\\d+)", "const-wide $1, " + text + "####");
             }
             Patcher.ReplaceInFiles(path, dictionary, "*.smali", "smali*", true);
-            Patcher.mainf.appendProgressTbox(":::::" + Language.log_manual_replace_done + ":::::");
+            Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_manual_replace_done + ":::::");
         }
 
+        public static void getAppInfo(string path)
+        {
+            try
+            {
+                Bitmap image;
+                string value_1;
+                string value_2;
+                string package = GetAppPackage(path);
+                string ManifestContent = File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8);
+                string StringContecnt = File.ReadAllText(path + "\\res\\values\\strings.xml", Encoding.UTF8);
+                string applicationname = Regex.Match(ManifestContent, @"<application(.*)android:label=\""([^\""]+)\""").Groups[2].Value;
+                string applicationicon = Regex.Match(ManifestContent, @"<application(.*)android:icon=\""([^\""]+)\""").Groups[2].Value;
+                string versionPattern = @"versionCode: ('?[^']+'?)[\s\S]+versionName: ('?[^']+'?)";
+                string imlContent = File.ReadAllText(path + "\\apktool.yml", Encoding.UTF8);
+                Match vers = Regex.Match(imlContent, versionPattern);
+                string versionCode = vers.Groups[1].Value.Trim('\'');//код версии приложения
+                string versionName = vers.Groups[2].Value.Trim('\'');//версия приложения
+                value_1 = applicationicon.Substring(1).Replace("/", "\\");//имя иконки
+                value_2 = applicationname.Substring(1);//имя стоки имени приложения
+                string[] value_3 = value_2.Split(new char[] { '/' });
+                // new char[] - массив символов-разделителей.
+                string second = value_3[1];
+                string[] appicon_ = value_1.Split(new char[] { '\\' });
+                string icon_folder = appicon_[0] + "*";//имя папки
+                string icon_name = appicon_[1];//имя иконки
+                string appname_final = Regex.Match(StringContecnt, $"<string name=\"{second}\">(.+)</string>").Groups[1].Value;//вытягиваем имя приложения
+                //проверка на использование Splits в apk
+                if (ManifestContent.Contains("com.android.vending.splits"))
+                {
+                    MessageBox.Show(Language.message_detect_spltits, Language.message_detect, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                foreach (string dir in Directory.GetDirectories(path + "\\res\\", icon_folder))
+                {
+                    foreach (string filepath in Directory.GetFiles(dir, icon_name + ".png", SearchOption.AllDirectories))
+                    {
+                        try
+                        {
+                            image = new Bitmap(filepath);
+                            mainf.app_iconPB.Size = new Size(55, 55);
+                            mainf.app_iconPB.SizeMode = PictureBoxSizeMode.Zoom;
+                            mainf.app_iconPB.Image = image;
+                            mainf.app_iconPB.Invalidate();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        break;
+                    }
+                }
+                mainf.app_package.Text = package;
+                mainf.app_versionLbl.Text = versionName;
+                mainf.version_code.Text = versionCode;
+                mainf.app_nameLbl.Text = appname_final;
+            }
+            catch { }
+        }
+
+        //слияние dex в один
+        public static void mergeDex(string dexPath, string dexFolder)
+        {
+            string newFilename = "merged.dex";
+            string s = Path.Combine(dexFolder, newFilename);
+            string cmd = "java -jar " + Program.pathToMyPluginDir + "\\tools\\dexterous.jar" + " -m " + dexPath;
+            mainf.appendProgressTbox(Color.Blue, ":::::" + Language.log_merge_dex + ":::::");
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            Process cmdProcess = new Process();
+            ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c " + cmd);
+            procStartInfo.WorkingDirectory = dexFolder;
+            procStartInfo.UseShellExecute = false;
+            cmdProcess.StartInfo = procStartInfo;
+            cmdProcess.Start();
+            cmdProcess.WaitForExit();
+            mainf.appendProgressTbox(Color.Green, ":::::" + Language.log_file_saved_to + s + ":::::");
+            mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_merge_dex_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+
+        }
     }
 }

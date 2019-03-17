@@ -9,8 +9,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using AllInOne.Forms;
 using AllInOne.Logic;
+using AllInOne.Logic.Util;
 
 namespace AllInOne.Forms
 {
@@ -18,18 +18,20 @@ namespace AllInOne.Forms
     public partial class MainForm : Form
     {
         private bool isDisabledCheckedChanged;
-        public string version = "7.0b3";
-
+        public static int eggs;
+        public string version = "7.2";
+        OpenFileDialog openFileDialog = new OpenFileDialog();
         public MainForm()
         {
             this.isDisabledCheckedChanged = false;
             this.InitializeComponent();
-            DateTime buildDate = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
-            //Несработал этот метод
-            //Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            //DateTime buildDate = new DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.Revision * 2);
+            //DateTime buildDate = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
+            //Более правильный вариант
+            Version Version = Assembly.GetExecutingAssembly().GetName().Version;
+            DateTime buildDate = new DateTime(2000, 1, 1).AddDays(Version.Build).AddSeconds(Version.Revision * 2);
             this.lblBuild.Text = buildDate.ToString();
             this.lblVersion.Text = version;
+
             if (!Program.standalone)
             {
                 this.openFolderButton.Visible = false;
@@ -39,44 +41,47 @@ namespace AllInOne.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            eggs = 0;
             base.Location = Properties.Settings.Default.WindowLocation;
             Size windowSize = Properties.Settings.Default.WindowSize;
             base.Size = Properties.Settings.Default.WindowSize;
             base.WindowState = Properties.Settings.Default.WindowState;
-            this.LoadBoxValues();
+           // this.LoadBoxValues();
             this.UpdateFormLanguage();
+            LoadSettings();
+            KeyPreview = true;
             this.openFolderButton.Visible = Program.standalone;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(Program.pathToMyPluginDir + "\\box.xml");
-            XmlNode xmlNode = xmlDocument.SelectSingleNode("root");
-            foreach (object obj in xmlNode.SelectSingleNode("box"))
-            {
-                XmlNode xmlNode2 = (XmlNode)obj;
-                string value = xmlNode2.Attributes[0].Value;
-                if (value == "AddToastMessage")
-                {
-                    xmlNode2.InnerText = this.toastMessageTBox.Text;
-                }
-            }
-            XmlNode xmlNode3 = xmlNode.SelectSingleNode("replace");
-            xmlNode3.RemoveAll();
-            foreach (object obj2 in this.replaceGBox.Controls)
-            {
-                if (obj2 is TextBox)
-                {
-                    XmlNode xmlNode4 = xmlDocument.CreateElement("item");
-                    XmlAttribute xmlAttribute = xmlDocument.CreateAttribute("name");
-                    xmlAttribute.Value = ((TextBox)obj2).Name;
-                    xmlNode4.Attributes.Append(xmlAttribute);
-                    xmlNode4.InnerText = ((TextBox)obj2).Text;
-                    xmlNode3.AppendChild(xmlNode4);
-                }
-            }
-            xmlDocument.Save(Program.pathToMyPluginDir + "\\box.xml");
+            //XmlDocument xmlDocument = new XmlDocument();
+            //xmlDocument.Load(Program.pathToMyPluginDir + "\\box.xml");
+            //XmlNode xmlNode = xmlDocument.SelectSingleNode("root");
+            //foreach (object obj in xmlNode.SelectSingleNode("box"))
+            //{
+            //    XmlNode xmlNode2 = (XmlNode)obj;
+            //    string value = xmlNode2.Attributes[0].Value;
+            //    if (value == "AddToastMessage")
+            //    {
+            //        xmlNode2.InnerText = this.toastMessageTBox.Text;
+            //    }
+            //}
+            //XmlNode xmlNode3 = xmlNode.SelectSingleNode("replace");
+            //xmlNode3.RemoveAll();
+            //foreach (object obj2 in this.replaceGBox.Controls)
+            //{
+            //    if (obj2 is TextBox)
+            //    {
+            //        XmlNode xmlNode4 = xmlDocument.CreateElement("item");
+            //        XmlAttribute xmlAttribute = xmlDocument.CreateAttribute("name");
+            //        xmlAttribute.Value = ((TextBox)obj2).Name;
+            //        xmlNode4.Attributes.Append(xmlAttribute);
+            //        xmlNode4.InnerText = ((TextBox)obj2).Text;
+            //        xmlNode3.AppendChild(xmlNode4);
+            //    }
+            //}
+            //xmlDocument.Save(Program.pathToMyPluginDir + "\\box.xml");
             if (base.WindowState == FormWindowState.Normal)
             {
                 Properties.Settings.Default.WindowSize = base.Size;
@@ -86,95 +91,133 @@ namespace AllInOne.Forms
             {
                 Properties.Settings.Default.WindowSize = base.RestoreBounds.Size;
             }
+              //   SaveBoxValues();
+            SaveSettings();
             Properties.Settings.Default.WindowState = base.WindowState;
             Properties.Settings.Default.Save();
         }
 
-        //#region LoadSettings
-        //public void LoadSettings()
-        //{
-        //    Dictionary<string, string> values = new Dictionary<string, string>();
-        //    if (System.IO.File.Exists("Settings.txt"))
-        //    {
-        //       var lines= System.IO.File.ReadAllLines("Settings.txt");
-        //        foreach (var s in lines)
-        //        {
-        //            if (s.IndexOf("#") > 0)
-        //            {
-        //                values[s.Substring(0, s.IndexOf('#'))]= s.Substring(s.IndexOf('#') + 1);
-        //            }
-        //        }
-        //    }
-        //    Recurs(this,null, values,false);
-
-        //}
-        //#endregion
-
-        //#region SaveSettings
-        //public void SaveSettings()
-        //{
-        //    Dictionary<string, string> values = new Dictionary<string, string>();
-        //    Recurs(this, null, values, true);
-        //    System.Text.StringBuilder str = new System.Text.StringBuilder();
-        //    foreach (var v in values)
-        //    {
-        //        str.AppendLine(v.Key + "#" + v.Value);
-        //    }
-
-        //    System.IO.File.WriteAllText("Settings.txt", str.ToString());
-        //}
-        //#endregion
-
-        //#region Recurs
-        //void Recurs(Control root, string path, Dictionary<string, string> values, bool save)
-        //{
-        //    foreach (Control ctr in root.Controls)
-        //    {
-        //        string full = path + "/" + ctr.Name;
-        //        Console.WriteLine(ctr.GetType().Name + ": " + full);
-
-        //        if (save)
-        //        {
-        //            string val = null;
-        //            if (ctr is CheckBox _CheckBox) val = _CheckBox.Checked ? "1" : "0";
-        //            if (ctr is ComboBox _ComboBox) val = _ComboBox.Text+"";
-        //            if (ctr is TextBox _TextBox) val = _TextBox.Text;
-        //            if (val != null)
-        //                values[full] = val;
-        //        }
-        //        else
-        //        {
-        //            if (values.TryGetValue(full, out var val))
-        //            {
-        //                try
-        //                {
-        //                    if (ctr is CheckBox _CheckBox) _CheckBox.Checked = val == "1";
-        //                    if (ctr is ComboBox _ComboBox) _ComboBox.Text = val;
-        //                    if (ctr is TextBox _TextBox) _TextBox.Text = val;
-        //                }
-        //                catch { }
-        //            }
-        //        }
-
-        //        Recurs(ctr, full, values, save);
-        //    }
-
-        //}
-        //#endregion
-
-        public void appendProgressTbox(string line)
+        #region LoadSettings
+        public void LoadSettings()
         {
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            if (File.Exists(Program.pathToMyPluginDir + "\\all_values.txt"))
+            {
+                var lines = File.ReadAllLines(Program.pathToMyPluginDir + "\\all_values.txt");
+                foreach (var s in lines)
+                {
+                    if (s.IndexOf("#") > 0)
+                    {
+                        values[s.Substring(0, s.IndexOf('#'))] = s.Substring(s.IndexOf('#') + 1);
+                    }
+                }
+            }
+            foreach (string file in Directory.GetFiles(Program.pathToMyPluginDir + "\\deleteRes", "*.xml"))
+            {
+                deleteLangsCBox.Items.Add(Path.GetFileName(file));
+            }
+
+            if (deleteLangsCBox.Items.Count > 0)
+            {
+                deleteLangsCBox.Text = deleteLangsCBox.Items[0].ToString();
+            }
+
+            foreach (string file in Directory.GetFiles(Program.pathToMyPluginDir + "\\sensors", "*.xml"))
+            {
+                blockSensorsCBox.Items.Add(Path.GetFileName(file));
+            }
+            if (blockSensorsCBox.Items.Count > 0)
+            {
+                blockSensorsCBox.Text = blockSensorsCBox.Items[0].ToString();
+            }
+           
+            Recurs(this, null, values, false);
+
+        }
+        #endregion
+
+        #region SaveSettings
+       // public void SaveSettings()
+        public void SaveSettings()
+        {
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            Recurs(this, null, values, true);
+            var str = new System.Text.StringBuilder();
+            foreach (var v in values)
+            {
+               str.AppendLine(v.Key + "#" + v.Value);
+            }
+             progressTbox.Text = "";
+
+            File.WriteAllText(Program.pathToMyPluginDir + "\\all_values.txt", str.ToString());
+        }
+        #endregion
+
+        #region Recurs
+        void Recurs(Control root, string path, Dictionary<string, string> values, bool save)
+        {
+            foreach (Control ctr in root.Controls)
+            {
+                string full = path + "/" + ctr.Name;
+                Console.WriteLine(ctr.GetType().Name + ": " + full);
+
+                if (save)
+                {
+                    string val = null;
+                    if (ctr is CheckBox _CheckBox) val = _CheckBox.Checked ? "1" : "0";
+                    if (ctr is ComboBox _ComboBox) val = _ComboBox.Text + "";
+                    if (ctr is TextBox _TextBox) val = _TextBox.Text;
+                    if(ctr is TextBox)
+                    {
+                        progressTbox.Text = "";
+                    }
+                    if (val != null)
+                        values[full] = val;
+                }
+                else
+                {
+                    if (values.TryGetValue(full, out var val))
+                    {
+                        try
+                        {
+                            if (ctr is CheckBox _CheckBox) _CheckBox.Checked = val == "1";
+                            if (ctr is ComboBox _ComboBox) _ComboBox.Text = val;
+                            if (ctr is TextBox _TextBox) _TextBox.Text = val;
+                        }
+                        catch { }
+                    }
+                }
+
+                Recurs(ctr, full, values, save);
+            }
+
+        }
+        #endregion
+
+        public void appendProgressTbox(Color color, string line)
+        {
+            int i = progressTbox.SelectionStart;
             if (progressTbox.InvokeRequired)
             {
                 progressTbox.Invoke(new Action(() =>
                 {
                     if ("".Equals(progressTbox.Text))
                     {
-                        progressTbox.Text = line;
+                         progressTbox.Text = line;//";
+                         progressTbox.SelectionStart = i;
+                      //  progressTbox.SelectedText = line + "\r";
+                        progressTbox.SelectionLength = line.Length + 1;
+                        progressTbox.SelectionColor = color;
+                        progressTbox.SelectionStart = progressTbox.Text.Length;
                     }
                     else
                     {
                         progressTbox.AppendText("\r\n" + line);
+                        progressTbox.SelectionStart = i;
+                    //   progressTbox.SelectedText = line + "\r";
+                        progressTbox.SelectionLength = line.Length + 1;
+                        progressTbox.SelectionColor = color;
+                        progressTbox.SelectionStart = progressTbox.Text.Length;
                     }
                 }));
             }
@@ -183,173 +226,250 @@ namespace AllInOne.Forms
                 if ("".Equals(progressTbox.Text))
                 {
                     progressTbox.Text = line;
+                    progressTbox.SelectionStart = i;
+                 //   progressTbox.SelectedText = line + "\r";
+                    progressTbox.SelectionLength = line.Length + 1;
+                    progressTbox.SelectionColor = color;
+                    progressTbox.SelectionStart = progressTbox.Text.Length;
                 }
                 else
                 {
                     progressTbox.AppendText("\r\n" + line);
+                    progressTbox.SelectionStart = i;
+                 //   progressTbox.SelectedText = line + "\r";
+                    progressTbox.SelectionLength = line.Length + 1;
+                    progressTbox.SelectionColor = color;
+                    progressTbox.SelectionStart = progressTbox.Text.Length;
                 }
             }
 
         }
-
         public void LoadBoxValues()
-        {
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(Program.pathToMyPluginDir + "\\box.xml");
-            XmlNode xmlNode = xmlDocument.SelectSingleNode("root");
-            XmlNode xmlNode2 = xmlNode.SelectSingleNode("box");
-            XmlNode xmlNode3 = xmlNode.SelectSingleNode("replace");
-            XmlNode xmlNode4 = xmlNode.SelectSingleNode("menu");
-            foreach (object obj in xmlNode2)
+        {//Convert.ToBoolean("false");
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Program.pathToMyPluginDir + "\\box.xml");
+            XmlNode root = doc.SelectSingleNode("root");
+            XmlNode settings = root.SelectSingleNode("box");
+            XmlNode replaceItems = root.SelectSingleNode("replace");
+            XmlNode menu = root.SelectSingleNode("menu");
+
+
+            foreach (XmlNode settingsItem in settings)
             {
-                XmlNode xmlNode5 = (XmlNode)obj;
-                string value = xmlNode5.Attributes[0].Value;
-                if (value == "AddToastMessage")
+                switch (settingsItem.Attributes[0].Value)
                 {
-                    this.toastMessageTBox.Text = xmlNode5.InnerText;
+                    case "AddToastMessage":
+                        toastMessageTBox.Text = settingsItem.InnerText;
+                        break;
                 }
             }
-            foreach (TextBox textBox in this.replaceGBox.Controls.OfType<TextBox>())
+
+            foreach (var control in replaceGBox.Controls)
             {
-                foreach (object obj2 in xmlNode3.SelectNodes("item"))
+                if (control is TextBox)
                 {
-                    XmlNode xmlNode6 = (XmlNode)obj2;
-                    if (textBox.Name.Equals(xmlNode6.Attributes[0].Value))
+                    foreach (XmlNode replaceItem in replaceItems.SelectNodes("item"))
                     {
-                        textBox.Text = xmlNode6.InnerText;
+                        if (!((TextBox)control).Name.Equals(replaceItem.Attributes[0].Value)) { continue; }
+
+                        ((TextBox)control).Text = replaceItem.InnerText;
                         break;
                     }
                 }
             }
-            Dictionary<int, string[]> dictionary = new Dictionary<int, string[]>();
-            foreach (object obj3 in xmlNode4)
+            Dictionary<int, string[]> order = new Dictionary<int, string[]>();
+            foreach (XmlNode menuitem in menu)
             {
-                XmlNode xmlNode7 = (XmlNode)obj3;
-                if (!xmlNode7.Attributes["position"].Value.Equals(""))
+                if (!menuitem.Attributes["position"].Value.Equals(""))
                 {
-                    dictionary.Add(int.Parse(xmlNode7.Attributes["position"].Value), new string[]
+                    order.Add(int.Parse(menuitem.Attributes["position"].Value), new string[]
                     {
-                xmlNode7.Attributes["checked"].Value,
-                xmlNode7.InnerText
+                        menuitem.Attributes["checked"].Value, menuitem.InnerText
                     });
                 }
             }
-            List<KeyValuePair<int, string[]>> list = dictionary.ToList<KeyValuePair<int, string[]>>();
-            list.Sort((KeyValuePair<int, string[]> pair1, KeyValuePair<int, string[]> pair2) => pair1.Key.CompareTo(pair2.Key));
+
+            List<KeyValuePair<int, string[]>> sortedOrder = order.ToList();
+            sortedOrder.Sort((pair1, pair2) => pair1.Key.CompareTo(pair2.Key));
+
             foreach (TabPage tabpage in this.mainTabControl.TabPages)
             {
-                foreach (KeyValuePair<int, string[]> keyValuePair in list)
-                {
-                    ((CheckBox)this.mainTabControl.Controls.Find(keyValuePair.Value[1], true)[0]).Checked = Convert.ToBoolean(keyValuePair.Value[0]);
+                foreach (var pair in sortedOrder)
+                {//разобраться с аналитикой и ее чекбоксами
+                    ((CheckBox)this.mainTabControl.Controls.Find(pair.Value[1], true)[0]).Checked = Convert.ToBoolean(pair.Value[0]);
                 }
             }
-            foreach (string path in Directory.GetFiles(Program.pathToMyPluginDir + "\\deleteRes", "*.xml"))
+
+            foreach (string file in Directory.GetFiles(Program.pathToMyPluginDir + "\\deleteRes", "*.xml"))
             {
-                this.deleteLangsCBox.Items.Add(Path.GetFileName(path));
+                deleteLangsCBox.Items.Add(Path.GetFileName(file));
             }
-            if (this.deleteLangsCBox.Items.Count > 0)
+
+            if (deleteLangsCBox.Items.Count > 0)
             {
-                this.deleteLangsCBox.Text = this.deleteLangsCBox.Items[0].ToString();
+                deleteLangsCBox.Text = deleteLangsCBox.Items[0].ToString();
             }
-            foreach (string path2 in Directory.GetFiles(Program.pathToMyPluginDir + "\\sensors", "*.xml"))
+
+            foreach (string file in Directory.GetFiles(Program.pathToMyPluginDir + "\\sensors", "*.xml"))
             {
-                this.blockSensorsCBox.Items.Add(Path.GetFileName(path2));
+                blockSensorsCBox.Items.Add(Path.GetFileName(file));
             }
-            if (this.blockSensorsCBox.Items.Count > 0)
+            if (blockSensorsCBox.Items.Count > 0)
             {
-                this.blockSensorsCBox.Text = this.blockSensorsCBox.Items[0].ToString();
+                blockSensorsCBox.Text = blockSensorsCBox.Items[0].ToString();
             }
         }
+        //public void LoadBoxValues()
+        //{
+        //    XmlDocument xmlDocument = new XmlDocument();
+        //    xmlDocument.Load(Program.pathToMyPluginDir + "\\box.xml");
+        //    XmlNode xmlNode = xmlDocument.SelectSingleNode("root");
+        //    XmlNode xmlNode2 = xmlNode.SelectSingleNode("box");
+        //    XmlNode xmlNode3 = xmlNode.SelectSingleNode("replace");
+        //    XmlNode xmlNode4 = xmlNode.SelectSingleNode("menu");
+        //    foreach (object obj in xmlNode2)
+        //    {
+        //        XmlNode xmlNode5 = (XmlNode)obj;
+        //        string value = xmlNode5.Attributes[0].Value;
+        //        if (value == "AddToastMessage")
+        //        {
+        //            this.toastMessageTBox.Text = xmlNode5.InnerText;
+        //        }
+        //    }
+        //    foreach (TextBox textBox in this.replaceGBox.Controls.OfType<TextBox>())
+        //    {
+        //        foreach (object obj2 in xmlNode3.SelectNodes("item"))
+        //        {
+        //            XmlNode xmlNode6 = (XmlNode)obj2;
+        //            if (textBox.Name.Equals(xmlNode6.Attributes[0].Value))
+        //            {
+        //                textBox.Text = xmlNode6.InnerText;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    Dictionary<int, string[]> dictionary = new Dictionary<int, string[]>();
+        //    foreach (object obj3 in xmlNode4)
+        //    {
+        //        XmlNode xmlNode7 = (XmlNode)obj3;
+        //        if (!xmlNode7.Attributes["position"].Value.Equals(""))
+        //        {
+        //            dictionary.Add(int.Parse(xmlNode7.Attributes["position"].Value), new string[]
+        //            {
+        //        xmlNode7.Attributes["checked"].Value,
+        //        xmlNode7.InnerText
+        //            });
+        //        }
+        //    }
+        //    List<KeyValuePair<int, string[]>> list = dictionary.ToList<KeyValuePair<int, string[]>>();
+        //    list.Sort((KeyValuePair<int, string[]> pair1, KeyValuePair<int, string[]> pair2) => pair1.Key.CompareTo(pair2.Key));
+        //    foreach (TabPage tabpage in this.mainTabControl.TabPages)
+        //    {
+        //        foreach (KeyValuePair<int, string[]> keyValuePair in list)
+        //        {
+        //            ((CheckBox)this.mainTabControl.Controls.Find(keyValuePair.Value[1], true)[0]).Checked = Convert.ToBoolean(keyValuePair.Value[0]);
+        //        }
+        //    }
+        //    foreach (string path in Directory.GetFiles(Program.pathToMyPluginDir + "\\deleteRes", "*.xml"))
+        //    {
+        //        this.deleteLangsCBox.Items.Add(Path.GetFileName(path));
+        //    }
+        //    if (this.deleteLangsCBox.Items.Count > 0)
+        //    {
+        //        this.deleteLangsCBox.Text = this.deleteLangsCBox.Items[0].ToString();
+        //    }
+        //    foreach (string path2 in Directory.GetFiles(Program.pathToMyPluginDir + "\\sensors", "*.xml"))
+        //    {
+        //        this.blockSensorsCBox.Items.Add(Path.GetFileName(path2));
+        //    }
+        //    if (this.blockSensorsCBox.Items.Count > 0)
+        //    {
+        //        this.blockSensorsCBox.Text = this.blockSensorsCBox.Items[0].ToString();
+        //    }
+        //}
 
         public void SaveBoxValues()
         {
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(Program.pathToMyPluginDir + "\\box.xml");
-            XmlNode xmlNode = xmlDocument.SelectSingleNode("root").SelectSingleNode("menu");
-            xmlNode.RemoveAll();
-            Dictionary<int, string> dictionary = new Dictionary<int, string>();
-            int num = 0;
-            foreach (object obj in this.orderLv.Items)
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Program.pathToMyPluginDir + "\\box.xml");
+            XmlNode root = doc.SelectSingleNode("root");
+            XmlNode menu = root.SelectSingleNode("menu");
+            menu.RemoveAll();
+            Dictionary<int, string> order = new Dictionary<int, string>();
+            int pos = 1;
+            foreach (ListViewItem item in orderLv.Items)
             {
-                ListViewItem listViewItem = (ListViewItem)obj;
-                if (listViewItem.Text.Contains(Language.plugin_delete_antianalytics))
+                if (item.Text.Contains(Language.plugin_delete_antianalytics))
                 {
-                    if (this.analyticActivityCB.Checked)
+                    if (analyticActivityCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticActivityCB.Text);
-                        num++;
+                        order.Add(pos, analyticActivityCB.Text);
+                        pos++;
                     }
-                    if (this.analyticServiceCB.Checked)
+                    if (analyticServiceCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticServiceCB.Text);
-                        num++;
+                        order.Add(pos, analyticServiceCB.Text);
+                        pos++;
                     }
-                    if (this.analyticLinksCB.Checked)
+                    if (analyticLinksCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticLinksCB.Text);
-                        num++;
+                        order.Add(pos, analyticLinksCB.Text);
+                        pos++;
                     }
-                    if (this.analyticFirebaseCB.Checked)
+                    if (analyticFirebaseCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticFirebaseCB.Text);
-                        num++;
+                        order.Add(pos, analyticFirebaseCB.Text);
+                        pos++;
                     }
-                    if (this.analyticReceiverCB.Checked)
+                    if (analyticReceiverCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticReceiverCB.Text);
-                        num++;
+                        order.Add(pos, analyticReceiverCB.Text);
+                        pos++;
                     }
-                    if (this.analyticLayoutCB.Checked)
+                    if (analyticLayoutCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticLayoutCB.Text);
-                        num++;
+                        order.Add(pos, analyticLayoutCB.Text);
+                        pos++;
                     }
-                    if (this.analyticMethodCB.Checked)
+                    if (analyticMethodCB.Checked)
                     {
-                        dictionary.Add(num, this.analyticMethodCB.Text);
-                        num++;
+                        order.Add(pos, analyticMethodCB.Text);
+                        pos++;
                     }
                 }
                 else
                 {
-                    dictionary.Add(num, listViewItem.Text);
-                    num++;
+                    order.Add(pos, item.Text);
+                    pos++;
                 }
             }
             List<CheckBox> checkboxes = new List<CheckBox>();
-            GetChildren<CheckBox>(mainTabControl, checkboxes);
+            GetChildren(mainTabControl, checkboxes);
             foreach (CheckBox checkBox in checkboxes)
             {
-                XmlNode xmlNode2 = xmlDocument.CreateElement("menuitem");
-                xmlNode2.InnerText = checkBox.Name;
-                XmlAttribute xmlAttribute = xmlDocument.CreateAttribute("checked");
-                xmlAttribute.Value = checkBox.Checked.ToString();
-                xmlNode2.Attributes.Append(xmlAttribute);
-                xmlAttribute = xmlDocument.CreateAttribute("position");
-                xmlAttribute.Value = "";
-                foreach (KeyValuePair<int, string> keyValuePair in dictionary)
+                XmlNode tmp = doc.CreateElement("menuitem");
+                tmp.InnerText = checkBox.Name;
+                XmlAttribute attr = doc.CreateAttribute("checked");
+                attr.Value = checkBox.Checked.ToString();
+                tmp.Attributes.Append(attr);
+                attr = doc.CreateAttribute("position");
+                attr.Value = "";
+                foreach (var pair in order)
                 {
-                    string[] array = keyValuePair.Value.Split(new char[]
+                    if (pair.Value.Contains(checkBox.Text))
                     {
-                        ':'
-                    });
-                    if (string.Compare((array.Count<string>() == 1) ? array[0].Trim() : array[1].Trim(), checkBox.Text) == 0)
-                    {
-                        xmlAttribute.Value = keyValuePair.Key.ToString();
+                        attr.Value = pair.Key.ToString();
                         break;
                     }
                 }
-                xmlNode2.Attributes.Append(xmlAttribute);
-                xmlNode.AppendChild(xmlNode2);
-
-
+                tmp.Attributes.Append(attr);
+                menu.AppendChild(tmp);
             }
-            xmlDocument.Save(Program.pathToMyPluginDir + "\\box.xml");
+            doc.Save(Program.pathToMyPluginDir + "\\box.xml");
         }
 
         public void ClearBoxValues()
         {
-            //ClearControls(mainTabControl);
             this.isDisabledCheckedChanged = true;
             List<CheckBox> checkboxes = new List<CheckBox>();
             List<TextBox> textBoxes = new List<TextBox>();
@@ -357,21 +477,12 @@ namespace AllInOne.Forms
             GetChildren<CheckBox>(mainTabControl, checkboxes);
             GetChildren<TextBox>(mainTabControl, textBoxes);
             GetChildren<ComboBox>(mainTabControl, comboBoxes);
-            //checkboxes.ForEach(ch => ch.Checked = false);
-            //textBoxes.ForEach(tb => tb.Text = "");
-            //foreach (Control control in GetChildTextBoxes<CheckBox>(groupBox))
-            //{
-
-            // TextBox textBox;
-            // ComboBox comboBox;
-
             foreach (CheckBox checkBox in checkboxes)
             {
                 checkBox.Checked = false;
             }
             foreach (TextBox textBox in textBoxes)
             {
-
                 textBox.Text = "";
                 textBox.Enabled = false;
             }
@@ -380,7 +491,6 @@ namespace AllInOne.Forms
                 comboBox.SelectedIndex = 0;
                 comboBox.Enabled = false;
             }
-
             this.progressTbox.Text = "";
             this.orderLv.Items.Clear();
             this.isDisabledCheckedChanged = false;
@@ -388,97 +498,136 @@ namespace AllInOne.Forms
 
         public void UpdateFormLanguage()
         {
-            this.Text = Language.plugin_name + " [" + Program.ApkDir + "]";
-            this.deleteGBox.Text = Language.plugin_delete;
-            this.analyticGBox.Text = Language.plugin_delete_antianalytics;
-            this.analyticActivityCB.Text = Language.analActivity;
-            this.analyticFirebaseCB.Text = Language.analFirebase;
-            this.analyticLayoutCB.Text = Language.analLayout;
-            this.analyticLinksCB.Text = Language.analLinks;
-            this.analyticMethodCB.Text = Language.analMethod;
-            this.analyticReceiverCB.Text = Language.analReceiver;
-            this.analyticServiceCB.Text = Language.analService;
-            this.themesGBox.Text = Language.plugin_themes;
-            this.themesDCB.Text = Language.plugin_themes_d;
-            this.themesLCB.Text = Language.plugin_themes_l;
-            this.googleMapsCB.Text = Language.googleMapsRepair;
-            this.saveCheckboxButton.Text = Language.saveCheckboxes;
-            this.internetCB.Text = Language.plugin_delete_internet;
-            this.emulatorCB.Text = Language.plugin_delete_emulator;
-            this.locationCB.Text = Language.plugin_delete_location;
-            this.gmsCB.Text = Language.plugin_delete_gms;
-            this.allToastsCB.Text = Language.plugin_delete_toast;
-            this.installerGBox.Text = Language.plugin_inst;
-            this.licenseGBox.Text = Language.plugin_license;
-            this.signatureGBox.Text = Language.plugin_signcheck;
-            this.binSignatureCB.Text = Language.plugin_signcheck_binsign;
-            this.binSignatureInstallerCB.Text = Language.plugin_signcheck_binsignInst;
-            this.allManualCB.Text = Language.plugin_replace_all_man;
-            this.allAutoCB.Text = Language.plugin_replace_all_auto;
-            this.timeCB.Text = Language.plugin_replace_time;
-            this.splashGBox.Text = Language.plugin_splash;
-            this.splashInstallCB.Text = Language.plugin_splash_inst;
-            this.splashRemoveCB.Text = Language.plugin_splash_rem;
-            this.otherGBox.Text = Language.plugin_other;
-            this.installLocationCB.Text = Language.plugin_other_instlocation;
-            this.orderLv.Columns[0].Text = Language.plugin_order_patches;
-            this.installLocationCBox.Items.Clear();
-            this.installLocationCBox.Items.AddRange(new object[]
+            Text = Language.plugin_name + " [" + Program.ApkDir + "]";
+            deleteGBox.Text = Language.plugin_delete;
+            analyticGBox.Text = Language.plugin_delete_antianalytics;
+            analyticActivityCB.Text = Language.analActivity;
+            analyticFirebaseCB.Text = Language.analFirebase;
+            analyticLayoutCB.Text = Language.analLayout;
+            analyticLinksCB.Text = Language.analLinks;
+            analyticMethodCB.Text = Language.analMethod;
+            analyticReceiverCB.Text = Language.analReceiver;
+            analyticServiceCB.Text = Language.analService;
+            themesGBox.Text = Language.plugin_themes;
+            themesDCB.Text = Language.plugin_themes_d;
+            themesLCB.Text = Language.plugin_themes_l;
+            googleMapsCB.Text = Language.googleMapsRepair;
+            saveCheckboxButton.Text = Language.saveCheckboxes;
+            internetCB.Text = Language.plugin_delete_internet;
+            emulatorCB.Text = Language.plugin_delete_emulator;
+            locationCB.Text = Language.plugin_delete_location;
+            gmsCB.Text = Language.plugin_delete_gms;
+            allToastsCB.Text = Language.plugin_delete_toast;
+            installerGBox.Text = Language.plugin_inst;
+            licenseGBox.Text = Language.plugin_license;
+            signatureGBox.Text = Language.plugin_signcheck;
+            binSignatureCB.Text = Language.plugin_signcheck_binsign;
+            binSignatureInstallerCB.Text = Language.plugin_signcheck_binsignInst;
+            allManualCB.Text = Language.plugin_replace_all_man;
+            allAutoCB.Text = Language.plugin_replace_all_auto;
+            timeCB.Text = Language.plugin_replace_time;
+            splashGBox.Text = Language.plugin_splash;
+            splashInstallCB.Text = Language.plugin_splash_inst;
+            splashRemoveCB.Text = Language.plugin_splash_rem;
+            otherGBox.Text = Language.plugin_other;
+            installLocationCB.Text = Language.plugin_other_instlocation;
+            orderLv.Columns[0].Text = Language.plugin_order_patches;
+            installLocationCBox.Items.Clear();
+            installLocationCBox.Items.AddRange(new object[]
             {
                 "auto",
                 Language.instloc_extern,
                 Language.instloc_intern
             });
-            this.minSdkCB.Text = Language.plugin_other_minsdk;
-            this.addToastCB.Text = Language.plugin_other_toastfr;
-            this.collectStringsButton.Text = Language.plugin_other_collectstrings;
-            this.rootCheckCB.Text = Language.plugin_other_root;
-            this.addSaveCB.Text = Language.plugin_other_addsave;
-            this.fullscreenCB.Text = Language.plugin_other_fullscreen;
-            this.hideIconCB.Text = Language.plugin_other_hideicon;
-            this.mockLocationCB.Text = Language.plugin_other_mockloc;
-            this.dexCB.Text = Language.plugin_other_dex;
-            this.mainTab.Text = Language.tab_main;
-            this.toolsTab.Text = Language.tools;
-            this.clearAll.Text = Language.clearButtonText;
-            this.startButton.Text = Language.startQueue;
-            this.addDebugInfoButton.Text = Language.addDebugInfo;
-            this.helpSmaliButton.Text = Language.helpSmaliButtonText;
-            this.noUpdateCB.Text = Language.noUpdate;
-            this.autostartCB.Text = Language.deleteAutoStart;
-            this.reflectionLogCB.Text = Language.refLog;
-            this.remDebugInfoButton.Text = Language.remDebugInfo;
-            this.openFolderButton.Text = Language.openFolder;
-            this.authorLabel.Text = Language.author;
-            this.versionLabel.Text = Language.version;
-            this.donateLabel.Text = Language.donate;
-            this.yandexMoneyLabel.Text = Language.yandexMoney;
-            this.yanMoneyLink.Text = Language.Link;
-            this.taskCountLabel.Text = Language.inProcess + " [0]";
-            this.hideIdsButton.Text = Language.listOfAllIds;
-            this.interestingPlacesButton.Text = Language.InterestingPlaces;
-            this.mergeStringsButton.Text = Language.mergeStrings;
-            this.deleteResourcesCB.Text = Language.deleteRes;
-            this.cloneCB.Text = Language.cloneApk;
-            this.replaceGBox.Text = Language.plugin_replace;
-            this.blockSensorsCB.Text = Language.blockSensors;
-            this.btnSettings.Text = Language.settings;
-            this.authorLabel2.Text = Language.authorLabel2;
-            this.authorLabel3.Text = Language.authorLabel3;
-            this.buildDateLabel.Text = Language.buildDate;
-            this.mainTabPage.Text = Language.mainTabPage;
-            this.replaceTabPage.Text = Language.replaceTabPage;
-            this.screenshotCB.Text = Language.plugin_other_screenshot_secure;
-            this.backKillCB.Text = Language.plugin_other_back_kill;
-            this.backKillCBox.Items.Clear();
-            this.backKillCBox.Items.AddRange(new object[]
+            minSdkCB.Text = Language.plugin_other_minsdk;
+            addToastCB.Text = Language.plugin_other_toastfr;
+            collectStringsButton.Text = Language.plugin_other_collectstrings;
+            rootCheckCB.Text = Language.plugin_other_root;
+            addSaveCB.Text = Language.plugin_other_addsave;
+            fullscreenCB.Text = Language.plugin_other_fullscreen;
+            hideIconCB.Text = Language.plugin_other_hide;
+            visibleIconCB.Text = Language.plugin_other_visible;
+            mockLocationCB.Text = Language.plugin_other_mockloc;
+            dexCB.Text = Language.plugin_other_dex;
+            mainTab.Text = Language.tab_main;
+            toolsTab.Text = Language.tools;
+            clearAll.Text = Language.clearButtonText;
+            startButton.Text = Language.startQueue;
+            addDebugInfoButton.Text = Language.addDebugInfo;
+            helpSmaliButton.Text = Language.helpSmaliButtonText;
+            noUpdateCB.Text = Language.noUpdate;
+            autostartCB.Text = Language.deleteAutoStart;
+            reflectionLogCB.Text = Language.refLog;
+            remDebugInfoButton.Text = Language.remDebugInfo;
+            openFolderButton.Text = Language.openFolder;
+            authorLabel.Text = Language.author;
+            versionLabel.Text = Language.version;
+
+            taskCountLabel.Text = Language.inProcess + " [0]";
+            hideIdsButton.Text = Language.listOfAllIds;
+            interestingPlacesButton.Text = Language.InterestingPlaces;
+            mergeStringsButton.Text = Language.mergeStrings;
+            deleteResourcesCB.Text = Language.deleteRes;
+            cloneCB.Text = Language.cloneApk;
+            replaceGBox.Text = Language.plugin_replace;
+            blockSensorsCB.Text = Language.blockSensors;
+            btnSettings.Text = Language.settings;
+            authorLabel2.Text = Language.authorLabel2;
+            authorLabel3.Text = Language.authorLabel3;
+            buildDateLabel.Text = Language.buildDate;
+            mainTabPage.Text = Language.mainTabPage;
+            replaceTabPage.Text = Language.replaceTabPage;
+            screenshotCB.Text = Language.plugin_other_screenshot_secure;
+            backKillCB.Text = Language.plugin_other_back_kill;
+            backKillCBox.Items.Clear();
+            backKillCBox.Items.AddRange(new object[]
             {
                 Language.plugin_other_back_kill_double_tap,
                 Language.plugin_other_back_kill_long_tap,
                 Language.plugin_other_back_kill_one_click
             });
-            //this.btnHelp.Text = Language.helpbutton;
-
+            tg_link.Text = Language.Link;
+            tg_label.Text = Language.tg_label;
+            fix18_9CB.Text = Language.plugin_other_fix_18_9;
+            //
+            maskCB.Text = Language.plugin_other_mask_app;
+            unpackfileCB.Text = Language.plugin_other_unpack_file;
+            screenOrientationCB.Text = Language.plugin_other_screen_orientation;
+            screenOrientationCBox.Items.Clear();
+            screenOrientationCBox.Items.AddRange(new object[]
+            {
+                Language.plugin_other_auto_screen_orientation,
+                Language.plugin_other_landscape_screen_orientation,
+                Language.plugin_other_portrait_screen_orientation
+            });
+            fix_auth_fb_vkCB.Text = Language.plugin_other_fix_auth_fb_vk;
+            add_permissionCB.Text = Language.plugin_other_add_permission;
+            add_permissionCBox.Items.Clear();
+            add_permissionCBox.Items.AddRange(new object[]
+            {
+                Language.plugin_other_add_permission_memory,
+                Language.plugin_other_add_permission_read_contact,
+                Language.plugin_other_add_permission_camera,
+                Language.plugin_other_add_permission_location,
+                Language.plugin_other_add_permission_read_SMS,
+                Language.plugin_other_add_permission_phone,
+                Language.plugin_other_add_permission_calendar
+            });
+            res_cruptBtn.Text = Language.res_crupt;
+            add_modDialogCB.Text = Language.plugin_other_add_mod_dialog;
+            mask_nameLbl.Text = Language.mask_name_label;
+            mask_icon_patchLbl.Text = Language.mask_icon_patch_label;
+            splash_image_patchLbl.Text = Language.splash_image_patch_label;
+            folder_unpackLbl.Text = Language.folder_unpack_label;
+            file_unpackLbl.Text = Language.file_unpack_label;
+            mod_linkLbl.Text = Language.mod_link_label;
+            mod_image_nameLbl.Text = Language.mod_image_name_label;
+            mod_change_log_nameLbl.Text = Language.mod_change_log_name_label;
+            color_editorBtn.Text = Language.tools_color_editor;
+            asmto_hexBtn.Text = Language.tools_ams_to_hex;
+            check_protectBtn.Text = Language.tools_check_protect;
+            mergeDexBtn.Text = Language.tools_merge_dex;
+            IconGB.Text = Language.icon;
         }
 
         public void addOrRemLVi(string text, string tag)
@@ -504,99 +653,90 @@ namespace AllInOne.Forms
 
         public void disableEnableReplace(CheckBox sender, bool tbEnable)
         {
-            foreach (object obj in this.replaceGBox.Controls)
+            foreach (var control in replaceGBox.Controls)
             {
-                if (obj is TextBox)
+                if (control is TextBox)
                 {
-                    ((TextBox)obj).Enabled = tbEnable;
+                    ((TextBox)control).Enabled = tbEnable;
                 }
-                else if (obj is CheckBox && !((CheckBox)obj).Name.Equals("allAutoCB") && !((CheckBox)obj).Name.Equals("allManualCB"))
+                else if (control is CheckBox)
                 {
-                    ((CheckBox)obj).Checked = false;
-                    ((CheckBox)obj).Enabled = !sender.Checked;
+                    if (((CheckBox)control).Name.Equals("allAutoCB") || ((CheckBox)control).Name.Equals("allManualCB"))
+                    {
+                        continue;
+                    }
+
+                    ((CheckBox)control).Checked = false;
+                    ((CheckBox)control).Enabled = !sender.Checked;
                 }
             }
         }
 
         private void analytics_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.isDisabledCheckedChanged)
+            if (isDisabledCheckedChanged) { return; }
+
+            bool add = true;
+            foreach (ListViewItem item in orderLv.Items)
             {
-                return;
-            }
-            bool flag = true;
-            foreach (object obj in this.orderLv.Items)
-            {
-                ListViewItem listViewItem = (ListViewItem)obj;
-                if (listViewItem.Text.EndsWith(Language.plugin_delete_antianalytics))
+                if (item.Text.EndsWith(Language.plugin_delete_antianalytics))
                 {
-                    if (!this.analyticActivityCB.Checked && !this.analyticFirebaseCB.Checked && !this.analyticLayoutCB.Checked && !this.analyticLinksCB.Checked && !this.analyticMethodCB.Checked && !this.analyticReceiverCB.Checked && !this.analyticServiceCB.Checked)
+                    if (!analyticActivityCB.Checked && !analyticFirebaseCB.Checked && !analyticLayoutCB.Checked && !analyticLinksCB.Checked && !analyticMethodCB.Checked && !analyticReceiverCB.Checked && !analyticServiceCB.Checked)
                     {
-                        this.orderLv.Items.Remove(listViewItem);
+                        orderLv.Items.Remove(item);
                     }
-                    flag = false;
+                    add = false;
                     break;
                 }
             }
-            if (flag)
+
+            if (add)
             {
-                ListViewItem listViewItem2 = new ListViewItem(Language.plugin_delete_antianalytics);
-                listViewItem2.Tag = "StartAntiReklalytics";
-                this.orderLv.Items.Add(listViewItem2);
+                ListViewItem tmp = new ListViewItem(Language.plugin_delete_antianalytics);
+                tmp.Tag = "StartAntiReklalytics";
+                orderLv.Items.Add(tmp);
             }
         }
 
         private void themes_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.isDisabledCheckedChanged)
+            if (isDisabledCheckedChanged) { return; }
+
+            isDisabledCheckedChanged = true;
+
+            CheckBox cb = (CheckBox)sender;
+            switch (cb.Name)
             {
-                return;
+                case "themesDHMACB":
+                    addOrRemLVi(cb.Text, "darkLightDHMAPatch");
+                    break;
+                case "themesDCB":
+                    addOrRemLVi(cb.Text, "darkLightDPatch");
+                    break;
+                case "themesLHMACB":
+                    addOrRemLVi(cb.Text, "darkLightLHMAPatch");
+                    break;
+                case "themesLCB":
+                    addOrRemLVi(cb.Text, "darkLightLPatch");
+                    break;
             }
-            this.isDisabledCheckedChanged = true;
-            CheckBox checkBox = (CheckBox)sender;
-            string name = checkBox.Name;
-            if (!(name == "themesDHMACB"))
+
+            foreach (var control in themesGBox.Controls)
             {
-                if (!(name == "themesDCB"))
+                if (!((CheckBox)sender).Name.Equals(((CheckBox)control).Name))
                 {
-                    if (!(name == "themesLHMACB"))
+                    ((CheckBox)control).Checked = false;
+                    foreach (ListViewItem item in orderLv.Items)
                     {
-                        if (name == "themesLCB")
+                        if (item.Text.EndsWith(((CheckBox)control).Text))
                         {
-                            this.addOrRemLVi(checkBox.Text, "darkLightLPatch");
-                        }
-                    }
-                    else
-                    {
-                        this.addOrRemLVi(checkBox.Text, "darkLightLHMAPatch");
-                    }
-                }
-                else
-                {
-                    this.addOrRemLVi(checkBox.Text, "darkLightDPatch");
-                }
-            }
-            else
-            {
-                this.addOrRemLVi(checkBox.Text, "darkLightDHMAPatch");
-            }
-            foreach (object obj in this.themesGBox.Controls)
-            {
-                if (!((CheckBox)sender).Name.Equals(((CheckBox)obj).Name))
-                {
-                    ((CheckBox)obj).Checked = false;
-                    foreach (object obj2 in this.orderLv.Items)
-                    {
-                        ListViewItem listViewItem = (ListViewItem)obj2;
-                        if (listViewItem.Text.EndsWith(((CheckBox)obj).Text))
-                        {
-                            this.orderLv.Items.Remove(listViewItem);
+                            orderLv.Items.Remove(item);
                             break;
                         }
                     }
                 }
             }
-            this.isDisabledCheckedChanged = false;
+            isDisabledCheckedChanged = false;
         }
 
         private void uni_CheckedChanged(object sender, EventArgs e)
@@ -725,6 +865,31 @@ namespace AllInOne.Forms
                     break;
                 case "hideIconCB":
                     addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_hideicon, "hideIconPatch");
+                    isDisabledCheckedChanged = true;
+                    foreach (ListViewItem item in orderLv.Items)
+                    {
+                        if (item.Text.Contains(Language.plugin_other + ": " + Language.plugin_other_visibleicon))
+                        {
+                            orderLv.Items.Remove(item);
+                            break;
+                        }
+                    }
+                    visibleIconCB.Checked = false;
+                    isDisabledCheckedChanged = false;
+                    break;
+                case "visibleIconCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_visibleicon, "visibleIconPatch");
+                    isDisabledCheckedChanged = true;
+                    foreach (ListViewItem item in orderLv.Items)
+                    {
+                        if (item.Text.Contains(Language.plugin_other + ": " + Language.plugin_other_hideicon))
+                        {
+                            orderLv.Items.Remove(item);
+                            break;
+                        }
+                    }
+                    hideIconCB.Checked = false;
+                    isDisabledCheckedChanged = false;
                     break;
                 case "installerAmazonCB":
                     addOrRemLVi(Language.plugin_inst + ": " + cb.Text, "InstallerAmazonPatch");
@@ -856,6 +1021,8 @@ namespace AllInOne.Forms
                     }
                     splashRemoveCB.Checked = false;
                     isDisabledCheckedChanged = false;
+                    splash_image_patchTBox.Enabled = splashInstallCB.Checked;
+                    open_btn_image.Enabled = splashInstallCB.Checked;
                     break;
                 case "splashRemoveCB":
                     addOrRemLVi(Language.plugin_splash + ": " + Language.plugin_splash_rem, "splashRemovePatch");
@@ -921,7 +1088,38 @@ namespace AllInOne.Forms
                     addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_back_kill, "backKillPatch");
                     backKillCBox.Enabled = backKillCB.Checked;
                     break;
-
+                case "fix18_9CB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_fix_18_9, "fix_18_9Patch");
+                    break;
+                case "maskCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_mask_app, "mask_appPatch");
+                    mask_nameTBox.Enabled = maskCB.Checked;
+                    mask_icon_patchTBox.Enabled = maskCB.Checked;
+                    open_btn.Enabled = maskCB.Checked;
+                    break;
+                case "unpackfileCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_unpack_file, "unpackfilePatch");
+                    folder_unpackTBox.Enabled = unpackfileCB.Checked;
+                    file_unpackTBox.Enabled = unpackfileCB.Checked;
+                    break;
+                case "screenOrientationCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_screen_orientation, "screenOrientationPatch");
+                    screenOrientationCBox.Enabled = screenOrientationCB.Checked;
+                    break;
+                case "fix_auth_fb_vkCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_fix_auth_fb_vk, "fix_auth_fb_vkPatch");
+                    break;
+                case "add_permissionCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_add_permission, "add_permissionPatch");
+                    add_permissionCBox.Enabled = add_permissionCB.Checked;
+                    break;
+                case "add_modDialogCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_add_mod_dialog, "add_modDialogPatch");
+                    mod_linkTBox.Enabled = add_modDialogCB.Checked;
+                    mod_image_nameTBox.Enabled = add_modDialogCB.Checked;
+                    mod_changelog_nameTBox.Enabled = add_modDialogCB.Checked;
+                    break;
+                
             }
         }
 
@@ -937,22 +1135,24 @@ namespace AllInOne.Forms
 
         private void orderLv_DragDrop(object sender, DragEventArgs e)
         {
-            ListViewItem listViewItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-            Point point = this.orderLv.PointToClient(new Point(e.X, e.Y));
-            ListViewItem itemAt = this.orderLv.GetItemAt(point.X, point.Y);
-            if (itemAt == null)
+            ListViewItem dragItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+
+            Point ptc = orderLv.PointToClient(new Point(e.X, e.Y));
+            ListViewItem insertItem = orderLv.GetItemAt(ptc.X, ptc.Y);
+
+            if (insertItem == null) { return; }
+            int insertItemIndex = insertItem.Index;
+            int dragItemIndex = dragItem.Index;
+
+            orderLv.Items.Remove(dragItem);
+            if (insertItemIndex == -1)
             {
-                return;
+                orderLv.Items.Insert(0, dragItem);
             }
-            int index = itemAt.Index;
-            int index2 = listViewItem.Index;
-            this.orderLv.Items.Remove(listViewItem);
-            if (index == -1)
+            else
             {
-                this.orderLv.Items.Insert(0, listViewItem);
-                return;
+                orderLv.Items.Insert(insertItemIndex, dragItem);
             }
-            this.orderLv.Items.Insert(index, listViewItem);
         }
 
         //public static void ClearControls(Control c)
@@ -1018,7 +1218,7 @@ namespace AllInOne.Forms
             {
                 if (Settings.deleteDebug)
                 {
-                    Patcher.DelDebugLogFile();
+                    Utils.DelDebugLogFile();
 
                 }
 
@@ -1057,7 +1257,7 @@ namespace AllInOne.Forms
                     item.BackColor = Color.SkyBlue;
                     foreach (string path in dirs)
                     {
-                        appendProgressTbox(item.Text + " (" + Patcher.TrimPathToInput(path) + ")");
+                        appendProgressTbox(Color.Blue, item.Text + " (" + Patcher.TrimPathToInput(path) + ")");
 
                         //запуск метода по его имени
                         MethodInfo mInfo = typeof(Patcher).GetMethod(item.Tag.ToString());
@@ -1070,7 +1270,8 @@ namespace AllInOne.Forms
                     item.BackColor = Color.GreenYellow;
                 }
                 watch.Stop();
-                appendProgressTbox(":::::" + Language.orderDone + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+                appendProgressTbox(Color.Red, ":::::" + Language.orderDone + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+                MessageBox.Show(Language.orderDone + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")", Language.orderDone, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
             //==========
         }
@@ -1155,6 +1356,10 @@ namespace AllInOne.Forms
             Process.Start("http://4pda.ru/forum/index.php?showuser=6390713");
         }
 
+        private void tg_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://t.me/ClubModApk");
+        }
         private void remDebugInfoButton_Click(object sender, EventArgs e)
         {
             if ("".Equals(Program.processApkPath))
@@ -1187,9 +1392,9 @@ namespace AllInOne.Forms
 
         private void saveCheckboxButton_Click(object sender, EventArgs e)
         {
-            //SaveSettings();
+            SaveSettings();
             //return;
-            SaveBoxValues();
+          //  SaveBoxValues();
         }
 
         private void openFoldersButton_Click(object sender, EventArgs e)
@@ -1202,6 +1407,7 @@ namespace AllInOne.Forms
                 Program.ApkDir = selectedPath.Substring(selectedPath.LastIndexOf("\\") + 1, selectedPath.Length - selectedPath.LastIndexOf("\\") - 1);
                 Program.processApkPath = folderBrowserDialog.SelectedPath;
                 this.Text = Language.plugin_name + " [" + Program.ApkDir + "]";
+                Patcher.getAppInfo(Program.processApkPath);
             }
         }
 
@@ -1304,7 +1510,7 @@ namespace AllInOne.Forms
             {
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
-                appendProgressTbox(":::::" + Language.log_interesing_placed + ":::::");
+                appendProgressTbox(Color.Green, ":::::" + Language.log_interesing_placed + ":::::");
                 InterestingPlacesForm form = new InterestingPlacesForm();
                 List<Dictionary<string, Dictionary<int, string>>> places = new List<Dictionary<string, Dictionary<int, string>>>();
                 string[] dirs;
@@ -1337,9 +1543,10 @@ namespace AllInOne.Forms
 
                 form.LoadPlaces(places);
                 // appendProgressTbox(":::::Search Interesing Places has started: Done!!!:::::");
-                appendProgressTbox(":::::" + Language.log_interesing_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
+                appendProgressTbox(Color.Red, ":::::" + Language.log_interesing_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
                 form.ShowDialog();
             }).Start();
+
         }
 
         private void mergeStringsButton_Click(object sender, EventArgs e)
@@ -1356,9 +1563,9 @@ namespace AllInOne.Forms
         {
             get
             {
-                CreateParams createParams = base.CreateParams;
-                createParams.Style &= -33554433;
-                return createParams;
+                var parms = base.CreateParams;
+                parms.Style &= ~0x02000000;   // Turn off WS_CLIPCHILDREN
+                return parms;
             }
         }
 
@@ -1369,14 +1576,10 @@ namespace AllInOne.Forms
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            if (
-            new SettingsForm().ShowDialog() == DialogResult.OK)
+            if (new SettingsForm().ShowDialog() == DialogResult.OK)
 
             {
                 RestartMessage();
-                // this.UpdateFormLanguage();
-                //this.Refresh();
-                // MainForm_Load(null, EventArgs.Empty);
             }
         }
 
@@ -1400,6 +1603,229 @@ namespace AllInOne.Forms
             new ChangelogForm().ShowDialog();
         }
 
+        private void open_btn_Click(object sender, EventArgs e)
+        {
+            // OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "*.png|*.png|*.jpg|.*jpg";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                mask_icon_patchTBox.Text = openFileDialog.FileName;
+            }
+        }
 
+        private void res_cruptBtn_Click(object sender, EventArgs e)
+        {
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "*.apk|*.apk";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //string ApkPatch = openFileDialog.FileName;
+                new Task(() =>
+             {
+                 string ApkPatch = openFileDialog.FileName;
+                 Patcher.resCrupt(ApkPatch);
+             }).Start();
+            }
+
+        }
+
+        private void eggs_picture_Click(object sender, EventArgs e)
+        {
+            if (eggs == 11)
+            {
+                MessageBox.Show("Осталось 12 кликов.");
+            }
+            if (eggs == 21)
+            {
+                MessageBox.Show("Осталось 3 клика.");
+            }
+            if (eggs != 24)
+            {
+                eggs++;
+                return;
+            }
+            MessageBox.Show("Поздравляю! Вы обнаружили пасхалку!");
+            if (eggs == 24)
+            {
+                res_cruptBtn.Visible = true;
+                obfuscate_lib_btn.Visible = true;
+            }
+             eggs = 0;
+        }
+
+        private void open_btn_image_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "*.png|*.png|*.jpg|.*jpg";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                splash_image_patchTBox.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void obfuscate_lib_btn_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "*.so|*.so";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //string ApkPatch = openFileDialog.FileName;
+                //new Task(() =>
+                //{
+                string SoPatch = openFileDialog.FileName;
+                    Patcher.LibObfuscated(SoPatch);
+                //  }).Start();
+            }
+        }
+
+        private void color_editorBtn_Click(object sender, EventArgs e)
+        {
+            //    //new ColorEditor().Show();
+            if ("".Equals(Program.processApkPath))
+            {
+                MessageBox.Show(Language.openFolderError, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            new Task(() =>
+            {
+                ColorEditorForm form = new ColorEditorForm();
+                List<Dictionary<string, Dictionary<string, string>>> color = new List<Dictionary<string, Dictionary<string, string>>>();
+                string[] dirs;
+
+                if (Program.processApkPath.EndsWith("_INPUT_APK"))
+                {
+                    dirs = Directory.GetDirectories(Program.processApkPath);
+                }
+                else
+                {
+                    if (!Directory.Exists(Program.processApkPath))
+                    {
+                        MessageBox.Show(Program.processApkPath + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    dirs = new string[] { Program.processApkPath };
+                }
+                if (dirs.Length == 0)
+                {
+                    MessageBox.Show(Language.emptyInputApk, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                foreach (string path in dirs)
+                {
+                    color.Add(Patcher.getAllColors(path));
+                }
+
+                if (color.Count == 0) { return; }
+
+                form.loadColors(color);
+                form.ShowDialog();
+                //if (form.ShowDialog() == DialogResult.OK)
+                //{
+                //    //MessageBox.Show(form.getChecked().Count.ToString());//
+                //    //получил список id, которые надо скрыть
+                //    Patcher.hideAllChecked(form.getChecked());
+                //}
+            }).Start();
+        }
+
+        private void asmto_hexBtn_Click(object sender, EventArgs e)
+        {
+            new AsmToHexArmForm().ShowDialog();
+        }
+
+        private void check_protectBtn_Click(object sender, EventArgs e)
+        {
+      //      new CheckProtect().ShowDialog();
+            if ("".Equals(Program.processApkPath))
+            {
+                MessageBox.Show(Language.openFolderError, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+           // new Task(() =>
+           // {
+           //     Stopwatch watch = new Stopwatch();
+           //     watch.Start();
+           //     appendProgressTbox(Color.FromArgb(0, 160, 176), ":::::" + Language.log_interesing_placed + ":::::");
+           //     string[] dirs;
+           ////     CheckProtect check = new CheckProtect();
+           //     if (Program.processApkPath.EndsWith("_INPUT_APK"))
+           //     {
+           //         dirs = Directory.GetDirectories(Program.processApkPath);
+           //     }
+           //     else
+           //     {
+           //         if (!Directory.Exists(Program.processApkPath))
+           //         {
+           //             MessageBox.Show(Program.processApkPath + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+           //             return;
+           //         }
+           //         dirs = new string[] { Program.processApkPath };
+           //     }
+           //     if (dirs.Length == 0)
+           //     {
+           //         MessageBox.Show(Language.emptyInputApk, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+           //         return;
+           //     }
+           //     foreach (string path in dirs)
+           //     {
+                   
+           //     }
+           //     string d = Program.processApkPath;
+                 
+           //    // check.checkProtect(d);
+           //       //  check.ShowDialog();
+           // }).Start();
+            new CheckProtectForm().ShowDialog(); 
+        }
+
+        //горячие клавиши
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)//Ctrl+S Настройки
+            {
+                btnSettings_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.F1)//F1 Помощь
+            {
+                btnHelp_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.N)//Ctrl+N Начало патчинга
+            {
+                startButton_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.O)//Ctrl+O Открытие проэекта
+            {
+                openFoldersButton_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.X)//Ctrl+X Закрытие патчера
+            {
+                this.Close();
+                e.SuppressKeyPress = true;
+            }
+            
+        }
+
+        private void progressTbox_TextChanged(object sender, EventArgs e)
+        {
+            //автопрокрутка ричтекстбокса при наполнении его текстом
+            progressTbox.SelectionStart = progressTbox.Text.Length;
+            progressTbox.ScrollToCaret();
+        }
+
+        private void mergeDexBtn_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "Dex File|*.dex";
+            openFileDialog.Multiselect = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var dx = string.Join(" ", openFileDialog.FileNames);
+                Patcher.mergeDex(dx, Path.GetDirectoryName(openFileDialog.FileName));
+            }
+        }
     }
 }

@@ -121,6 +121,28 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="open_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAARpJREFUSEvtlL1qAlEQha9FECshRSSFhSjuNla+hFj4AL5L8E2idsE0KQIJEtII
+        4m58ALE0QiBlbGXGWe54zd1M4WwKLTzwdfd8h/3hmkvOJ3Bv2tA3axwYTAMD0+Nj2UPyT0m+598jklRL
+        8gaIFiv9SIUs0JOuWOlHOpwVVvr5c/C1hBgFiHGoBuLgC6Kgy2obTz4qiEUNNLDBefOK9amB52uxpAHi
+        cAvLWp71qYHxrVjSAFG4YLWNNzCpiCUNNPDIahsnH+Yyf9zf0MAdq23cwENeLGihP6nDahs38FQUC1pg
+        Vq+w2sYNvNyIBQ30B/0gmhyrbdxl914WSxro9byx9pDkkkruEZzWxNKxwLT6DR9Bg7WXnDzG7ADy9FJN
+        /Z0KRQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="open_btn_image.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAARpJREFUSEvtlL1qAlEQha9FECshRSSFhSjuNla+hFj4AL5L8E2idsE0KQIJEtII
+        4m58ALE0QiBlbGXGWe54zd1M4WwKLTzwdfd8h/3hmkvOJ3Bv2tA3axwYTAMD0+Nj2UPyT0m+598jklRL
+        8gaIFiv9SIUs0JOuWOlHOpwVVvr5c/C1hBgFiHGoBuLgC6Kgy2obTz4qiEUNNLDBefOK9amB52uxpAHi
+        cAvLWp71qYHxrVjSAFG4YLWNNzCpiCUNNPDIahsnH+Yyf9zf0MAdq23cwENeLGihP6nDahs38FQUC1pg
+        Vq+w2sYNvNyIBQ30B/0gmhyrbdxl914WSxro9byx9pDkkkruEZzWxNKxwLT6DR9Bg7WXnDzG7ADy9FJN
+        /Z0KRQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAeHgAAAEAIACo6AAAFgAAACgAAAB4AAAA8AAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

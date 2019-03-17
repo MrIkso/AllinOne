@@ -35,6 +35,9 @@ namespace AllInOne.Logic
         public static string plugin_other_dex = "";
         public static string plugin_other_fullscreen = "";
         public static string plugin_other_hideicon = "";
+        public static string plugin_other_visibleicon = "";
+        public static string plugin_other_hide = "";
+        public static string plugin_other_visible = "";
         public static string plugin_other_root = "";
         public static string plugin_other_toastfr = "";
         public static string plugin_other_toastfr_text = "";
@@ -47,6 +50,23 @@ namespace AllInOne.Logic
         public static string plugin_other_back_kill_one_click = "";
         public static string plugin_other_back_kill_double_tap = "";
         public static string plugin_other_back_kill_long_tap = "";
+        public static string plugin_other_mask_app = "";
+        public static string plugin_other_mask_app_icon = "";
+        public static string plugin_other_unpack_file = "";
+        public static string plugin_other_screen_orientation = "";
+        public static string plugin_other_auto_screen_orientation = "";
+        public static string plugin_other_landscape_screen_orientation = "";
+        public static string plugin_other_portrait_screen_orientation = "";
+        public static string plugin_other_fix_auth_fb_vk = "";
+        public static string plugin_other_add_permission = "";
+        public static string plugin_other_add_permission_memory = "";
+        public static string plugin_other_add_permission_read_contact = "";
+        public static string plugin_other_add_permission_camera = "";
+        public static string plugin_other_add_permission_location = "";
+        public static string plugin_other_add_permission_read_SMS = "";
+        public static string plugin_other_add_permission_phone = "";
+        public static string plugin_other_add_permission_calendar = "";
+        public static string plugin_other_add_mod_dialog = "";
         public static string plugin_themes = "";
         public static string plugin_themes_d = "";
         public static string plugin_themes_l = "";
@@ -167,7 +187,43 @@ namespace AllInOne.Logic
         public static string log_manual_replace_done = "";
         public static string log_merge_string = "";
         public static string log_merge_string_done = "";
-
+        public static string log_res_crupt = "";
+        public static string log_res_crupt_done = "";
+        public static string log_merge_dex = "";
+        public static string log_merge_dex_done = "";
+        public static string log_file_saved_to = "";
+        public static string log_no_foundet_pattern = "";
+        public static string plugin_other_fix_18_9 = "";
+        public static string tg_label = "";
+        public static string res_crupt = "";
+        public static string mask_name_label= "";
+        public static string mask_icon_patch_label = "";
+        public static string splash_image_patch_label = "";
+        public static string folder_unpack_label = "";
+        public static string file_unpack_label = "";
+        public static string mod_link_label = "";
+        public static string mod_image_name_label = "";
+        public static string mod_change_log_name_label = "";
+        public static string asm_convert_btn = "";
+        public static string asm_clear_btn = "";
+        public static string asm_result = "";
+        public static string asm_tips_done = "";
+        public static string asm_tips_processing = "";
+        public static string asm_tips_error = "";
+        public static string message_detect = "";
+        public static string message_detect_spltits = "";
+        public static string message_color_not_valid = "";
+        public static string tools_color_editor = "";
+        public static string tools_merge_dex = "";
+        public static string tools_ams_to_hex = "";
+        public static string tools_check_protect = "";
+        public static string tools_check_protect_btn = "";
+        public static string tools_check_protect_packer = "";
+        public static string tools_check_protect_engine = "";
+        public static string tools_ams_to_hex_result = "";
+        public static string tools_ams_to_hex_convert_btn = "";
+        public static string tools__color_selected_color = "";
+        public static string icon = "";
 
         public static void Load(string lng)
         {
@@ -204,6 +260,4 @@ namespace AllInOne.Logic
             }
         }
     }
-
-   
 }
