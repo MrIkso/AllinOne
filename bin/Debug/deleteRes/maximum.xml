@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <ExcludeRes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <langs></langs>
@@ -16,4 +17,24 @@
   <raw>true</raw>
   <values>true</values>
   <xml>true</xml>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<ExcludeRes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <langs></langs>
+  <quals></quals>
+  <libs>armeabi-v7a,armeabi</libs>
+  <basis>xhdpi</basis>
+  <animator>true</animator>
+  <anim>true</anim>
+  <font>true</font>
+  <color>true</color>
+  <drawable>true</drawable>
+  <mipmap>true</mipmap>
+  <layout>true</layout>
+  <lib>true</lib>
+  <menu>true</menu>
+  <raw>true</raw>
+  <values>true</values>
+  <xml>true</xml>
+>>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 </ExcludeRes>

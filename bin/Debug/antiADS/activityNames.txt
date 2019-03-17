@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 \.ad\.
 \.adman\.
 \.ads\.
@@ -13,4 +14,21 @@ io\.branch\.
 mad\.ad\.
 medialets\.advertising\.
 MediaPlayerWrapper
+=======
+\.ad\.
+\.adman\.
+\.ads\.
+\.AdsActivity
+\.AdView
+adwhirl
+amobee
+burstly
+cauly\.android.ad\.
+inmobi\.
+inneractive\.api\.ads\.
+io\.branch\.
+mad\.ad\.
+medialets\.advertising\.
+MediaPlayerWrapper
+>>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 pontiflex\.mobile\.webview\.sdk\.activities

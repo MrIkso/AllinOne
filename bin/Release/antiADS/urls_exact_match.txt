@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .doubleclick.net
 .googleadservices.com
 //imasdk.googleapis.com/admob/sdkloader/native_video.html
@@ -11,4 +12,19 @@ manifest.sandbox53.localytics.com
 mobileads.google.com
 profile-api.sandbox53.localytics.com
 profile.localytics.com
+=======
+.doubleclick.net
+.googleadservices.com
+//imasdk.googleapis.com/admob/sdkloader/native_video.html
+/pagead/ads
+ad.doubleclick.net
+analytics.localytics.com
+app-measurement.com
+googleads.g.doubleclick.net
+manifest.localytics.com
+manifest.sandbox53.localytics.com
+mobileads.google.com
+profile-api.sandbox53.localytics.com
+profile.localytics.com
+>>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 queuer-elb.sandbox53.localytics.com
