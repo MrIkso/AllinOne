@@ -17,7 +17,8 @@ namespace AllInOne.Forms
             checkBtn.Text = Language.tools_check_protect_btn;
             packerGB.Text = Language.tools_check_protect_packer;
             engineGB.Text = Language.tools_check_protect_engine;
-            checkProtect(patch);
+            //при открытии формы, проверка не будет производится
+           // checkProtect(patch);
         }
 
         public void checkProtect(string str)
@@ -64,6 +65,12 @@ namespace AllInOne.Forms
                         jiaguCheckCB.CheckState = CheckState.Checked;
                         jiaguCheckCB.ForeColor = Color.Red;
                     }
+                    if (file.Contains("jiami.dat") || file.Contains("libdexload_a64.so") || file.Contains("libdexload_arm.so"))
+                    {
+                        ijiamiCheckCB.Checked = true;
+                        ijiamiCheckCB.CheckState = CheckState.Checked;
+                        ijiamiCheckCB.ForeColor = Color.Red;
+                    }
                 }
             }
             if (Directory.Exists(str + "\\lib\\"))
@@ -109,6 +116,12 @@ namespace AllInOne.Forms
                         cocosCB.Checked = true;
                         cocosCB.CheckState = CheckState.Checked;
                         cocosCB.ForeColor = Color.Red;
+                    }
+                    if (file.Contains("libmonodroid.so") || file.Contains("libmonosgen-2.0.so"))
+                    {
+                        xamarinCB.Checked = true;
+                        xamarinCB.CheckState = CheckState.Checked;
+                        xamarinCB.ForeColor = Color.Red;
                     }
                     ///=====/ Packers /======///
                     if (file.Contains("libjiagu.so") || file.Contains("libjiagu_art.so"))
@@ -225,7 +238,6 @@ namespace AllInOne.Forms
                         nqshieldCB.CheckState = CheckState.Checked;
                         nqshieldCB.ForeColor = Color.Red;
                     }
-
                 }
             }
         }
@@ -235,5 +247,4 @@ namespace AllInOne.Forms
             checkProtect(patch);
         }
     }
-
 }

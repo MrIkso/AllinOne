@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,18 +56,22 @@ namespace AllInOne.Logic
                     if (".".Equals(Program.workdir))
                     {
                         Program.processApkPath = Program.pathToBatchapktool + "\\_INPUT_APK\\" + Program.ApkDir;
+                        fi = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
+                        Program.pathToMyPluginDir = fi.DirectoryName;
+                        Language.Load(args[2]);
+                        Utils.CheckSplits(Program.processApkPath);
+                        return;
                     }
                     else
                     {
                         Program.processApkPath = Program.pathToBatchapktool + "\\" + Program.workdir + "\\_INPUT_APK\\" + Program.ApkDir;
+                       // Utils.CheckSplits(Program.processApkPath);
                     }
                 }
                 fi = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
                 Program.pathToMyPluginDir = fi.DirectoryName;
-
                 Language.Load(args[2]);
                 return;
-
             }
 
             fi = new FileInfo(Process.GetCurrentProcess().MainModule.FileName);
@@ -79,6 +82,7 @@ namespace AllInOne.Logic
             Program.processApkPath = "";
             Language.Load(Settings.language);
         }
+
         public static void setMainForm(ref MainForm f)
         {
             mainf = f;
@@ -131,7 +135,7 @@ namespace AllInOne.Logic
             mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_res_crupt_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
             p.WaitForExit();
         }
-       
+
         public static void LibObfuscated(string soPatch)
         {
             Stopwatch watch = new Stopwatch();
@@ -144,6 +148,7 @@ namespace AllInOne.Logic
             //  pattern.Add("00 00 A0 E3", "00 00 40 E0");
             pattern.Add("00 20 A0 E3", "02 20 22 E0");
             pattern.Add("00 10 A0 E3", "01 10 41 E0");
+            // pattern.Add("08 46", "08 00");
             //pattern.Add("00 30 A0 E3", "03 30 23 E0");
             //pattern.Add("00 40 A0 E3", "04 40 24 E0");
             //pattern.Add("00 50 A0 E3", "05 50 25 E0");
@@ -178,10 +183,7 @@ namespace AllInOne.Logic
                         "\nOld=\n",
                         keyValuePair.Key,
                         "\nNew=\n"
-                       // keyValuePair.Value,
-                      //  "\nOffset= "
                     }));
-                    //  stringBuilder.AppendLine("Offset= " + );
                     stringBuilder.AppendLine("====================================================================================================================================================");
                 }
                 foreach (int num in list)
@@ -199,6 +201,7 @@ namespace AllInOne.Logic
                 //    Patcher.mainf.appendProgressTbox("     " + Language.log_patched + Patcher.TrimPathToInput(soPath));
                 //}
                 File.WriteAllBytes(s, array);
+                mainf.appendProgressTbox(Color.Green, ":::::" + "File saved to: " + s + ":::::");
             }
 
             if (flag == false)
@@ -206,7 +209,6 @@ namespace AllInOne.Logic
                 mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_foundet_pattern);
             }
             Utils.WriteDebugLog(stringBuilder.ToString());
-            mainf.appendProgressTbox(Color.Green, ":::::" + "File saved to: " + s + ":::::");
             mainf.appendProgressTbox(Color.Red, ":::::" + "Lib Obfuscate: Done" + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
             MessageBox.Show("Lib Obfuscate: Done" + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")", "Done", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
@@ -346,21 +348,43 @@ namespace AllInOne.Logic
         public static void moveToClassesNorNot(string apkDir, string smaliPath)
         {
             if (!File.Exists(smaliPath)) { return; }
-
-            string[] dirs = Directory.GetDirectories(apkDir, "smali*");
-
-            if ("smali".Equals(Path.GetFileName(dirs[dirs.Length - 1])))
+            //var sdk = File.ReadAllText(apkDir + "\\apktool.yml", Encoding.UTF8);
+            //var sdk_ver = "minSdkVersion: ('?[^']+'?)[\\s\\S]";
+            //Match vers = Regex.Match(sdk, sdk_ver);
+            int versionCode = Convert.ToInt32(Utils.getMinSDK());//vers.Groups[1].Value.Trim('\''));
+            if (versionCode >= 21)
             {
-                return;
+                string[] dirs = Directory.GetDirectories(apkDir, "smali*");
+                if ("smali".Equals(Path.GetFileName(dirs[dirs.Length - 1])))
+                {
+                    return;
+                }
+                else
+                {
+                    string dest = apkDir + "\\" + Path.GetFileName(dirs[dirs.Length - 1]) + smaliPath.Remove(0, apkDir.Length + 6);
+                    if (!Directory.Exists(Path.GetDirectoryName(dest)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                    }
+                    File.Move(smaliPath, dest);
+                }
             }
             else
             {
-                string dest = apkDir + "\\" + Path.GetFileName(dirs[dirs.Length - 1]) + smaliPath.Remove(0, apkDir.Length + 6);
-                if (!Directory.Exists(Path.GetDirectoryName(dest)))
+                string[] dirs = Directory.GetDirectories(apkDir, "smali");
+                if ("smali".Equals(Path.GetFileName(dirs[dirs.Length - 1])))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                    return;
                 }
-                File.Move(smaliPath, dest);
+                else
+                {
+                    string dest = apkDir + "\\" + Path.GetFileName(dirs[dirs.Length - 1]) + smaliPath.Remove(0, apkDir.Length + 6);
+                    if (!Directory.Exists(Path.GetDirectoryName(dest)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                    }
+                    File.Move(smaliPath, dest);
+                }
             }
         }
 
@@ -465,9 +489,6 @@ namespace AllInOne.Logic
                         mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(path));
                         flag = true;
                     }
-
-
-
                     if (Settings.writeDebug)
                     {
                         Utils.WriteDebugLog(log.ToString());
@@ -574,7 +595,7 @@ namespace AllInOne.Logic
                     stringBuilder.AppendLine(string.Concat(new string[]
                     {
                         "File= ",
-                        Patcher.TrimPathToInput(soPath),
+                        TrimPathToInput(soPath),
                         "\nOld=\n",
                         keyValuePair.Key,
                         "\nNew=\n",
@@ -986,26 +1007,75 @@ namespace AllInOne.Logic
                         replacedSubs.Add(m.Value);
                     }
                     //---
-                    foreach (string[] pattern in new string[][] {
-                    new string[] { @"const-string.+\""((?:.*?\\u[0-9a-fA-F]+.+?)+)\""" , "##AllInOne##!UNICODE! " },
-                    new string[] { @"\.array-data \d+[\r\n]+((?:\s+-?0x[a-fA-F0-9]+t)+)[\r\n\s]+\.end array-data", "##AllInOne##!ARRAYDATA! " },
-                    new string[] { @"const-string.+\""([a-zA-Z0-9/\+]+={0,3})\""", "##AllInOne##!BASE64! " } })
+                    Regex regex;
+                    regex = new Regex("const-string.+\\\"((?:.*?\\\\u[0-9a-fA-F]+.+?)+)\\\"");
+                    replacedSubs.Clear();
+                    if (regex.IsMatch(fileContent))
                     {
-                        replacedSubs.Clear();
-
-                        foreach (Match m in Regex.Matches(fileContent, pattern[0]))
+                        foreach (Match m in regex.Matches(fileContent))
                         {
-                            if (replacedSubs.Contains(m.Value)) { continue; }
-
-                            string tmp = Utils.convertUnicodeToText(m.Groups[1].Value);
-                            if (!"".Equals(tmp))
+                            if (!replacedSubs.Contains(m.Value))
                             {
-                                fileContent = fileContent.Replace(m.Value, pattern[1] + tmp + "\n    " + m.Value);
+                                string unicode = Utils.convertUnicodeToText(m.Groups[1].Value);
+                                if (!"".Equals(unicode))
+                                {
+                                    fileContent = fileContent.Replace(m.Value, "##AllInOne##!UNICODE! " + unicode + "\n    " + m.Value);
+                                }
+                                replacedSubs.Add(m.Value);
                             }
-                            replacedSubs.Add(m.Value);
                         }
                     }
-
+                    regex = new Regex("\\.array-data \\d+[\\r\\n]+((?:\\s+-?0x[a-fA-F0-9]+t)+)[\\r\\n\\s]+\\.end array-data");
+                    replacedSubs.Clear();
+                    if (regex.IsMatch(fileContent))
+                    {
+                        foreach (Match m in regex.Matches(fileContent))
+                        {
+                            if (!replacedSubs.Contains(m.Value))
+                            {
+                                string array = Utils.convertArrayDataToString(m.Groups[1].Value);
+                                if (!"".Equals(array))
+                                {
+                                    fileContent = fileContent.Replace(m.Value, "##AllInOne##!ARRAYDATA! " + array + "\n    " + m.Value);
+                                }
+                                replacedSubs.Add(m.Value);
+                            }
+                        }
+                    }
+                    regex = new Regex("const-string.+\\\"([a-zA-Z0-9/\\+]+={0,3})\\\"");
+                    replacedSubs.Clear();
+                    if (regex.IsMatch(fileContent))
+                    {
+                        foreach (Match m in regex.Matches(fileContent))
+                        {
+                            if (!replacedSubs.Contains(m.Value))
+                            {
+                                string base64 = Utils.convertBase64ToText(m.Groups[1].Value);
+                                if (!"".Equals(base64))
+                                {
+                                    fileContent = fileContent.Replace(m.Value, "##AllInOne##!BASE64! " + base64 + "\n    " + m.Value);
+                                }
+                                replacedSubs.Add(m.Value);
+                            }
+                        }
+                    }
+                    regex = new Regex("const ([pv]\\d+), (-?0x(.){5,6})");
+                    replacedSubs.Clear();
+                    if (regex.IsMatch(fileContent))
+                    {
+                        foreach (Match m in regex.Matches(fileContent))
+                        {
+                            if (!replacedSubs.Contains(m.Value))
+                            {
+                                string color = Utils.convertSmaliColorToHex(m.Groups[2].Value);
+                                if (!"".Equals(color))
+                                {
+                                    fileContent = fileContent.Replace(m.Value, "##AllInOne##!COLOR! " + color + "\n    " + m.Value);
+                                }
+                                replacedSubs.Add(m.Value);
+                            }
+                        }
+                    }
                     if (orig != fileContent.GetHashCode())
                     {
                         using (StreamWriter sw = new StreamWriter(foundedfile, false, new UTF8Encoding(false), 65536))
@@ -1015,14 +1085,9 @@ namespace AllInOne.Logic
 
                         mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(foundedfile));
                     }
-                    //else
-                    //{
-                    //   mainf.appendProgressTbox(Color.Green, "     " + "Language.log_no_pathed");
-                    //}
-                }));
-
+                }
+                ));
             }
-
             work.Start();
             mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_add_smali_secondary_info_done + ":::::");
         }
@@ -1464,7 +1529,6 @@ namespace AllInOne.Logic
                 string path_image = mainf.splash_image_patchTBox.Text;
                 copyFileOrNot(path_image, path + "\\res\\drawable\\sssplasssh.png", copy && copy2 && copy3);
             }
-
         }
 
         public static void splashRemovePatch(string path)
@@ -2170,9 +2234,9 @@ namespace AllInOne.Logic
                 work.Start();
             }
             //work.Start();
-            using (StreamWriter sw = new StreamWriter(path + "\\DeleteResources.log", false, new UTF8Encoding(false), 65536))
+            using (StreamWriter sw = new StreamWriter(Program.pathToBatchapktool + "\\DeleteResources_" + TrimPathToInput(path) + ".txt", false, new UTF8Encoding(false), 65536))
             {
-                sw.WriteLine("Apk: " + TrimPathToInput(path) + "\nDeleted directories:\n" + dsb.ToString() + "\nDeleted files:\n" + fsb.ToString() + "=====Total size of deleted files: ~" + Math.Round(totalsize / 1024.0 / 1024.0, 3).ToString() + "Mb =====");
+                sw.WriteLine("Apk: " + TrimPathToInput(path) + "\n" + "Deleted directories:\n" + dsb.ToString() + "\nDeleted files:\n" + fsb.ToString() + "=====Total size of deleted files: ~" + Math.Round(totalsize / 1024.0 / 1024.0, 3).ToString() + "Mb =====");
             }
             mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_delete_resource_done + ":::::");
         }
@@ -2484,11 +2548,6 @@ namespace AllInOne.Logic
                             if (founded.EndsWith(".smali")) { Interlocked.Increment(ref copy); }
                             mainf.appendProgressTbox(Color.Green, "     " + Language.log_patched + TrimPathToInput(founded));
                         }
-                        //else
-                        //{
-                        //     mainf.appendProgressTbox(Color.Green, "     " + Language.log_no_pathed);
-                        //}
-
                     }
                     catch (Exception e)
                     {
@@ -2524,7 +2583,6 @@ namespace AllInOne.Logic
                 return;
             }
             Patcher.ReplaceInFiles(path, Patterns.screenshotPatch, "*.smali", "smali*", true);
-
         }
 
         public static void fix_18_9Patch(string path)
@@ -2581,7 +2639,6 @@ namespace AllInOne.Logic
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
                 }
             }
-
         }
 
         public static void mask_appPatch(string path)
@@ -2624,7 +2681,6 @@ namespace AllInOne.Logic
                 Patcher.copyFileOrNot(mask_icon_patch, path + "\\res\\drawable\\" + mask_icon_name, strings_patch && manifest_path);
                 Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
             }
-
         }
 
         public static void unpackfilePatch(string path)
@@ -2649,7 +2705,6 @@ namespace AllInOne.Logic
                 dictionary.Add("\\# virtual methods", virtualm);
                 Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
             }
-
         }
 
         public static void screenOrientationPatch(string path)
@@ -2703,8 +2758,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2723,8 +2778,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2743,8 +2798,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.CAMERA\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.CAMERA\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2763,8 +2818,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2783,8 +2838,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.READ_SMS\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.READ_SMS\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2803,8 +2858,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2823,8 +2878,8 @@ namespace AllInOne.Logic
                     bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
                     {
                         {
-                            "</application",
-                            "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />\n\n<application"
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />\n<application"
                         }
                     }, true);
                     Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
@@ -2834,6 +2889,10 @@ namespace AllInOne.Logic
 
         public static void add_modDialogPatch(string path)
         {
+            if (path == "")
+            {
+                return;
+            }
             string sourceDir = Program.pathToMyPluginDir + "\\smali\\mod_dialog";
             string targetDir = path + "\\smali\\cracker\\info";
             string mod_link = mainf.mod_linkTBox.Text;
@@ -2877,7 +2936,7 @@ namespace AllInOne.Logic
                 string mod_image_name_encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(mod_image_name));
                 string mod_changelog_name_encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(mod_changelog_name));
                 Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-static {v0}, Lcracker/info/mod_dialog;->CrackerInfo(Landroid/content/Context;)V)");
+                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-static {v0}, Lcracker/info/mod_dialog;->CrackerInfo(Landroid/content/Context;)V");
                 Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
                 bool strings_patch_1 = Patcher.ReplaceInFile(path + "\\smali\\cracker\\info\\mod_dialog$2.smali", new Dictionary<string, string>
               {
@@ -2904,7 +2963,61 @@ namespace AllInOne.Logic
 
             }
         }
-        
+
+        //патч-фикс для изменения цвета фона при старте приложения
+        public static void FixWhiteStartupPatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            string color = mainf.colorTBox.Text;
+            string ManifestContent = File.ReadAllText(path + "\\AndroidManifest.xml", Encoding.UTF8);
+            string StylesContent = File.ReadAllText(path + "\\res\\values\\styles.xml", Encoding.UTF8);
+            string application_theme = Regex.Match(ManifestContent, @"<application(.*)android:theme=\""([^\""]+)\""").Groups[2].Value;
+            string value_1 = application_theme.Substring(1);
+            string[] value_2 = value_1.Split(new char[] { '/' });
+            string style_name = value_2[1];
+            //MessageBox.Show(style_name);
+            string variant_1 = $"<style name=\"{style_name}\" parent=\"([^\"]+)\">";
+            string variant_2 = $"<style name=\"{style_name}\" parent=\"([^\"]+)\" />";
+            string variant_1_replace = $"<style name=\"{style_name}\" parent=\"$1\">\n        <item name=\"android:windowBackground\">@color/custom_start</item>";
+            string variant_2_replace = $"<style name=\"{style_name}\" parent=\"$1\">\n        <item name=\"android:windowBackground\">@color/custom_start</item>\n</style>";
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary.Add(variant_1, variant_1_replace);
+            dictionary.Add(variant_2, variant_2_replace);
+            ReplaceInFile(path + "\\res\\values\\styles.xml", dictionary, true);
+            //ReplaceInFile(path + "\\res\\values\\styles.xml", new Dictionary<string, string> { { $"<style name=\"{style_name}\" parent=\"([^\"]+)\">", $"<style name=\"{style_name}\" parent=\"$1\">\n    <item name=\"android:windowBackground\">@color/custom_start</item>" } });
+            ReplaceInFile(path + "\\res\\values\\colors.xml", new Dictionary<string, string> { { "</resources>", "    <color name=\"custom_start\">#" + color + "</color>\n</resources>" } });
+        }
+
+        public static void disabledozePatch(string path)
+        {
+            if (path == "")
+            {
+                return;
+            }
+            string launcherActivity = Patcher.GetLauncherActivity(path);
+            if (launcherActivity != string.Empty)
+            {
+                //добавление кода в smali
+                string text = File.ReadAllLines(Patcher.getPathToSmali(path, launcherActivity))[0];
+                text = text.Remove(0, text.IndexOf(" L") + 1);
+                string direct = "# direct methods\n\n.method public static disableDoze(Landroid/content/Context;)V\n    .registers 11\n    .annotation system Ldalvik/annotation/Signature;\n        value = {\n            \"(\",\n            \"Landroid / content / Context; \",\n            \")V\"\n        }\n    .end annotation\n\n    .prologue\n    .line 16\n    move-object v0, p0\n\n    const-string v6, \"doze - util\"\n\n    new-instance v7, Ljava/lang/StringBuffer;\n\n    move-object v9, v7\n\n    move-object v7, v9\n\n    move-object v8, v9\n\n    invoke-direct {v8}, Ljava/lang/StringBuffer;-><init>()V\n\n    const-string v8, \"Context = \"\n\n    invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n\n    move-result-object v7\n\n    move-object v8, v0\n\n    invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/Object;)Ljava/lang/StringBuffer;\n\n    move-result-object v7\n\n    invoke-virtual {v7}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;\n\n    move-result-object v7\n\n    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n    move-result v6\n\n    .line 17\n    sget v6, Landroid/os/Build$VERSION;->SDK_INT:I\n\n    const/16 v7, 0x17\n      if-lt v6, v7, :cond_8e\n      .line 18\n     new-instance v6, Landroid/content/Intent;\n\n      move-object v9, v6\n\n      move-object v6, v9\n      move-object v7, v9\n\n      invoke-direct {v7}, Landroid/content/Intent;-><init>()V\n\n      move-object v2, v6\n\n      .line 19\n     move-object v6, v0\n\n      invoke-virtual {v6}, Landroid/content/Context;->getPackageName()Ljava/lang/String;\n\n      move-result-object v6\n\n      move-object v3, v6\n\n      .line 20\n     const-string v6, \"doze - util\"\n\n      new-instance v7, Ljava/lang/StringBuffer;\n\n      move-object v9, v7\n\n      move-object v7, v9\n\n      move-object v8, v9\n\n      invoke-direct {v8}, Ljava/lang/StringBuffer;-><init>()V\n\n      const-string v8, \"pkg = \"\n\n      invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n\n      move-result-object v7\n\n      move-object v8, v3\n\n      invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n\n      move-result-object v7\n\n      invoke-virtual {v7}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;\n\n      move-result-object v7\n\n      invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n      move-result v6\n\n      .line 21\n     move-object v6, v0\n\n      const-string v7, \"power\"\n\n      invoke-virtual {v6, v7}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;\n\n      move-result-object v6\n\n      check-cast v6, Landroid/os/PowerManager;\n\n      move-object v4, v6\n\n      .line 22\n     move-object v6, v4\n\n      move-object v7, v3\n\n      invoke-virtual {v6, v7}, Landroid/os/PowerManager;->isIgnoringBatteryOptimizations(Ljava/lang/String;)Z\n\n      move-result v6\n\n      if-nez v6, :cond_8f\n      .line 23\n     move-object v6, v2\n\n      const-string v7, \"android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\"\n\n      invoke-virtual {v6, v7}, Landroid/content/Intent;->setAction(Ljava/lang/String;)Landroid/content/Intent;\n\n      move-result-object v6\n\n      .line 24\n     move-object v6, v2\n\n      new-instance v7, Ljava/lang/StringBuffer;\n\n      move-object v9, v7\n\n      move-object v7, v9\n\n      move-object v8, v9\n\n      invoke-direct {v8}, Ljava/lang/StringBuffer;-><init>()V\n\n      const-string v8, \"package: \"\n\n      invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n\n      move-result-object v7\n\n      move-object v8, v3\n\n      invoke-virtual {v7, v8}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n\n      move-result-object v7\n\n      invoke-virtual {v7}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;\n\n      move-result-object v7\n\n      invoke-static {v7}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;\n\n      move-result-object v7\n\n      invoke-virtual {v6, v7}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;\n\n      move-result-object v6\n\n      .line 25\n     move-object v6, v0\n\n      move-object v7, v2\n\n      invoke-virtual {v6, v7}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V\n\n      .line 27\n     :cond_8e\n     :goto_8e\n     return-void\n\n      :cond_8f\n     const-string v6, \"doze - util\"\n\n      const-string v7, \"Doze optimizations already disabled for this app!\"\n\n      invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I\n\n      move-result v6\n\n      goto :goto_8e\n .end method";
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                dictionary.Add("\\.method (.+)onCreate\\(Landroid/os/Bundle;\\)V[\\r\\n\\s]+\\.locals (\\d+)", ".method $1onCreate(Landroid/os/Bundle;)V\n    .locals $2\n\n    invoke-static {p0}, " + text + "->disableDoze(Landroid/content/Context;)V");
+                dictionary.Add("\\# direct methods", direct);
+                bool manifest_path = Patcher.ReplaceInFile(path + "\\AndroidManifest.xml", new Dictionary<string, string>
+                    {
+                        {
+                            "<application",
+                            "<uses-permission android:name=\"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\" />\n<application"
+                        }
+                    }, true);
+                Patcher.ReplaceInFile(Patcher.getPathToSmali(path, launcherActivity), dictionary, true);
+            }
+        }
+
         public static void DeviceIdPatch(string path)
         {
             if (path == "")
@@ -3734,6 +3847,7 @@ namespace AllInOne.Logic
             Patcher.mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_manual_replace_done + ":::::");
         }
 
+        //получение инофрмации о выбраном проекте
         public static void getAppInfo(string path)
         {
             try
@@ -3760,11 +3874,7 @@ namespace AllInOne.Logic
                 string icon_folder = appicon_[0] + "*";//имя папки
                 string icon_name = appicon_[1];//имя иконки
                 string appname_final = Regex.Match(StringContecnt, $"<string name=\"{second}\">(.+)</string>").Groups[1].Value;//вытягиваем имя приложения
-                //проверка на использование Splits в apk
-                if (ManifestContent.Contains("com.android.vending.splits"))
-                {
-                    MessageBox.Show(Language.message_detect_spltits, Language.message_detect, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                Utils.CheckSplits(path);
                 foreach (string dir in Directory.GetDirectories(path + "\\res\\", icon_folder))
                 {
                     foreach (string filepath in Directory.GetFiles(dir, icon_name + ".png", SearchOption.AllDirectories))
@@ -3810,7 +3920,6 @@ namespace AllInOne.Logic
             cmdProcess.WaitForExit();
             mainf.appendProgressTbox(Color.Green, ":::::" + Language.log_file_saved_to + s + ":::::");
             mainf.appendProgressTbox(Color.Red, ":::::" + Language.log_merge_dex_done + " (" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds, watch.Elapsed.Milliseconds / 10) + ")" + ":::::");
-
         }
     }
 }

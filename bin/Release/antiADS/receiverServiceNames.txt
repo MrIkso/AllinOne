@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 analytics
 AppMeasurement
 campaign
@@ -6,13 +5,4 @@ measurement
 metrica
 tracking
 AdStatisticsReceiver
-=======
-analytics
-AppMeasurement
-campaign
-measurement
-metrica
-tracking
-AdStatisticsReceiver
->>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 \.adman\.

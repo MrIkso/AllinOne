@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [^\"]*_ad
 [^\"]*_ad_[^\"]*
 ad_[^\"]*
@@ -25,32 +24,4 @@ vast_small_ad
 AppodealView
 VastTextureView
 AdsContainerLayout
-=======
-[^\"]*_ad
-[^\"]*_ad_[^\"]*
-ad_[^\"]*
-[^\"]*_ads
-ads_[^\"]*
-[^\"]*_ads_[^\"]*
-_banner
-ad2
-ad
-adContainerView
-adContainer
-adHolder
-adHost
-[^\"]*adman[^\"]*
-[^\"]*admob[^\"]*
-ads
-[^\"]*appodeal[^\"]*
-banner
-[^\"]*startApp[^\"]*
-vast_ad
-vast_small_ad
-[^\"]*adview[^\"]*
-\.adview
-AppodealView
-VastTextureView
-AdsContainerLayout
->>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 adv_layout

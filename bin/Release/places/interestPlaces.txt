@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 const-string [pv]\d+, \".*(premium|isPro|removeAds|free|Vip|Paid|Purchased|Subscribed).*
-=======
-const-string [pv]\d+, \".*(premium|isPro|removeAds|free|Vip|Paid|Purchased|Subscribed).*
->>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 const-string [pv]\d+, \"pro\"

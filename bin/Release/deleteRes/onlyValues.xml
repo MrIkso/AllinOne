@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <ExcludeRes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <langs>en,ru,rRU,uk</langs>
@@ -17,24 +16,4 @@
   <raw>false</raw>
   <values>true</values>
   <xml>false</xml>
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<ExcludeRes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <langs>en,ru,rRU,uk</langs>
-  <quals></quals>
-  <libs></libs>
-  <basis>xhdpi</basis>
-  <animator>false</animator>
-  <anim>false</anim>
-  <font>false</font>
-  <color>false</color>
-  <drawable>false</drawable>
-  <mipmap>false</mipmap>
-  <layout>false</layout>
-  <lib>false</lib>
-  <menu>false</menu>
-  <raw>false</raw>
-  <values>true</values>
-  <xml>false</xml>
->>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 </ExcludeRes>

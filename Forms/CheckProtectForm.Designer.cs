@@ -59,6 +59,7 @@
             this.unrealCheckCB = new System.Windows.Forms.CheckBox();
             this.unity_monoCB = new System.Windows.Forms.CheckBox();
             this.checkBtn = new System.Windows.Forms.Button();
+            this.xamarinCB = new System.Windows.Forms.CheckBox();
             this.packerGB.SuspendLayout();
             this.engineGB.SuspendLayout();
             this.SuspendLayout();
@@ -396,13 +397,14 @@
             // 
             // engineGB
             // 
+            this.engineGB.Controls.Add(this.xamarinCB);
             this.engineGB.Controls.Add(this.unity_il2cppCB);
             this.engineGB.Controls.Add(this.cocosCB);
             this.engineGB.Controls.Add(this.unrealCheckCB);
             this.engineGB.Controls.Add(this.unity_monoCB);
             this.engineGB.Location = new System.Drawing.Point(398, 12);
             this.engineGB.Name = "engineGB";
-            this.engineGB.Size = new System.Drawing.Size(200, 133);
+            this.engineGB.Size = new System.Drawing.Size(200, 167);
             this.engineGB.TabIndex = 2;
             this.engineGB.TabStop = false;
             this.engineGB.Text = "Engine";
@@ -469,7 +471,20 @@
             this.checkBtn.UseVisualStyleBackColor = true;
             this.checkBtn.Click += new System.EventHandler(this.checkBtn_Click);
             // 
-            // CheckProtect
+            // xamarinCB
+            // 
+            this.xamarinCB.AutoSize = true;
+            this.xamarinCB.Checked = true;
+            this.xamarinCB.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.xamarinCB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.xamarinCB.Location = new System.Drawing.Point(5, 126);
+            this.xamarinCB.Name = "xamarinCB";
+            this.xamarinCB.Size = new System.Drawing.Size(82, 21);
+            this.xamarinCB.TabIndex = 4;
+            this.xamarinCB.Text = "Xamarin";
+            this.xamarinCB.UseVisualStyleBackColor = true;
+            // 
+            // CheckProtectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -479,7 +494,7 @@
             this.Controls.Add(this.packerGB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "CheckProtect";
+            this.Name = "CheckProtectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Check Protect";
             this.packerGB.ResumeLayout(false);
@@ -522,5 +537,6 @@
         private System.Windows.Forms.CheckBox nqshieldCB;
         private System.Windows.Forms.Button checkBtn;
         private System.Windows.Forms.CheckBox unity_il2cppCB;
+        private System.Windows.Forms.CheckBox xamarinCB;
     }
 }

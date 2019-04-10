@@ -27,5 +27,10 @@ namespace AllInOne.Forms
                 this.richTxtHelp.Text = ex.Message;
 			}
 		}
-	}
+
+        private void richTxtHelp_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
+    }
 }

@@ -11,15 +11,12 @@ namespace AllInOne.Forms
         {
             InitializeComponent();
             try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("Changelog.txt"))
+            { 
+                using (StreamReader sr = new StreamReader(Program.pathToMyPluginDir + "//Changelog.txt"))
                 {
-                    // Read the stream to a string, and write the string to the console.
                     String line = sr.ReadToEnd();
                     changelogBox.Text = line;
-        
-                }
-                
+                } 
             }
             catch (IOException ex)
             {
@@ -29,5 +26,9 @@ namespace AllInOne.Forms
             }
         }
 
+        private void changelogBox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
     }
 }

@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="api_key_textBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 16</value>
+    <value>253, 20</value>
   </data>
   <data name="api_key_textBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 22</value>
@@ -141,7 +141,7 @@
     <value>2</value>
   </data>
   <data name="replace_link_textBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 44</value>
+    <value>253, 50</value>
   </data>
   <data name="replace_link_textBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 22</value>
@@ -162,7 +162,7 @@
     <value>4</value>
   </data>
   <data name="text_editor_textBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 139</value>
+    <value>253, 140</value>
   </data>
   <data name="text_editor_textBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 22</value>
@@ -186,7 +186,7 @@
     <value>True</value>
   </data>
   <data name="asset_files_checkBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>22, 173</value>
+    <value>19, 173</value>
   </data>
   <data name="asset_files_checkBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 21</value>
@@ -213,7 +213,7 @@
     <value>True</value>
   </data>
   <data name="lib_files_checkBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>22, 203</value>
+    <value>19, 203</value>
   </data>
   <data name="lib_files_checkBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 21</value>
@@ -240,7 +240,7 @@
     <value>True</value>
   </data>
   <data name="KeyLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 21</value>
+    <value>19, 20</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="KeyLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
@@ -271,7 +271,7 @@
     <value>True</value>
   </data>
   <data name="AdsLinkLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 49</value>
+    <value>19, 50</value>
   </data>
   <data name="AdsLinkLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -301,7 +301,7 @@
     <value>True</value>
   </data>
   <data name="TxtEditorLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 144</value>
+    <value>19, 140</value>
   </data>
   <data name="TxtEditorLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -331,7 +331,7 @@
     <value>True</value>
   </data>
   <data name="TaskCountLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 77</value>
+    <value>19, 80</value>
   </data>
   <data name="TaskCountLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -358,7 +358,7 @@
     <value>8</value>
   </data>
   <data name="task_textBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 72</value>
+    <value>253, 80</value>
   </data>
   <data name="task_textBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 22</value>
@@ -484,7 +484,7 @@
     <value>NoControl</value>
   </data>
   <data name="TxtEditorOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 108</value>
+    <value>19, 110</value>
   </data>
   <data name="TxtEditorOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -546,16 +546,19 @@
     <value>9</value>
   </data>
   <data name="textEditorArgsComboBox.Items" xml:space="preserve">
-    <value>%FILEPATH%</value>
+    <value>-n%LINENUMBER% %FILEPATH%</value>
   </data>
   <data name="textEditorArgsComboBox.Items1" xml:space="preserve">
-    <value>%FILEPATH%:%LINENUMBER%</value>
+    <value>%FILEPATH%</value>
   </data>
   <data name="textEditorArgsComboBox.Items2" xml:space="preserve">
+    <value>%FILEPATH%:%LINENUMBER%</value>
+  </data>
+  <data name="textEditorArgsComboBox.Items3" xml:space="preserve">
     <value>%LINENUMBER%:%FILEPATH%</value>
   </data>
   <data name="textEditorArgsComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 105</value>
+    <value>253, 110</value>
   </data>
   <data name="textEditorArgsComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 24</value>

@@ -2,6 +2,9 @@
 /mainTLP/mainTabControl/mainTabPage/themesGBox/themesLHMACB#0
 /mainTLP/mainTabControl/mainTabPage/themesGBox/themesDCB#0
 /mainTLP/mainTabControl/mainTabPage/themesGBox/themesDHMACB#0
+/mainTLP/mainTabControl/mainTabPage/otherGBox/disabledozeCB#0
+/mainTLP/mainTabControl/mainTabPage/otherGBox/colorTBox#
+/mainTLP/mainTabControl/mainTabPage/otherGBox/fixcolorstartupCB#1
 /mainTLP/mainTabControl/mainTabPage/otherGBox/IconGB/visibleIconCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/IconGB/hideIconCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/mod_changelog_nameTBox#
@@ -9,27 +12,27 @@
 /mainTLP/mainTabControl/mainTabPage/otherGBox/add_modDialogCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/mod_linkTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/add_permissionCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/add_permissionCBox#
+/mainTLP/mainTabControl/mainTabPage/otherGBox/add_permissionCBox#Разрешение на память
 /mainTLP/mainTabControl/mainTabPage/otherGBox/fix_auth_fb_vkCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/screenOrientationCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/screenOrientationCBox#
-/mainTLP/mainTabControl/mainTabPage/otherGBox/file_unpackTBox#AllinOne_File.zip
+/mainTLP/mainTabControl/mainTabPage/otherGBox/screenOrientationCBox#Авто
+/mainTLP/mainTabControl/mainTabPage/otherGBox/file_unpackTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/unpackfileCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/folder_unpackTBox#AllinOne
+/mainTLP/mainTabControl/mainTabPage/otherGBox/folder_unpackTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/mask_icon_patchTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/maskCB#1
-/mainTLP/mainTabControl/mainTabPage/otherGBox/mask_nameTBox#AllinOne
+/mainTLP/mainTabControl/mainTabPage/otherGBox/mask_nameTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/fix18_9CB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/splashGBox/splashInstallCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/splashGBox/splash_image_patchTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/splashGBox/splashRemoveCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/screenshotCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/backKillCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/backKillCBox#
+/mainTLP/mainTabControl/mainTabPage/otherGBox/backKillCBox#Двойное нажатие для выхода
 /mainTLP/mainTabControl/mainTabPage/otherGBox/blockSensorsCBox#profile.xml
 /mainTLP/mainTabControl/mainTabPage/otherGBox/blockSensorsCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/cloneTBox#
-/mainTLP/mainTabControl/mainTabPage/otherGBox/installLocationCBox#
+/mainTLP/mainTabControl/mainTabPage/otherGBox/installLocationCBox#auto
 /mainTLP/mainTabControl/mainTabPage/otherGBox/cloneCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/installLocationCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/addSaveCB#0
@@ -37,9 +40,9 @@
 /mainTLP/mainTabControl/mainTabPage/otherGBox/fullscreenCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/addToastCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/rootCheckCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/minSdkCBox#
+/mainTLP/mainTabControl/mainTabPage/otherGBox/minSdkCBox#1 - Android 1.0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/noUpdateCB#0
-/mainTLP/mainTabControl/mainTabPage/otherGBox/toastMessageTBox#:::Patched by AllinOne:::
+/mainTLP/mainTabControl/mainTabPage/otherGBox/toastMessageTBox#
 /mainTLP/mainTabControl/mainTabPage/otherGBox/mockLocationCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/googleMapsCB#0
 /mainTLP/mainTabControl/mainTabPage/otherGBox/dexCB#0
@@ -50,8 +53,8 @@
 /mainTLP/mainTabControl/mainTabPage/installerGBox/installerAmazonCB#0
 /mainTLP/mainTabControl/mainTabPage/signatureGBox/binSignatureCB#0
 /mainTLP/mainTabControl/mainTabPage/signatureGBox/binSignatureInstallerCB#0
-/mainTLP/mainTabControl/mainTabPage/signatureGBox/binInstallerCBox#
-/mainTLP/mainTabControl/mainTabPage/deleteGBox/deleteLangsCBox#maximum.xml
+/mainTLP/mainTabControl/mainTabPage/signatureGBox/binInstallerCBox#Google
+/mainTLP/mainTabControl/mainTabPage/deleteGBox/deleteLangsCBox#0_standart.xml
 /mainTLP/mainTabControl/mainTabPage/deleteGBox/deleteResourcesCB#0
 /mainTLP/mainTabControl/mainTabPage/deleteGBox/emulatorCB#0
 /mainTLP/mainTabControl/mainTabPage/deleteGBox/locationCB#0

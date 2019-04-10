@@ -42,6 +42,7 @@
             this.changelogBox.Size = new System.Drawing.Size(631, 538);
             this.changelogBox.TabIndex = 0;
             this.changelogBox.Text = "";
+            this.changelogBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.changelogBox_LinkClicked);
             // 
             // ChangelogForm
             // 

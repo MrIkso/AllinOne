@@ -149,12 +149,12 @@
             // 
             // textEditorArgsComboBox
             // 
-            this.textEditorArgsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.textEditorArgsComboBox.FormattingEnabled = true;
             this.textEditorArgsComboBox.Items.AddRange(new object[] {
             resources.GetString("textEditorArgsComboBox.Items"),
             resources.GetString("textEditorArgsComboBox.Items1"),
-            resources.GetString("textEditorArgsComboBox.Items2")});
+            resources.GetString("textEditorArgsComboBox.Items2"),
+            resources.GetString("textEditorArgsComboBox.Items3")});
             resources.ApplyResources(this.textEditorArgsComboBox, "textEditorArgsComboBox");
             this.textEditorArgsComboBox.Name = "textEditorArgsComboBox";
             this.textEditorArgsComboBox.Sorted = true;

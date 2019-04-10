@@ -67,6 +67,8 @@ namespace AllInOne.Logic
         public static string plugin_other_add_permission_phone = "";
         public static string plugin_other_add_permission_calendar = "";
         public static string plugin_other_add_mod_dialog = "";
+        public static string plugin_other_fix_color_startup = "";
+        public static string plugin_other_disable_doze = "";
         public static string plugin_themes = "";
         public static string plugin_themes_d = "";
         public static string plugin_themes_l = "";
@@ -195,6 +197,7 @@ namespace AllInOne.Logic
         public static string log_no_foundet_pattern = "";
         public static string plugin_other_fix_18_9 = "";
         public static string tg_label = "";
+        public static string color_startup_label = "";
         public static string res_crupt = "";
         public static string mask_name_label= "";
         public static string mask_icon_patch_label = "";

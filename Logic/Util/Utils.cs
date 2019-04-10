@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -25,14 +26,29 @@ namespace AllInOne.Logic.Util
             }
         }
 
+        public static string getMinSDK()
+        {
+            var sdk = File.ReadAllText(Program.processApkPath + "\\apktool.yml", Encoding.UTF8);
+            var sdk_ver = "minSdkVersion: ('?[^']+'?)[\\s\\S]";
+            Match vers = Regex.Match(sdk, sdk_ver);
+            string result = vers.Groups[1].Value.Trim('\'');
+            return result;
+        }
+
         public static void WriteLog(string str)
         {
-            lock (locker) { File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_log.txt", DateTime.Now.ToString("HH:mm:ss") + " :\n" + str); }
+            lock (locker)
+            {
+                File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_log.txt", DateTime.Now.ToString("HH:mm:ss") + " :\n" + str);
+            }
         }
 
         public static void WriteDebugLog(string str)
         {
-            lock (locker) { File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_DEBUG.txt", str); }
+            lock (locker)
+            {
+                File.AppendAllText(Program.pathToBatchapktool + "\\AllInOne_DEBUG.txt", str);
+            }
         }
 
         public static void DelDebugLogFile()
@@ -42,6 +58,7 @@ namespace AllInOne.Logic.Util
                 File.Delete(Program.pathToBatchapktool + "\\AllInOne_DEBUG.txt");
             }
         }
+
         public static byte[] stringToBytes(string str)//"FF FF"
         {
             string[] strSplit = str.Split(' ');
@@ -153,6 +170,71 @@ namespace AllInOne.Logic.Util
             }
         }
 
+        public static string convertSmaliColorToHex(string text)
+        {
+            try
+            {
+                string result = "";
+                if (text.IndexOf('-') != -1)
+                    text = text.Replace("-", "");
+                int s = -Convert.ToInt32(text, 16);
+                result = s.ToString("X");
+                return result;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+
+        public static string convertHexColorToSmali(string input)
+        {
+            try
+            {
+                string result = "";
+                StringBuilder sb = new StringBuilder();
+                if (input.Length == 3 || input.Length == 4)
+                {
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        sb.Append(input[i]);
+                        // sb.Append(input[i]);
+                    }
+                    input = sb.ToString();
+                }
+                if (input.Length == 6)
+                {
+                    input = "ff" + input;
+                }
+                if (input.Length < 3 || input.Length > 8 || input.Length == 5 || input.Length == 7)
+                {
+                    MessageBox.Show("Please, enter corect value", "Error");
+                }
+                else
+                {
+                    int color = ColorTranslator.FromHtml("#" + input).ToArgb();
+                    int decimalAlpha = Convert.ToInt32(input.Substring(0, 2), 16);
+                    string s;
+                    if (decimalAlpha >= 128)
+                    {
+                        s = "-0x" + (color * -1).ToString("x");
+                    }
+                    else
+                    {
+                        s = "0x" + color.ToString("x");
+                    }
+
+                    result = s;
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+
         public static string getCurrentTime()
         {
             long result = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
@@ -190,6 +272,24 @@ namespace AllInOne.Logic.Util
                 hex = hex + string.Format("{0:X2}", hexIn);
             }
             return hex;
+        }
+
+        public static void CheckSplits(string path)
+        {
+            //проверка на использование Splits в apk
+            string manifest = path + "\\AndroidManifest.xml";
+            if (File.Exists(manifest))
+            {
+                string ManifestContent = File.ReadAllText(manifest, Encoding.UTF8);
+                if (ManifestContent.Contains("com.android.vending.splits"))
+                {
+                    MessageBox.Show(Language.message_detect_spltits, Language.message_detect, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show(manifest + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

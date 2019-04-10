@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <settings>
@@ -11,11 +10,12 @@
     <!--- на что заменять рекламные ссылки в патче Антирекламы-->
     <settingsItem name="ReplaceLinksTo">http://=</settingsItem>
     <!--- язык плагина. Используется только если плагин запущен через его exe-->
-    <settingsItem name="language">english</settingsItem>
+    <settingsItem name="language">russian</settingsItem>
     <!--- количество одновременных обработок. Грубо говоря, количество одновременно обрабатываемых файлов-->
     <settingsItem name="taskCount">100</settingsItem>
     <!---путь к exe текстового редактора -->
-    <settingsItem name="textEditorPath">C:\Program Files\Sublime Text 3\sublime_text.exe</settingsItem>
+    <settingsItem name="textEditorPath">
+    </settingsItem>
     <!--- аргументы для запуска текст. редактора с нужным файлом и на определенной строке. Вместо %FILEPATH% и %LINENUMBER% плагин сам подставит нужное. Эти аргументы должны быть ОБЯЗАТЕЛЬНО. Для Notepad++ надо вписать -n%LINENUMBER% %FILEPATH% -->
     <settingsItem name="textEditorArgs">%FILEPATH%:%LINENUMBER%</settingsItem>
     <!--- искать ли имена файлов из папки assets по всем файлам в декомпилированной папке. Используется для инструмента Интересные места-->
@@ -23,30 +23,4 @@
     <!--- искать ли имена файлов из папки lib по всем файлам в декомпилированной папке. Используется для инструмента Интересные места-->
     <settingsItem name="searchLibFiles">False</settingsItem>
   </settings>
-=======
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <settings>
-    <!--- true - включает запись лога в AllInOne_DEBUG.txt, false - выключает-->
-    <settingsItem name="debug">True</settingsItem>
-    <!--- true - включает удаление файла AllInOne_DEBUG.txt перед применением патча, false - выключает-->
-    <settingsItem name="delDebugLog">False</settingsItem>
-    <!--- ключ гугл карт-->
-    <settingsItem name="GoogleMapsApiKey">NONE</settingsItem>
-    <!--- на что заменять рекламные ссылки в патче Антирекламы-->
-    <settingsItem name="ReplaceLinksTo">http://=</settingsItem>
-    <!--- язык плагина. Используется только если плагин запущен через его exe-->
-    <settingsItem name="language">ukrainian</settingsItem>
-    <!--- количество одновременных обработок. Грубо говоря, количество одновременно обрабатываемых файлов-->
-    <settingsItem name="taskCount">100</settingsItem>
-    <!---путь к exe текстового редактора -->
-    <settingsItem name="textEditorPath">C:\Program Files\Sublime Text 3\sublime_text.exe</settingsItem>
-    <!--- аргументы для запуска текст. редактора с нужным файлом и на определенной строке. Вместо %FILEPATH% и %LINENUMBER% плагин сам подставит нужное. Эти аргументы должны быть ОБЯЗАТЕЛЬНО. Для Notepad++ надо вписать -n%LINENUMBER% %FILEPATH% -->
-    <settingsItem name="textEditorArgs">%FILEPATH%:%LINENUMBER%</settingsItem>
-    <!--- искать ли имена файлов из папки assets по всем файлам в декомпилированной папке. Используется для инструмента Интересные места-->
-    <settingsItem name="searchAssetsFiles">False</settingsItem>
-    <!--- искать ли имена файлов из папки lib по всем файлам в декомпилированной папке. Используется для инструмента Интересные места-->
-    <settingsItem name="searchLibFiles">False</settingsItem>
-  </settings>
->>>>>>> c39fab210371af58865a746595fdbb0e229bf86e
 </root>

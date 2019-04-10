@@ -23,11 +23,12 @@
             this.progressTbox = new System.Windows.Forms.RichTextBox();
             this.tabsControl = new System.Windows.Forms.TabControl();
             this.mainTab = new System.Windows.Forms.TabPage();
+            this.appinfoPanel = new System.Windows.Forms.Panel();
+            this.app_iconPB = new System.Windows.Forms.PictureBox();
             this.version_code = new System.Windows.Forms.Label();
+            this.app_nameLbl = new System.Windows.Forms.Label();
             this.app_package = new System.Windows.Forms.Label();
             this.app_versionLbl = new System.Windows.Forms.Label();
-            this.app_nameLbl = new System.Windows.Forms.Label();
-            this.app_iconPB = new System.Windows.Forms.PictureBox();
             this.openFolderButton = new System.Windows.Forms.Button();
             this.saveCheckboxButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
@@ -74,6 +75,10 @@
             this.themesDCB = new System.Windows.Forms.CheckBox();
             this.themesDHMACB = new System.Windows.Forms.CheckBox();
             this.otherGBox = new System.Windows.Forms.GroupBox();
+            this.disabledozeCB = new System.Windows.Forms.CheckBox();
+            this.color_startupLbl = new System.Windows.Forms.Label();
+            this.colorTBox = new System.Windows.Forms.TextBox();
+            this.fixcolorstartupCB = new System.Windows.Forms.CheckBox();
             this.IconGB = new System.Windows.Forms.GroupBox();
             this.visibleIconCB = new System.Windows.Forms.CheckBox();
             this.hideIconCB = new System.Windows.Forms.CheckBox();
@@ -214,9 +219,11 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.mod_image_naneTbox = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.smali_colorBtn = new System.Windows.Forms.Button();
             this.progressTLP.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.mainTab.SuspendLayout();
+            this.appinfoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.app_iconPB)).BeginInit();
             this.toolsTab.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -239,13 +246,14 @@
             // 
             // taskCountLabel
             // 
-            this.taskCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.taskCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.taskCountLabel.AutoSize = true;
             this.taskCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.taskCountLabel.Location = new System.Drawing.Point(1659, 0);
+            this.taskCountLabel.Location = new System.Drawing.Point(1604, 0);
             this.taskCountLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.taskCountLabel.Name = "taskCountLabel";
-            this.taskCountLabel.Size = new System.Drawing.Size(107, 17);
+            this.taskCountLabel.Size = new System.Drawing.Size(168, 17);
             this.taskCountLabel.TabIndex = 19;
             this.taskCountLabel.Text = "В процессе: [0]";
             // 
@@ -255,7 +263,7 @@
             this.pBar.Location = new System.Drawing.Point(1, 0);
             this.pBar.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
             this.pBar.Name = "pBar";
-            this.pBar.Size = new System.Drawing.Size(1593, 24);
+            this.pBar.Size = new System.Drawing.Size(1598, 24);
             this.pBar.Step = 1;
             this.pBar.TabIndex = 25;
             // 
@@ -274,7 +282,7 @@
             this.progressTLP.RowCount = 1;
             this.progressTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.progressTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.progressTLP.Size = new System.Drawing.Size(1770, 25);
+            this.progressTLP.Size = new System.Drawing.Size(1776, 25);
             this.progressTLP.TabIndex = 25;
             // 
             // progressTbox
@@ -287,7 +295,7 @@
             this.progressTbox.Margin = new System.Windows.Forms.Padding(1);
             this.progressTbox.Name = "progressTbox";
             this.progressTbox.ReadOnly = true;
-            this.progressTbox.Size = new System.Drawing.Size(1768, 163);
+            this.progressTbox.Size = new System.Drawing.Size(1774, 163);
             this.progressTbox.TabIndex = 18;
             this.progressTbox.Text = "";
             this.progressTbox.TextChanged += new System.EventHandler(this.progressTbox_TextChanged);
@@ -297,7 +305,7 @@
             this.tabsControl.Controls.Add(this.mainTab);
             this.tabsControl.Controls.Add(this.toolsTab);
             this.tabsControl.Controls.Add(this.aboutTab);
-            this.tabsControl.Location = new System.Drawing.Point(1313, 1);
+            this.tabsControl.Location = new System.Drawing.Point(1319, 1);
             this.tabsControl.Margin = new System.Windows.Forms.Padding(1);
             this.tabsControl.MinimumSize = new System.Drawing.Size(456, 0);
             this.tabsControl.Name = "tabsControl";
@@ -308,11 +316,7 @@
             // mainTab
             // 
             this.mainTab.BackColor = System.Drawing.SystemColors.Control;
-            this.mainTab.Controls.Add(this.version_code);
-            this.mainTab.Controls.Add(this.app_package);
-            this.mainTab.Controls.Add(this.app_versionLbl);
-            this.mainTab.Controls.Add(this.app_nameLbl);
-            this.mainTab.Controls.Add(this.app_iconPB);
+            this.mainTab.Controls.Add(this.appinfoPanel);
             this.mainTab.Controls.Add(this.openFolderButton);
             this.mainTab.Controls.Add(this.saveCheckboxButton);
             this.mainTab.Controls.Add(this.startButton);
@@ -326,19 +330,50 @@
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Главная";
             // 
+            // appinfoPanel
+            // 
+            this.appinfoPanel.Controls.Add(this.app_iconPB);
+            this.appinfoPanel.Controls.Add(this.version_code);
+            this.appinfoPanel.Controls.Add(this.app_nameLbl);
+            this.appinfoPanel.Controls.Add(this.app_package);
+            this.appinfoPanel.Controls.Add(this.app_versionLbl);
+            this.appinfoPanel.Location = new System.Drawing.Point(4, 539);
+            this.appinfoPanel.Name = "appinfoPanel";
+            this.appinfoPanel.Size = new System.Drawing.Size(437, 100);
+            this.appinfoPanel.TabIndex = 26;
+            // 
+            // app_iconPB
+            // 
+            this.app_iconPB.InitialImage = global::AllInOne.Properties.Resources.ic_launcher;
+            this.app_iconPB.Location = new System.Drawing.Point(3, 15);
+            this.app_iconPB.Name = "app_iconPB";
+            this.app_iconPB.Size = new System.Drawing.Size(55, 55);
+            this.app_iconPB.TabIndex = 21;
+            this.app_iconPB.TabStop = false;
+            // 
             // version_code
             // 
             this.version_code.AutoSize = true;
-            this.version_code.Location = new System.Drawing.Point(80, 597);
+            this.version_code.Location = new System.Drawing.Point(76, 54);
             this.version_code.Name = "version_code";
             this.version_code.Size = new System.Drawing.Size(89, 17);
             this.version_code.TabIndex = 25;
             this.version_code.Text = "version code";
             // 
+            // app_nameLbl
+            // 
+            this.app_nameLbl.AutoSize = true;
+            this.app_nameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.app_nameLbl.Location = new System.Drawing.Point(75, 10);
+            this.app_nameLbl.Name = "app_nameLbl";
+            this.app_nameLbl.Size = new System.Drawing.Size(95, 20);
+            this.app_nameLbl.TabIndex = 22;
+            this.app_nameLbl.Text = "App Name";
+            // 
             // app_package
             // 
             this.app_package.AutoSize = true;
-            this.app_package.Location = new System.Drawing.Point(80, 614);
+            this.app_package.Location = new System.Drawing.Point(76, 71);
             this.app_package.Name = "app_package";
             this.app_package.Size = new System.Drawing.Size(62, 17);
             this.app_package.TabIndex = 24;
@@ -347,30 +382,11 @@
             // app_versionLbl
             // 
             this.app_versionLbl.AutoSize = true;
-            this.app_versionLbl.Location = new System.Drawing.Point(80, 579);
+            this.app_versionLbl.Location = new System.Drawing.Point(76, 36);
             this.app_versionLbl.Name = "app_versionLbl";
             this.app_versionLbl.Size = new System.Drawing.Size(54, 17);
             this.app_versionLbl.TabIndex = 23;
             this.app_versionLbl.Text = "version";
-            // 
-            // app_nameLbl
-            // 
-            this.app_nameLbl.AutoSize = true;
-            this.app_nameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.app_nameLbl.Location = new System.Drawing.Point(79, 553);
-            this.app_nameLbl.Name = "app_nameLbl";
-            this.app_nameLbl.Size = new System.Drawing.Size(95, 20);
-            this.app_nameLbl.TabIndex = 22;
-            this.app_nameLbl.Text = "App Name";
-            // 
-            // app_iconPB
-            // 
-            this.app_iconPB.InitialImage = global::AllInOne.Properties.Resources.ic_launcher;
-            this.app_iconPB.Location = new System.Drawing.Point(7, 558);
-            this.app_iconPB.Name = "app_iconPB";
-            this.app_iconPB.Size = new System.Drawing.Size(55, 55);
-            this.app_iconPB.TabIndex = 21;
-            this.app_iconPB.TabStop = false;
             // 
             // openFolderButton
             // 
@@ -450,6 +466,7 @@
             // toolsTab
             // 
             this.toolsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.toolsTab.Controls.Add(this.smali_colorBtn);
             this.toolsTab.Controls.Add(this.mergeDexBtn);
             this.toolsTab.Controls.Add(this.asmto_hexBtn);
             this.toolsTab.Controls.Add(this.check_protectBtn);
@@ -524,7 +541,7 @@
             // obfuscate_lib_btn
             // 
             this.obfuscate_lib_btn.BackColor = System.Drawing.SystemColors.Control;
-            this.obfuscate_lib_btn.Location = new System.Drawing.Point(4, 434);
+            this.obfuscate_lib_btn.Location = new System.Drawing.Point(4, 459);
             this.obfuscate_lib_btn.Margin = new System.Windows.Forms.Padding(4);
             this.obfuscate_lib_btn.Name = "obfuscate_lib_btn";
             this.obfuscate_lib_btn.Size = new System.Drawing.Size(440, 28);
@@ -537,7 +554,7 @@
             // res_cruptBtn
             // 
             this.res_cruptBtn.BackColor = System.Drawing.SystemColors.Control;
-            this.res_cruptBtn.Location = new System.Drawing.Point(4, 398);
+            this.res_cruptBtn.Location = new System.Drawing.Point(4, 423);
             this.res_cruptBtn.Margin = new System.Windows.Forms.Padding(4);
             this.res_cruptBtn.Name = "res_cruptBtn";
             this.res_cruptBtn.Size = new System.Drawing.Size(440, 28);
@@ -575,7 +592,7 @@
             // 
             // mehButton
             // 
-            this.mehButton.Location = new System.Drawing.Point(4, 362);
+            this.mehButton.Location = new System.Drawing.Point(4, 387);
             this.mehButton.Margin = new System.Windows.Forms.Padding(4);
             this.mehButton.Name = "mehButton";
             this.mehButton.Size = new System.Drawing.Size(440, 28);
@@ -697,7 +714,7 @@
             // 
             this.tg_link.AutoSize = true;
             this.tg_link.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tg_link.Location = new System.Drawing.Point(186, 306);
+            this.tg_link.Location = new System.Drawing.Point(186, 309);
             this.tg_link.Margin = new System.Windows.Forms.Padding(4);
             this.tg_link.Name = "tg_link";
             this.tg_link.Size = new System.Drawing.Size(38, 20);
@@ -711,7 +728,7 @@
             // 
             this.tg_label.AutoSize = true;
             this.tg_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tg_label.Location = new System.Drawing.Point(22, 306);
+            this.tg_label.Location = new System.Drawing.Point(22, 309);
             this.tg_label.Margin = new System.Windows.Forms.Padding(4);
             this.tg_label.Name = "tg_label";
             this.tg_label.Size = new System.Drawing.Size(124, 20);
@@ -725,7 +742,7 @@
             this.Changelog_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.Changelog_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Changelog_btn.ForeColor = System.Drawing.Color.ForestGreen;
-            this.Changelog_btn.Location = new System.Drawing.Point(164, 334);
+            this.Changelog_btn.Location = new System.Drawing.Point(164, 338);
             this.Changelog_btn.Name = "Changelog_btn";
             this.Changelog_btn.Size = new System.Drawing.Size(113, 34);
             this.Changelog_btn.TabIndex = 18;
@@ -749,7 +766,7 @@
             // 
             this.new_author2.AutoSize = true;
             this.new_author2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.new_author2.Location = new System.Drawing.Point(188, 224);
+            this.new_author2.Location = new System.Drawing.Point(188, 225);
             this.new_author2.Margin = new System.Windows.Forms.Padding(4);
             this.new_author2.Name = "new_author2";
             this.new_author2.Size = new System.Drawing.Size(61, 20);
@@ -775,7 +792,7 @@
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.linkLabel2.Location = new System.Drawing.Point(188, 196);
+            this.linkLabel2.Location = new System.Drawing.Point(188, 197);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(4);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(68, 20);
@@ -789,7 +806,7 @@
             // 
             this.buildDateLabel.AutoSize = true;
             this.buildDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buildDateLabel.Location = new System.Drawing.Point(22, 278);
+            this.buildDateLabel.Location = new System.Drawing.Point(22, 281);
             this.buildDateLabel.Margin = new System.Windows.Forms.Padding(4);
             this.buildDateLabel.Name = "buildDateLabel";
             this.buildDateLabel.Size = new System.Drawing.Size(91, 20);
@@ -801,7 +818,7 @@
             // 
             this.lblBuild.AutoSize = true;
             this.lblBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBuild.Location = new System.Drawing.Point(188, 277);
+            this.lblBuild.Location = new System.Drawing.Point(188, 281);
             this.lblBuild.Margin = new System.Windows.Forms.Padding(4);
             this.lblBuild.Name = "lblBuild";
             this.lblBuild.Size = new System.Drawing.Size(41, 20);
@@ -812,7 +829,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblVersion.Location = new System.Drawing.Point(188, 252);
+            this.lblVersion.Location = new System.Drawing.Point(188, 253);
             this.lblVersion.Margin = new System.Windows.Forms.Padding(4);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(59, 20);
@@ -824,7 +841,7 @@
             // 
             this.versionLabel.AutoSize = true;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.versionLabel.Location = new System.Drawing.Point(22, 250);
+            this.versionLabel.Location = new System.Drawing.Point(22, 253);
             this.versionLabel.Margin = new System.Windows.Forms.Padding(4);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(72, 20);
@@ -848,7 +865,7 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.linkLabel1.Location = new System.Drawing.Point(188, 168);
+            this.linkLabel1.Location = new System.Drawing.Point(188, 169);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(4);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(128, 20);
@@ -860,13 +877,14 @@
             // 
             // eggs_picture
             // 
-            this.eggs_picture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eggs_picture.Dock = System.Windows.Forms.DockStyle.Top;
             this.eggs_picture.Image = global::AllInOne.Properties.Resources.sloth;
             this.eggs_picture.InitialImage = null;
             this.eggs_picture.Location = new System.Drawing.Point(0, 0);
             this.eggs_picture.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eggs_picture.Name = "eggs_picture";
-            this.eggs_picture.Size = new System.Drawing.Size(448, 642);
+            this.eggs_picture.Size = new System.Drawing.Size(448, 146);
+            this.eggs_picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.eggs_picture.TabIndex = 10;
             this.eggs_picture.TabStop = false;
             this.eggs_picture.Click += new System.EventHandler(this.eggs_picture_Click);
@@ -879,7 +897,7 @@
             this.mainTabControl.Margin = new System.Windows.Forms.Padding(4);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1300, 696);
+            this.mainTabControl.Size = new System.Drawing.Size(1310, 697);
             this.mainTabControl.TabIndex = 27;
             // 
             // mainTabPage
@@ -897,7 +915,7 @@
             this.mainTabPage.Margin = new System.Windows.Forms.Padding(4);
             this.mainTabPage.Name = "mainTabPage";
             this.mainTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.mainTabPage.Size = new System.Drawing.Size(1292, 667);
+            this.mainTabPage.Size = new System.Drawing.Size(1302, 668);
             this.mainTabPage.TabIndex = 0;
             this.mainTabPage.Text = "Main";
             // 
@@ -967,6 +985,10 @@
             // otherGBox
             // 
             this.otherGBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.otherGBox.Controls.Add(this.disabledozeCB);
+            this.otherGBox.Controls.Add(this.color_startupLbl);
+            this.otherGBox.Controls.Add(this.colorTBox);
+            this.otherGBox.Controls.Add(this.fixcolorstartupCB);
             this.otherGBox.Controls.Add(this.IconGB);
             this.otherGBox.Controls.Add(this.mod_change_log_nameLbl);
             this.otherGBox.Controls.Add(this.mod_image_nameLbl);
@@ -1019,10 +1041,53 @@
             this.otherGBox.MinimumSize = new System.Drawing.Size(327, 0);
             this.otherGBox.Name = "otherGBox";
             this.otherGBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.otherGBox.Size = new System.Drawing.Size(961, 652);
+            this.otherGBox.Size = new System.Drawing.Size(971, 653);
             this.otherGBox.TabIndex = 23;
             this.otherGBox.TabStop = false;
             this.otherGBox.Text = "Другое";
+            // 
+            // disabledozeCB
+            // 
+            this.disabledozeCB.AutoSize = true;
+            this.disabledozeCB.Location = new System.Drawing.Point(668, 85);
+            this.disabledozeCB.Margin = new System.Windows.Forms.Padding(0);
+            this.disabledozeCB.Name = "disabledozeCB";
+            this.disabledozeCB.Size = new System.Drawing.Size(241, 21);
+            this.disabledozeCB.TabIndex = 56;
+            this.disabledozeCB.Text = "Отключение оптимизации Doze";
+            this.disabledozeCB.UseVisualStyleBackColor = true;
+            this.disabledozeCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
+            // 
+            // color_startupLbl
+            // 
+            this.color_startupLbl.AutoSize = true;
+            this.color_startupLbl.Location = new System.Drawing.Point(665, 39);
+            this.color_startupLbl.Name = "color_startupLbl";
+            this.color_startupLbl.Size = new System.Drawing.Size(241, 17);
+            this.color_startupLbl.TabIndex = 55;
+            this.color_startupLbl.Text = "Цвет, который будет отображатся:";
+            // 
+            // colorTBox
+            // 
+            this.colorTBox.Enabled = false;
+            this.colorTBox.Location = new System.Drawing.Point(668, 58);
+            this.colorTBox.Margin = new System.Windows.Forms.Padding(1);
+            this.colorTBox.Name = "colorTBox";
+            this.colorTBox.Size = new System.Drawing.Size(279, 22);
+            this.colorTBox.TabIndex = 54;
+            this.colorTBox.Text = "ff303030";
+            // 
+            // fixcolorstartupCB
+            // 
+            this.fixcolorstartupCB.AutoSize = true;
+            this.fixcolorstartupCB.Location = new System.Drawing.Point(668, 13);
+            this.fixcolorstartupCB.Margin = new System.Windows.Forms.Padding(0);
+            this.fixcolorstartupCB.Name = "fixcolorstartupCB";
+            this.fixcolorstartupCB.Size = new System.Drawing.Size(248, 21);
+            this.fixcolorstartupCB.TabIndex = 53;
+            this.fixcolorstartupCB.Text = "Пофиксить белый екран запуске";
+            this.fixcolorstartupCB.UseVisualStyleBackColor = true;
+            this.fixcolorstartupCB.CheckedChanged += new System.EventHandler(this.uni_CheckedChanged);
             // 
             // IconGB
             // 
@@ -2035,7 +2100,7 @@
             this.replaceTabPage.Margin = new System.Windows.Forms.Padding(4);
             this.replaceTabPage.Name = "replaceTabPage";
             this.replaceTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.replaceTabPage.Size = new System.Drawing.Size(1292, 667);
+            this.replaceTabPage.Size = new System.Drawing.Size(1302, 668);
             this.replaceTabPage.TabIndex = 1;
             this.replaceTabPage.Text = "Replace";
             // 
@@ -2656,7 +2721,7 @@
             this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.05855F));
             this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 9F));
             this.mainTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.mainTLP.Size = new System.Drawing.Size(1770, 888);
+            this.mainTLP.Size = new System.Drawing.Size(1776, 888);
             this.mainTLP.TabIndex = 24;
             // 
             // textBox2
@@ -2689,11 +2754,23 @@
             this.textBox4.TabIndex = 43;
             this.textBox4.Text = "Имя файла из ченджлогом";
             // 
+            // smali_colorBtn
+            // 
+            this.smali_colorBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.smali_colorBtn.Location = new System.Drawing.Point(4, 356);
+            this.smali_colorBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.smali_colorBtn.Name = "smali_colorBtn";
+            this.smali_colorBtn.Size = new System.Drawing.Size(440, 28);
+            this.smali_colorBtn.TabIndex = 32;
+            this.smali_colorBtn.Text = "Smali Color Converter";
+            this.smali_colorBtn.UseVisualStyleBackColor = false;
+            this.smali_colorBtn.Click += new System.EventHandler(this.smali_colorBtn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1770, 913);
+            this.ClientSize = new System.Drawing.Size(1776, 913);
             this.Controls.Add(this.mainTLP);
             this.Controls.Add(this.progressTLP);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2710,6 +2787,8 @@
             this.tabsControl.ResumeLayout(false);
             this.mainTab.ResumeLayout(false);
             this.mainTab.PerformLayout();
+            this.appinfoPanel.ResumeLayout(false);
+            this.appinfoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.app_iconPB)).EndInit();
             this.toolsTab.ResumeLayout(false);
             this.aboutTab.ResumeLayout(false);
@@ -2949,5 +3028,11 @@
         public System.Windows.Forms.PictureBox app_iconPB;
         public System.Windows.Forms.Label version_code;
         private System.Windows.Forms.Button mergeDexBtn;
+        private System.Windows.Forms.Panel appinfoPanel;
+        private System.Windows.Forms.Label color_startupLbl;
+        public System.Windows.Forms.TextBox colorTBox;
+        private System.Windows.Forms.CheckBox fixcolorstartupCB;
+        private System.Windows.Forms.CheckBox disabledozeCB;
+        private System.Windows.Forms.Button smali_colorBtn;
     }
 }

@@ -43,7 +43,7 @@ namespace AllInOne.Logic
             methodsPatterns = new Dictionary<string, string>
             {
                 { @"const-string(.+)([pv]\d+), \""ca-app-pub.+?\""",
-                "const-string$1$2, \"Deleted By AllInOne\""},
+                "const-string$1$2, \"ca-app-pub-0000000000000000~0000000000\""},
                 {@"([ais]*get-object.*Lcom/google/android/gms/(?:internal|ads).*)[\r\n]+\s+invoke-.+Landroid/.*;->addView\([^\)]*\)V",
                 "$1"},
                 {@"const/(\d+) ([pv]\d+), 0x(4|0)[\r\n]+\s+invoke-virtual \{([pv]\d+), ([pv]\d+)\}, Lcom/google/android/gms/ads/AdView;->setVisibility\(I\)V",
@@ -140,7 +140,7 @@ namespace AllInOne.Logic
         public static Dictionary<string, string> ManifestPatterns = new Dictionary<string, string>
         {
             {@"\""ca-app-pub[^\""]*\""",
-                "\"=\""},
+                "\"ca-app-pub-0000000000000000~0000000000\""},
             {@"<meta-data(.+)android:name=\""com\.crashlytics\.ApiKey\""(.+)android:value=\"".+\""(.*)/>",
             "<meta-data$1android:name=\"com.crashlytics.ApiKey\"$2android:value=\"Deleted By AllInOne\"$3/>"},
             {@"<meta-data(.+)android:name=\""io\.fabric\.ApiKey\""(.+)android:value=\"".+\""(.*)/>",
@@ -151,8 +151,8 @@ namespace AllInOne.Logic
 
         public static Dictionary<string, string> XmlPatterns = new Dictionary<string, string>
         {
-            {@"\""ca-app-pub[^\""]*\""",    "\"=\""},
-            {@">ca-app-pub[^<]*</",        ">=</"}
+            {@"\""ca-app-pub[^\""]*\""",    "\"ca-app-pub-0000000000000000~0000000000\""},
+            {@">ca-app-pub[^<]*</",        ">ca-app-pub-0000000000000000~0000000000</"}
         };
 
         public static Dictionary<string, string> adsModulesOnly = new Dictionary<string, string>
@@ -314,7 +314,7 @@ namespace AllInOne.Logic
             {@"(<com\.google\.android\.gms\.ads\.AdView)(.*)(android|n\d+):visibility=\""(?:visible|invisible)\""",
                 "$1$2 $3:visibility=\"gone\" "},
             {@"=\""ca-app-pub[^\""]+\""",
-                "=\"=\""}
+                "=\"ca-app-pub-0000000000000000~0000000000\""}
         };
 
         public static Dictionary<string, string> GoogleBannerPatchSmali = new Dictionary<string, string>
@@ -424,6 +424,8 @@ namespace AllInOne.Logic
         public static Dictionary<string, string> AutostartPattern = new Dictionary<string, string>
         {
             { @"[\r\n\s]+<receiver.+?>(?<!/>)[\r\n]+?(?:\s*?<(?!(?:receiver|service|activity)).+?>[\r\n]+)*?(?:\s*?<(?!(?:receiver|service|activity)).+android\.intent\.action\.BOOT_COMPLETED.+>[\r\n]+)+?(?:\s*?<(?!(?:receiver|service|activity)).+?>[\r\n]+)*?\s*?</receiver>",
+            "" },
+            { @"[\r\n\s]*<uses-permission[^>]+(\.RECEIVE_BOOT_COMPLETED)[^>]*>",
             ""}
         };
 

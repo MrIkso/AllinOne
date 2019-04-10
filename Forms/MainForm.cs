@@ -19,8 +19,9 @@ namespace AllInOne.Forms
     {
         private bool isDisabledCheckedChanged;
         public static int eggs;
-        public string version = "7.2";
+        public string version = "7.3";
         OpenFileDialog openFileDialog = new OpenFileDialog();
+
         public MainForm()
         {
             this.isDisabledCheckedChanged = false;
@@ -31,11 +32,9 @@ namespace AllInOne.Forms
             DateTime buildDate = new DateTime(2000, 1, 1).AddDays(Version.Build).AddSeconds(Version.Revision * 2);
             this.lblBuild.Text = buildDate.ToString();
             this.lblVersion.Text = version;
-
             if (!Program.standalone)
             {
-                this.openFolderButton.Visible = false;
-                this.orderLv.Height = 336;
+                appinfoPanel.Visible = false;
             }
         }
 
@@ -46,11 +45,12 @@ namespace AllInOne.Forms
             Size windowSize = Properties.Settings.Default.WindowSize;
             base.Size = Properties.Settings.Default.WindowSize;
             base.WindowState = Properties.Settings.Default.WindowState;
-           // this.LoadBoxValues();
+            // this.LoadBoxValues();
             this.UpdateFormLanguage();
             LoadSettings();
             KeyPreview = true;
-            this.openFolderButton.Visible = Program.standalone;
+            defaultCombobox();
+            //this.openFolderButton.Visible = Program.standalone;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -91,7 +91,7 @@ namespace AllInOne.Forms
             {
                 Properties.Settings.Default.WindowSize = base.RestoreBounds.Size;
             }
-              //   SaveBoxValues();
+            //   SaveBoxValues();
             SaveSettings();
             Properties.Settings.Default.WindowState = base.WindowState;
             Properties.Settings.Default.Save();
@@ -130,14 +130,14 @@ namespace AllInOne.Forms
             {
                 blockSensorsCBox.Text = blockSensorsCBox.Items[0].ToString();
             }
-           
+
             Recurs(this, null, values, false);
 
         }
         #endregion
 
         #region SaveSettings
-       // public void SaveSettings()
+        // public void SaveSettings()
         public void SaveSettings()
         {
             Dictionary<string, string> values = new Dictionary<string, string>();
@@ -145,9 +145,9 @@ namespace AllInOne.Forms
             var str = new System.Text.StringBuilder();
             foreach (var v in values)
             {
-               str.AppendLine(v.Key + "#" + v.Value);
+                str.AppendLine(v.Key + "#" + v.Value);
             }
-             progressTbox.Text = "";
+            progressTbox.Text = "";
 
             File.WriteAllText(Program.pathToMyPluginDir + "\\all_values.txt", str.ToString());
         }
@@ -167,7 +167,7 @@ namespace AllInOne.Forms
                     if (ctr is CheckBox _CheckBox) val = _CheckBox.Checked ? "1" : "0";
                     if (ctr is ComboBox _ComboBox) val = _ComboBox.Text + "";
                     if (ctr is TextBox _TextBox) val = _TextBox.Text;
-                    if(ctr is TextBox)
+                    if (ctr is TextBox)
                     {
                         progressTbox.Text = "";
                     }
@@ -203,9 +203,8 @@ namespace AllInOne.Forms
                 {
                     if ("".Equals(progressTbox.Text))
                     {
-                         progressTbox.Text = line;//";
-                         progressTbox.SelectionStart = i;
-                      //  progressTbox.SelectedText = line + "\r";
+                        progressTbox.Text = line;//";
+                        progressTbox.SelectionStart = i;
                         progressTbox.SelectionLength = line.Length + 1;
                         progressTbox.SelectionColor = color;
                         progressTbox.SelectionStart = progressTbox.Text.Length;
@@ -214,7 +213,6 @@ namespace AllInOne.Forms
                     {
                         progressTbox.AppendText("\r\n" + line);
                         progressTbox.SelectionStart = i;
-                    //   progressTbox.SelectedText = line + "\r";
                         progressTbox.SelectionLength = line.Length + 1;
                         progressTbox.SelectionColor = color;
                         progressTbox.SelectionStart = progressTbox.Text.Length;
@@ -227,7 +225,6 @@ namespace AllInOne.Forms
                 {
                     progressTbox.Text = line;
                     progressTbox.SelectionStart = i;
-                 //   progressTbox.SelectedText = line + "\r";
                     progressTbox.SelectionLength = line.Length + 1;
                     progressTbox.SelectionColor = color;
                     progressTbox.SelectionStart = progressTbox.Text.Length;
@@ -236,7 +233,6 @@ namespace AllInOne.Forms
                 {
                     progressTbox.AppendText("\r\n" + line);
                     progressTbox.SelectionStart = i;
-                 //   progressTbox.SelectedText = line + "\r";
                     progressTbox.SelectionLength = line.Length + 1;
                     progressTbox.SelectionColor = color;
                     progressTbox.SelectionStart = progressTbox.Text.Length;
@@ -628,6 +624,9 @@ namespace AllInOne.Forms
             check_protectBtn.Text = Language.tools_check_protect;
             mergeDexBtn.Text = Language.tools_merge_dex;
             IconGB.Text = Language.icon;
+            fixcolorstartupCB.Text = Language.plugin_other_fix_color_startup;
+            color_startupLbl.Text = Language.color_startup_label;
+            disabledozeCB.Text = Language.plugin_other_disable_doze;
         }
 
         public void addOrRemLVi(string text, string tag)
@@ -1119,7 +1118,13 @@ namespace AllInOne.Forms
                     mod_image_nameTBox.Enabled = add_modDialogCB.Checked;
                     mod_changelog_nameTBox.Enabled = add_modDialogCB.Checked;
                     break;
-                
+                case "fixcolorstartupCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_fix_color_startup, "FixWhiteStartupPatch");
+                    colorTBox.Enabled = fixcolorstartupCB.Checked;
+                    break;
+                case "disabledozeCB":
+                    addOrRemLVi(Language.plugin_other + ": " + Language.plugin_other_disable_doze, "disabledozePatch");
+                    break;
             }
         }
 
@@ -1360,6 +1365,7 @@ namespace AllInOne.Forms
         {
             Process.Start("https://t.me/ClubModApk");
         }
+
         private void remDebugInfoButton_Click(object sender, EventArgs e)
         {
             if ("".Equals(Program.processApkPath))
@@ -1394,7 +1400,7 @@ namespace AllInOne.Forms
         {
             SaveSettings();
             //return;
-          //  SaveBoxValues();
+            //  SaveBoxValues();
         }
 
         private void openFoldersButton_Click(object sender, EventArgs e)
@@ -1577,7 +1583,6 @@ namespace AllInOne.Forms
         private void btnSettings_Click(object sender, EventArgs e)
         {
             if (new SettingsForm().ShowDialog() == DialogResult.OK)
-
             {
                 RestartMessage();
             }
@@ -1592,10 +1597,8 @@ namespace AllInOne.Forms
             if (result == DialogResult.OK)
                 //Start a new instance of the current program
                 Process.Start(Application.ExecutablePath);
-
             //close the current application process
             Process.GetCurrentProcess().Kill();
-
         }
 
         private void Changelog_btn_Click(object sender, EventArgs e)
@@ -1615,18 +1618,15 @@ namespace AllInOne.Forms
 
         private void res_cruptBtn_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "*.apk|*.apk";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //string ApkPatch = openFileDialog.FileName;
                 new Task(() =>
-             {
-                 string ApkPatch = openFileDialog.FileName;
-                 Patcher.resCrupt(ApkPatch);
-             }).Start();
+                 {
+                     string ApkPatch = openFileDialog.FileName;
+                     Patcher.resCrupt(ApkPatch);
+                 }).Start();
             }
-
         }
 
         private void eggs_picture_Click(object sender, EventArgs e)
@@ -1650,7 +1650,7 @@ namespace AllInOne.Forms
                 res_cruptBtn.Visible = true;
                 obfuscate_lib_btn.Visible = true;
             }
-             eggs = 0;
+            eggs = 0;
         }
 
         private void open_btn_image_Click(object sender, EventArgs e)
@@ -1667,12 +1667,8 @@ namespace AllInOne.Forms
             openFileDialog.Filter = "*.so|*.so";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //string ApkPatch = openFileDialog.FileName;
-                //new Task(() =>
-                //{
                 string SoPatch = openFileDialog.FileName;
-                    Patcher.LibObfuscated(SoPatch);
-                //  }).Start();
+                Patcher.LibObfuscated(SoPatch);
             }
         }
 
@@ -1719,12 +1715,6 @@ namespace AllInOne.Forms
 
                 form.loadColors(color);
                 form.ShowDialog();
-                //if (form.ShowDialog() == DialogResult.OK)
-                //{
-                //    //MessageBox.Show(form.getChecked().Count.ToString());//
-                //    //получил список id, которые надо скрыть
-                //    Patcher.hideAllChecked(form.getChecked());
-                //}
             }).Start();
         }
 
@@ -1735,48 +1725,48 @@ namespace AllInOne.Forms
 
         private void check_protectBtn_Click(object sender, EventArgs e)
         {
-      //      new CheckProtect().ShowDialog();
+            //      new CheckProtect().ShowDialog();
             if ("".Equals(Program.processApkPath))
             {
                 MessageBox.Show(Language.openFolderError, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-           // new Task(() =>
-           // {
-           //     Stopwatch watch = new Stopwatch();
-           //     watch.Start();
-           //     appendProgressTbox(Color.FromArgb(0, 160, 176), ":::::" + Language.log_interesing_placed + ":::::");
-           //     string[] dirs;
-           ////     CheckProtect check = new CheckProtect();
-           //     if (Program.processApkPath.EndsWith("_INPUT_APK"))
-           //     {
-           //         dirs = Directory.GetDirectories(Program.processApkPath);
-           //     }
-           //     else
-           //     {
-           //         if (!Directory.Exists(Program.processApkPath))
-           //         {
-           //             MessageBox.Show(Program.processApkPath + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-           //             return;
-           //         }
-           //         dirs = new string[] { Program.processApkPath };
-           //     }
-           //     if (dirs.Length == 0)
-           //     {
-           //         MessageBox.Show(Language.emptyInputApk, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-           //         return;
-           //     }
-           //     foreach (string path in dirs)
-           //     {
-                   
-           //     }
-           //     string d = Program.processApkPath;
-                 
-           //    // check.checkProtect(d);
-           //       //  check.ShowDialog();
-           // }).Start();
-            new CheckProtectForm().ShowDialog(); 
+            // new Task(() =>
+            // {
+            //     Stopwatch watch = new Stopwatch();
+            //     watch.Start();
+            //     appendProgressTbox(Color.FromArgb(0, 160, 176), ":::::" + Language.log_interesing_placed + ":::::");
+            //     string[] dirs;
+            ////     CheckProtect check = new CheckProtect();
+            //     if (Program.processApkPath.EndsWith("_INPUT_APK"))
+            //     {
+            //         dirs = Directory.GetDirectories(Program.processApkPath);
+            //     }
+            //     else
+            //     {
+            //         if (!Directory.Exists(Program.processApkPath))
+            //         {
+            //             MessageBox.Show(Program.processApkPath + Language.errorMsgNotExist, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //             return;
+            //         }
+            //         dirs = new string[] { Program.processApkPath };
+            //     }
+            //     if (dirs.Length == 0)
+            //     {
+            //         MessageBox.Show(Language.emptyInputApk, Language.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //         return;
+            //     }
+            //     foreach (string path in dirs)
+            //     {
+
+            //     }
+            //     string d = Program.processApkPath;
+
+            //    // check.checkProtect(d);
+            //       //  check.ShowDialog();
+            // }).Start();
+            new CheckProtectForm().ShowDialog();
         }
 
         //горячие клавиши
@@ -1807,7 +1797,6 @@ namespace AllInOne.Forms
                 this.Close();
                 e.SuppressKeyPress = true;
             }
-            
         }
 
         private void progressTbox_TextChanged(object sender, EventArgs e)
@@ -1826,6 +1815,24 @@ namespace AllInOne.Forms
                 var dx = string.Join(" ", openFileDialog.FileNames);
                 Patcher.mergeDex(dx, Path.GetDirectoryName(openFileDialog.FileName));
             }
+        }
+
+        //значения комбоксов по-умолчанию
+        private void defaultCombobox()
+        {
+            deleteLangsCBox.SelectedIndex = 0;
+            binInstallerCBox.SelectedIndex = 0;
+            installLocationCBox.SelectedIndex = 0;
+            minSdkCBox.SelectedIndex = 0;
+            blockSensorsCBox.SelectedIndex = 0;
+            backKillCBox.SelectedIndex = 0;
+            screenOrientationCBox.SelectedIndex = 0;
+            add_permissionCBox.SelectedIndex = 0;
+        }
+
+        private void smali_colorBtn_Click(object sender, EventArgs e)
+        {
+            new SmaliColorForm().Show();
         }
     }
 }

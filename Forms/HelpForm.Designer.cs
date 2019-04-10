@@ -16,28 +16,37 @@
         // Token: 0x0600001B RID: 27 RVA: 0x00004518 File Offset: 0x00002718
         private void InitializeComponent()
         {
-            this.richTxtHelp = new global::System.Windows.Forms.RichTextBox();
-            base.SuspendLayout();
-            this.richTxtHelp.Dock = global::System.Windows.Forms.DockStyle.Fill;
-            this.richTxtHelp.Location = new global::System.Drawing.Point(0, 0);
-            this.richTxtHelp.Margin = new global::System.Windows.Forms.Padding(30, 3, 3, 3);
+            this.richTxtHelp = new System.Windows.Forms.RichTextBox();
+            this.SuspendLayout();
+            // 
+            // richTxtHelp
+            // 
+            this.richTxtHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTxtHelp.Location = new System.Drawing.Point(0, 0);
+            this.richTxtHelp.Margin = new System.Windows.Forms.Padding(40, 4, 4, 4);
             this.richTxtHelp.Name = "richTxtHelp";
             this.richTxtHelp.ReadOnly = true;
-            this.richTxtHelp.Size = new global::System.Drawing.Size(800, 692);
+            this.richTxtHelp.Size = new System.Drawing.Size(1067, 852);
             this.richTxtHelp.TabIndex = 0;
             this.richTxtHelp.Text = "";
-            base.AutoScaleDimensions = new global::System.Drawing.SizeF(6f, 13f);
-            base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new global::System.Drawing.Size(800, 692);
-            base.Controls.Add(this.richTxtHelp);
-            this.MinimumSize = new global::System.Drawing.Size(400, 200);
-            base.Name = "frmHelp";
-            base.ShowIcon = false;
-            base.ShowInTaskbar = false;
-            base.StartPosition = global::System.Windows.Forms.FormStartPosition.CenterParent;
+            this.richTxtHelp.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTxtHelp_LinkClicked);
+            // 
+            // HelpForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1067, 852);
+            this.Controls.Add(this.richTxtHelp);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(527, 235);
+            this.Name = "HelpForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AllInOne Help";
-            base.Load += new global::System.EventHandler(this.frmHelp_Load);
-            base.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.frmHelp_Load);
+            this.ResumeLayout(false);
+
         }
 
         // Token: 0x04000029 RID: 41
